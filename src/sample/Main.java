@@ -7,12 +7,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    // this method will be rewritten
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("view/log-in.fxml"));
-        primaryStage.setTitle("Scheduler");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Scheduler Pro");
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
