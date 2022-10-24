@@ -23,7 +23,4 @@ public class DBConnector {
     public static Statement newStatement() throws SQLException {
         return conn.createStatement();
     }
-
-
-
 }
