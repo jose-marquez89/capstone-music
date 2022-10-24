@@ -24,7 +24,7 @@
                </VBox.margin></PasswordField>
          </children>
       </VBox>
-      <Button fx:id="loginButton" layoutX="127.0" layoutY="184.0" mnemonicParsing="false" onAction="#logIn" text="Log In" />
+      <Button fx:id="logInButton" layoutX="127.0" layoutY="184.0" mnemonicParsing="false" onAction="#logIn" text="Log In" />
       <Label layoutX="77.0" layoutY="39.0" text="Scheduler Pro">
          <font>
             <Font size="24.0" />
