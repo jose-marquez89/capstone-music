@@ -18,13 +18,12 @@
                   <Insets />
                </VBox.margin>
             </TextField>
-            <PasswordField fx:id="passwordField" promptText="Password" onAction="#logIn">
+            <PasswordField fx:id="passwordField" onAction="#logIn" promptText="Password">
                <VBox.margin>
                   <Insets />
                </VBox.margin></PasswordField>
          </children>
       </VBox>
-      <Button fx:id="logInButton" layoutX="127.0" layoutY="184.0" mnemonicParsing="false" onAction="#logIn" text="Log In" />
       <Label layoutX="77.0" layoutY="39.0" text="Scheduler Pro">
          <font>
             <Font size="24.0" />
@@ -36,6 +35,11 @@
                   <Font size="10.0" />
                </font>
             </Label>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" layoutX="76.0" layoutY="175.0" prefHeight="44.0" prefWidth="160.0">
+         <children>
+            <Button fx:id="logInButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#logIn" text="Log In" />
          </children>
       </VBox>
    </children>
