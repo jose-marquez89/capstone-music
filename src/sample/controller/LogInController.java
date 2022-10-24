@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
@@ -19,6 +16,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.time.ZoneId;
 
@@ -26,12 +24,21 @@ public class LogInController implements Initializable {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private Label zoneLabel;
+    @FXML private Button logInButton;
     private ResultSet queryResult;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       String zone = ZoneId.systemDefault().getId();
-       String formattedZone = "User Location: " + zone;
-       zoneLabel.setText(formattedZone);
+        ResourceBundle localeBundle = ResourceBundle.getBundle("Nat", Locale.getDefault());
+        String zone = ZoneId.systemDefault().getId();
+        String formattedZone = localeBundle.getString("userLocation") + " " + zone;
+        String unamePrompt = localeBundle.getString("username");
+        String pwordPrompt = localeBundle.getString("password");
+        String logInBtnText = localeBundle.getString("logIn");
+
+        zoneLabel.setText(formattedZone);
+        usernameField.setPromptText(unamePrompt);
+        passwordField.setPromptText(pwordPrompt);
+        logInButton.setText(logInBtnText);
     }
     public void logIn(ActionEvent event) throws SQLException, IOException {
         Parent root;
