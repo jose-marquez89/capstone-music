@@ -13,6 +13,7 @@ public class Main extends Application {
         primaryStage.setTitle("Scheduler Pro");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        root.requestFocus();
     }
 
 
