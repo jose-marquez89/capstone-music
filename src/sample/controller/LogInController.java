@@ -46,10 +46,13 @@ public class LogInController implements Initializable {
         Scene scene;
         String candidatePword = passwordField.getText();
         String candidateUname = usernameField.getText();
+        ResourceBundle localeBundle = ResourceBundle.getBundle("Nat", Locale.getDefault());
+        String alertMessage = localeBundle.getString("badLogin");
+        String alertTitle = localeBundle.getString("logInTitle");
         Alert badLogin = new Alert(Alert.AlertType.INFORMATION);
 
-        badLogin.setTitle("Login");
-        badLogin.setContentText("Username or password is incorrect");
+        badLogin.setTitle(alertTitle);
+        badLogin.setContentText(alertMessage);
 
         DBConnector.connect();
         Query.runQuery("SELECT user_name, password FROM users WHERE user_name = '" + candidateUname + "';");
