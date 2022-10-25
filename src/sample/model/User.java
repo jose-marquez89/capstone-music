@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 
 public class User extends Person {
     private String password;
+    private static int passwordRetrievalsLeft = 1;
 
     public User(int id, String name, ZonedDateTime createDate, String createdBy,
                 ZonedDateTime lastUpdate, String lastUpdatedBy, String password) {
@@ -12,6 +13,10 @@ public class User extends Person {
     }
 
     public String getPassword() {
-        return password;
+        // not great logic
+        if (passwordRetrievalsLeft-- > 0) {
+            return password;
+        }
+        return "";
     }
 }
