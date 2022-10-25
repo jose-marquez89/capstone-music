@@ -11,11 +11,15 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
+import sample.model.Schedule;
+import sample.model.User;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.time.ZoneId;
@@ -44,9 +48,14 @@ public class LogInController implements Initializable {
         Parent root;
         Stage stage;
         Scene scene;
+        User queuedUser;
+        int id;
+        String name, createdBy, lastUpdatedBy, DBPword;
+        ZonedDateTime createdDate, lastUpdatedDate;
         String candidatePword = passwordField.getText();
         String candidateUname = usernameField.getText();
         ResourceBundle localeBundle = ResourceBundle.getBundle("Nat", Locale.getDefault());
+        ZoneId systemZone = ZoneId.systemDefault();
         String alertMessage = localeBundle.getString("badLogin");
         String alertTitle = localeBundle.getString("logInTitle");
         Alert badLogin = new Alert(Alert.AlertType.INFORMATION);
@@ -55,11 +64,28 @@ public class LogInController implements Initializable {
         badLogin.setContentText(alertMessage);
 
         DBConnector.connect();
-        Query.runQuery("SELECT user_name, password FROM users WHERE user_name = '" + candidateUname + "';");
+        Query.runQuery("SELECT * FROM users WHERE user_name = '" + candidateUname + "';");
         queryResult = Query.getResults();
 
         if (queryResult.next()) {
-            if (candidatePword.equals(queryResult.getString("password"))) {
+            // we really don't need the User class
+            id = Integer.parseInt(queryResult.getString("user_id"));
+            name = queryResult.getString("user_name");
+            createdDate = queryResult.getTimestamp("create_date")
+                    .toLocalDateTime()
+                    .atZone(ZoneId.of("UTC"))
+                    .withZoneSameInstant(systemZone);
+            lastUpdatedDate = queryResult.getTimestamp("create_date")
+                    .toLocalDateTime()
+                    .atZone(ZoneId.of("UTC"))
+                    .withZoneSameInstant(systemZone);
+            createdBy = queryResult.getString("created_by");
+            lastUpdatedBy = queryResult.getString("last_updated_by");
+            DBPword = queryResult.getString("password");
+            queuedUser = new User(id, name, createdDate,createdBy, lastUpdatedDate, lastUpdatedBy, DBPword);
+
+            if (candidatePword.equals(queuedUser.getPassword())) {
+                Schedule.setCurrentUser(queuedUser);
                 root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
