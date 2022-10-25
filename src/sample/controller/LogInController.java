@@ -50,7 +50,7 @@ public class LogInController implements Initializable {
         Scene scene;
         User queuedUser;
         int id;
-        String name, createdBy, lastUpdatedBy, DBPword;
+        String name, createdBy, lastUpdatedBy;
         ZonedDateTime createdDate, lastUpdatedDate;
         String candidatePword = passwordField.getText();
         String candidateUname = usernameField.getText();
@@ -81,10 +81,9 @@ public class LogInController implements Initializable {
                     .withZoneSameInstant(systemZone);
             createdBy = queryResult.getString("created_by");
             lastUpdatedBy = queryResult.getString("last_updated_by");
-            DBPword = queryResult.getString("password");
-            queuedUser = new User(id, name, createdDate,createdBy, lastUpdatedDate, lastUpdatedBy, DBPword);
+            queuedUser = new User(id, name, createdDate,createdBy, lastUpdatedDate, lastUpdatedBy);
 
-            if (candidatePword.equals(queuedUser.getPassword())) {
+            if (candidatePword.equals(queryResult.getString("password"))) {
                 Schedule.setCurrentUser(queuedUser);
                 root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
