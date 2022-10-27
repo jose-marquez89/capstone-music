@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Schedule {
-    private static ObservableList<Person> customers = FXCollections.observableArrayList();
+    private static ObservableList<Customer> customers = FXCollections.observableArrayList();
     private static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
     private static User currentUser;
 
@@ -23,8 +23,12 @@ public class Schedule {
         appointments.add(appt);
     }
 
-    public static ObservableList<Person> getCustomers() {
+    public static ObservableList<Customer> getCustomers() {
         return customers;
+    }
+
+    public static void clearCustomers() {
+        customers.clear();
     }
 
     public static ObservableList<Appointment> getAppointments() {
