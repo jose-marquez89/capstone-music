@@ -6,15 +6,17 @@ public class Customer extends Person {
     private String address;
     private String postalCode;
     private String phone;
-    private int divisionId;
+    private String division;
+    private String country;
 
     public Customer(int id, String name, ZonedDateTime createDate, String createdBy, ZonedDateTime lastUpdate,
-                    String lastUpdatedBy, String address, String postalCode, String phone, int divisionId) {
+                    String lastUpdatedBy, String address, String postalCode, String phone, String division, String country) {
         super(id, name, createDate, createdBy, lastUpdate, lastUpdatedBy);
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
-        this.divisionId = divisionId;
+        this.division = division;
+        this.country = country;
     }
 
     public void setAddress(String address) {
@@ -29,10 +31,6 @@ public class Customer extends Person {
         this.phone = phone;
     }
 
-    public void setDivisionId(int divisionId) {
-        this.divisionId = divisionId;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -45,7 +43,11 @@ public class Customer extends Person {
         return phone;
     }
 
-    public int getDivisionId() {
-        return divisionId;
+    public String getCountry() {
+        return country;
+    }
+
+    public String getDivision() {
+        return division;
     }
 }
