@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -30,6 +29,9 @@ public class LogInController implements Initializable {
     @FXML private Label zoneLabel;
     @FXML private Button logInButton;
     private ResultSet queryResult;
+    private Parent root;
+    private Stage stage;
+    private Scene scene;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ResourceBundle localeBundle = ResourceBundle.getBundle("Nat", Locale.getDefault());
@@ -45,9 +47,6 @@ public class LogInController implements Initializable {
         logInButton.setText(logInBtnText);
     }
     public void logIn(ActionEvent event) throws SQLException, IOException {
-        Parent root;
-        Stage stage;
-        Scene scene;
         User queuedUser;
         int id;
         String name, createdBy, lastUpdatedBy;
@@ -86,16 +85,20 @@ public class LogInController implements Initializable {
             if (candidatePword.equals(queryResult.getString("password"))) {
                 Schedule.setCurrentUser(queuedUser);
                 root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setX(100.0);
                 stage.setY(50.0);
                 stage.show();
+
+                DBConnector.closeConnection();
+
                 return;
             }
         }
 
+        DBConnector.closeConnection();
         badLogin.show();
     }
 }
