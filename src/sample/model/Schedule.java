@@ -30,6 +30,9 @@ public class Schedule {
     public static void clearCustomers() {
         customers.clear();
     }
+    public static void clearAppointments() {
+        appointments.clear();
+    }
 
     public static ObservableList<Appointment> getAppointments() {
         return appointments;
