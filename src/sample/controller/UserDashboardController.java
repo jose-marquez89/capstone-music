@@ -7,6 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.dao.DBConnector;
 import sample.dao.Query;
+import sample.model.Appointment;
 import sample.model.Customer;
 import sample.model.Schedule;
 
@@ -72,9 +73,55 @@ public class UserDashboardController implements Initializable {
            Customer newCustomer = new Customer(id, name, createDate, createdBy, lastUpdate,
                    lastUpdatedBy, address, pc, phone, div, country);
 
-//           System.out.println(newCustomer.getCountry());
-
            Schedule.addCustomer(newCustomer);
+        }
+
+        DBConnector.closeConnection();
+    }
+
+    public void updateAppointments() throws SQLException {
+        int id, customerId, userId;
+        String title, location, description, contact, type;
+        ZonedDateTime start, end;
+        ResultSet apptQueryResult;
+        String queryUserTail = Schedule.getCurrentUser().getName() + "';";
+        String getApptsQuery = """
+                SELECT *
+                FROM appointments AS a
+                JOIN contacts AS c
+                ON a.contact_id = c.contact_id 
+                WHERE a.user_id = '""" + queryUserTail;
+
+        DBConnector.connect();
+        Query.runQuery(getApptsQuery);
+        apptQueryResult = Query.getResults();
+
+        Schedule.clearAppointments();
+
+        while (apptQueryResult.next()) {
+            id = apptQueryResult.getInt("appointment_id");
+            customerId = apptQueryResult.getInt("customer_id");
+            userId = apptQueryResult.getInt("user_id");
+            title = apptQueryResult.getString("title");
+            description = apptQueryResult.getString("description");
+            location = apptQueryResult.getString("location");
+            contact = apptQueryResult.getString("contact");
+            type = apptQueryResult.getString("type");
+            start = apptQueryResult
+                    .getTimestamp("start")
+                    .toLocalDateTime()
+                    .atZone(ZoneId.of("UTC"))
+                    .withZoneSameInstant(ZoneId.systemDefault());
+            end = apptQueryResult
+                    .getTimestamp("end")
+                    .toLocalDateTime()
+                    .atZone(ZoneId.of("UTC"))
+                    .withZoneSameInstant(ZoneId.systemDefault());
+
+            Appointment newAppt = new Appointment(id, title, description, location,
+                    contact, type, start, end, customerId, userId);
+
+            Schedule.addAppointment(newAppt);
         }
 
         DBConnector.closeConnection();
@@ -103,10 +150,6 @@ public class UserDashboardController implements Initializable {
         customerTable.setItems(Schedule.getCustomers());
     }
 
-    public void testDash() {
-        System.out.println("Preparing to initialize dashboard...");
-    }
-
     /*
     TODO: add fields to show for customers
     - customer_id
@@ -117,7 +160,4 @@ public class UserDashboardController implements Initializable {
     - division_id
      */
 
-    /*
-    TODO: add fields to show for appointments
-     */
 }
