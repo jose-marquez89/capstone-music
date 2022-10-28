@@ -24,6 +24,7 @@
             <TableView fx:id="customerTable" prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="customerIdCol" prefWidth="75.0" text="ID" />
+                  <TableColumn fx:id="customerNameCol" prefWidth="169.03180694580078" text="Name" />
                   <TableColumn fx:id="customerAddressCol" prefWidth="192.33642578125" text="Address" />
                   <TableColumn fx:id="postalCodeCol" prefWidth="121.66351318359375" text="Postal Code" />
                   <TableColumn fx:id="phoneNumberCol" prefWidth="130.13265991210938" text="Phone Number" />
