@@ -1,16 +1,23 @@
 package sample.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Appointment;
 import sample.model.Customer;
 import sample.model.Schedule;
 
+import javafx.event.ActionEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,6 +46,9 @@ public class UserDashboardController implements Initializable {
     @FXML private TableColumn<Appointment, String> apptTypeCol;
     @FXML private TableColumn<Appointment, LocalDateTime> apptStartCol;
     @FXML private TableColumn<Appointment, LocalDateTime> apptEndCol;
+    private Parent root;
+    private Scene scene;
+    private Stage stage;
 
 
     @Override
@@ -64,6 +74,7 @@ public class UserDashboardController implements Initializable {
         apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
         apptContactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        // TODO: override updateItem to format date/time display
         apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
 
@@ -179,6 +190,19 @@ public class UserDashboardController implements Initializable {
         }
 
         DBConnector.closeConnection();
+    }
+
+    public void updateAppointment(ActionEvent event) {
+        // TODO: start as update form and switch to appt mod form
+    }
+
+    public void addAppointment(ActionEvent event) throws IOException {
+        // TODO: start as add form and switch to appt mod form
+        root = FXMLLoader.load(getClass().getResource("../view/appointment-add-form.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     /*
