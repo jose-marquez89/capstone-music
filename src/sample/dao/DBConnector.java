@@ -1,9 +1,6 @@
 package sample.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DBConnector {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/client_schedule";
@@ -22,5 +19,9 @@ public class DBConnector {
 
     public static Statement newStatement() throws SQLException {
         return conn.createStatement();
+    }
+
+    public static PreparedStatement newPreparedStatement(String statement) throws SQLException {
+        return conn.prepareStatement(statement);
     }
 }
