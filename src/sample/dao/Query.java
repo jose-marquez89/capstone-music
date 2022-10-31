@@ -1,6 +1,8 @@
 package sample.dao;
 
-import javax.xml.transform.Result;
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
+
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
@@ -8,6 +10,7 @@ import java.sql.ResultSet;
 public class Query {
     private static String query;
     private static Statement statement;
+    private static PreparedStatement preparedStatement;
     private static ResultSet result;
 
     public static void runQuery(String q) {
@@ -25,6 +28,32 @@ public class Query {
             statement.executeUpdate(q);
         } catch(Exception e) {
             System.out.println("Query Error: " + e.getMessage());
+        }
+    }
+
+    public static PreparedStatement pendingStatement(String q) {
+        try {
+            preparedStatement = DBConnector.newPreparedStatement(q);
+        } catch (Exception e) {
+            System.out.println("Prepared Query Error: " + e.getMessage());
+        }
+
+        return preparedStatement;
+    }
+
+    public static void executePendingQuery(PreparedStatement ps) {
+        try {
+            result = ps.executeQuery();
+        } catch (Exception e) {
+            System.out.println("Prepared Query Error: " + e.getMessage());
+        }
+    }
+
+    public static void executePendingUpdate(PreparedStatement ps) {
+        try {
+            ps.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Prepared Query Error: " + e.getMessage());
         }
     }
 
