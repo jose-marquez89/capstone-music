@@ -5,10 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.utility.DisplayMinutes;
 
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
+        // make static utilities available to application
+        DisplayMinutes.initializeMinutes();
+
         Parent root = FXMLLoader.load(getClass().getResource("view/log-in.fxml"));
         primaryStage.setTitle("Scheduler Pro");
         primaryStage.setScene(new Scene(root));
