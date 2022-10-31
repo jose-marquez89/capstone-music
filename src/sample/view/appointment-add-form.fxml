@@ -33,7 +33,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -45,28 +45,28 @@
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="ID" />
             <Label text="Title" GridPane.rowIndex="1" />
             <Label text="Description" GridPane.rowIndex="2" />
             <Label text="Location" GridPane.rowIndex="3" />
-            <Label text="Contact" GridPane.rowIndex="4" />
-            <Label text="Type" GridPane.rowIndex="5" />
-            <Label text="Start Date and Time" GridPane.rowIndex="6" />
-            <Label text="End Date and Time" GridPane.rowIndex="7" />
-            <Label text="Customer ID" GridPane.rowIndex="8" />
-            <Label text="User ID" GridPane.rowIndex="9" />
+            <Label text="Type" GridPane.rowIndex="4" />
+            <Label text="Start Date and Time" GridPane.rowIndex="5" />
+            <Label text="End Date and Time" GridPane.rowIndex="6" />
+            <Label text="Customer ID" GridPane.rowIndex="7" />
+            <Label text="User ID" GridPane.rowIndex="8" />
+            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <ComboBox prefWidth="150.0" promptText="AM" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-            <ComboBox prefWidth="150.0" promptText="AM" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-            <ComboBox prefWidth="150.0" promptText="12" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <ComboBox prefWidth="150.0" promptText="00" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-            <ComboBox prefWidth="150.0" promptText="00" GridPane.columnIndex="3" GridPane.rowIndex="7" />
-            <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <ComboBox prefWidth="150.0" promptText="12" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <ComboBox fx:id="customerIdSelector" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <ComboBox fx:id="startPeriodSelector" prefWidth="150.0" promptText="AM" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+            <ComboBox fx:id="endPeriodSelector" prefWidth="150.0" promptText="AM" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+            <ComboBox fx:id="endHourSelector" prefWidth="150.0" promptText="12" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <ComboBox fx:id="startMinuteSelector" prefWidth="150.0" promptText="00" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+            <ComboBox fx:id="endMinuteSelector" prefWidth="150.0" promptText="00" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+            <ComboBox fx:id="userIdSelector" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <ComboBox fx:id="startHourSelector" prefWidth="150.0" promptText="12" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <TextArea prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Contact" GridPane.rowIndex="9" />
+            <ComboBox fx:id="contactSelector" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
          </children>
       </GridPane>
       <HBox layoutX="434.0" layoutY="625.0" prefHeight="23.0" prefWidth="123.0" spacing="10.0">
