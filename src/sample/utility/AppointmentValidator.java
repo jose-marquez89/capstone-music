@@ -1,4 +1,4 @@
-package sample.controller;
+package sample.utility;
 
 public class AppointmentValidator {
     // TODO: implement validation
