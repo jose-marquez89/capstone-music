@@ -1,5 +1,6 @@
 package sample.model;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 public class Customer extends Person {
@@ -9,7 +10,7 @@ public class Customer extends Person {
     private String division;
     private String country;
 
-    public Customer(int id, String name, ZonedDateTime createDate, String createdBy, ZonedDateTime lastUpdate,
+    public Customer(int id, String name, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate,
                     String lastUpdatedBy, String address, String postalCode, String phone, String division, String country) {
         super(id, name, createDate, createdBy, lastUpdate, lastUpdatedBy);
         this.address = address;
