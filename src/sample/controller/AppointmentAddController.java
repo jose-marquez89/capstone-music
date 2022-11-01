@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
@@ -23,6 +20,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
@@ -30,7 +29,7 @@ import java.util.stream.IntStream;
 public class AppointmentAddController implements Initializable {
     @FXML private TextField titleField;
     @FXML private TextField locationField;
-    @FXML private TextField descriptionField;
+    @FXML private TextArea descriptionField;
     @FXML private TextField typeField;
     @FXML private DatePicker startDatePicker;
     @FXML private DatePicker endDatePicker;
@@ -69,6 +68,9 @@ public class AppointmentAddController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /*
+        TODO: set the time fields such that you don't need to make a choice to get a valid time (validator should still tip off bad time selections)
+         */
         ResultSet results;
         Integer[] hours = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         String[] periods = {"AM", "PM"};
@@ -132,7 +134,7 @@ public class AppointmentAddController implements Initializable {
             }
         });
     }
-    public void cancel(ActionEvent event) throws IOException {
+    public void mainFormRedirect(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -140,6 +142,38 @@ public class AppointmentAddController implements Initializable {
         stage.setX(100.0);
         stage.setY(50.0);
         stage.show();
+    }
+
+    public int convertHour(int hour, String period) {
+        if (period == "AM") {
+            if (hour == 12) {
+                hour = 0;
+            }
+        } else {
+            if (hour != 12) {
+                hour += 12;
+            }
+        }
+
+        return hour;
+    }
+    public Timestamp[] extractTimestamps() {
+        Timestamp[] timestamps = new Timestamp[2];
+        int startHour = convertHour(startHourSelector.getValue(), startPeriodSelector.getValue());
+        int endHour = convertHour(endHourSelector.getValue(), endPeriodSelector.getValue());
+        timestamps[0] = Timestamp.valueOf(
+                startDatePicker
+                        .getValue()
+                        .atTime(startHour, startMinuteSelector.getValue().getIntegerMinute())
+        );
+
+        timestamps[1] = Timestamp.valueOf(
+                endDatePicker
+                        .getValue()
+                        .atTime(endHour, endMinuteSelector.getValue().getIntegerMinute())
+        );
+
+        return timestamps;
     }
 
     public PreparedStatement newAppointmentQuery(Timestamp start, Timestamp end) throws SQLException {
@@ -150,7 +184,7 @@ public class AppointmentAddController implements Initializable {
         String description = descriptionField.getText();
         String type = typeField.getText();
         int customerId = customerIdSelector.getSelectionModel().getSelectedItem();
-        int userId = customerIdSelector.getSelectionModel().getSelectedItem();
+        int userId = userIdSelector.getSelectionModel().getSelectedItem();
         int contactId = contactSelector.getSelectionModel().getSelectedItem().getId();
 
         query = """
@@ -173,8 +207,14 @@ public class AppointmentAddController implements Initializable {
         return ps;
     }
 
-    public void save() {
+    public void save(ActionEvent event) throws SQLException, IOException {
         // TODO: validate appointment time params
+        Timestamp[] timestamps = extractTimestamps();
+        DBConnector.connect();
+        PreparedStatement newAppt = newAppointmentQuery(timestamps[0], timestamps[1]);
+        newAppt.executeUpdate();
+        DBConnector.closeConnection();
+        mainFormRedirect(event);
     }
 
 }
