@@ -23,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
@@ -91,7 +92,7 @@ public class UserDashboardController implements Initializable {
 
     public void updateCustomers() throws SQLException {
         int id;
-        ZonedDateTime createDate, lastUpdate;
+        LocalDateTime createDate, lastUpdate;
         String name, address, pc, phone, divId, div, country, createdBy, lastUpdatedBy;
         ResultSet customerQueryResult;
         String getCustomersQry = """
@@ -121,14 +122,10 @@ public class UserDashboardController implements Initializable {
             country = customerQueryResult.getString("country");
             createDate = customerQueryResult
                     .getTimestamp("create_date")
-                    .toLocalDateTime()
-                    .atZone(ZoneId.of("UTC"))
-                    .withZoneSameInstant(ZoneId.systemDefault());
+                    .toLocalDateTime();
             lastUpdate = customerQueryResult
                     .getTimestamp("last_update")
-                    .toLocalDateTime()
-                    .atZone(ZoneId.of("UTC"))
-                    .withZoneSameInstant(ZoneId.systemDefault());
+                    .toLocalDateTime();
 
            Customer newCustomer = new Customer(id, name, createDate, createdBy, lastUpdate,
                    lastUpdatedBy, address, pc, phone, div, country);
@@ -144,13 +141,14 @@ public class UserDashboardController implements Initializable {
         String title, location, description, contact, type;
         LocalDateTime start, end;
         ResultSet apptQueryResult;
-        String queryUserTail = Schedule.getCurrentUser().getId() + ";";
+        // TODO: remove user specific query elements if necessary
+        // String queryUserTail = Schedule.getCurrentUser().getId() + ";";
         String getApptsQuery = """
                 SELECT *
                 FROM appointments AS a
                 JOIN contacts AS c
-                ON a.contact_id = c.contact_id 
-                WHERE a.user_id = """ + queryUserTail;
+                ON a.contact_id = c.contact_id;""";
+                // --WHERE a.user_id = """ + queryUserTail;
 
         DBConnector.connect();
         Query.runQuery(getApptsQuery);
@@ -170,15 +168,9 @@ public class UserDashboardController implements Initializable {
             type = apptQueryResult.getString("type");
             start = apptQueryResult
                     .getTimestamp("start")
-                    .toLocalDateTime()
-                    .atZone(ZoneId.of("UTC"))
-                    .withZoneSameInstant(ZoneId.systemDefault())
                     .toLocalDateTime();
             end = apptQueryResult
                     .getTimestamp("end")
-                    .toLocalDateTime()
-                    .atZone(ZoneId.of("UTC"))
-                    .withZoneSameInstant(ZoneId.systemDefault())
                     .toLocalDateTime();
 
             System.out.println("Creating appointment with ID: " + id);
