@@ -157,26 +157,22 @@ public class AppointmentAddController implements Initializable {
 
         return hour;
     }
-    public Timestamp[] extractTimestamps() {
-        Timestamp[] timestamps = new Timestamp[2];
+    public LocalDateTime[] extractDateTimes() {
+        LocalDateTime[] dateTimes = new LocalDateTime[2];
         int startHour = convertHour(startHourSelector.getValue(), startPeriodSelector.getValue());
         int endHour = convertHour(endHourSelector.getValue(), endPeriodSelector.getValue());
-        timestamps[0] = Timestamp.valueOf(
-                startDatePicker
-                        .getValue()
-                        .atTime(startHour, startMinuteSelector.getValue().getIntegerMinute())
-        );
+        dateTimes[0] = startDatePicker
+                .getValue()
+                .atTime(startHour, startMinuteSelector.getValue().getIntegerMinute());
 
-        timestamps[1] = Timestamp.valueOf(
-                endDatePicker
-                        .getValue()
-                        .atTime(endHour, endMinuteSelector.getValue().getIntegerMinute())
-        );
+        dateTimes[1] = endDatePicker
+                .getValue()
+                .atTime(endHour, endMinuteSelector.getValue().getIntegerMinute());
 
-        return timestamps;
+        return dateTimes;
     }
 
-    public PreparedStatement newAppointmentQuery(Timestamp start, Timestamp end) throws SQLException {
+    public PreparedStatement newAppointmentQuery(LocalDateTime start, LocalDateTime end) throws SQLException {
         PreparedStatement ps;
         String query;
         String title = titleField.getText();
@@ -196,8 +192,8 @@ public class AppointmentAddController implements Initializable {
         ps.setString(2, description);
         ps.setString(3, location);
         ps.setString(4, type);
-        ps.setTimestamp(5, start);
-        ps.setTimestamp(6, end);
+        ps.setTimestamp(5, Timestamp.valueOf(start));
+        ps.setTimestamp(6, Timestamp.valueOf(end));
         ps.setString(7, Schedule.getCurrentUser().getName());
         ps.setString(8, Schedule.getCurrentUser().getName());
         ps.setInt(9, customerId);
@@ -209,9 +205,9 @@ public class AppointmentAddController implements Initializable {
 
     public void save(ActionEvent event) throws SQLException, IOException {
         // TODO: validate appointment time params
-        Timestamp[] timestamps = extractTimestamps();
+        LocalDateTime[] dateTimes = extractDateTimes();
         DBConnector.connect();
-        PreparedStatement newAppt = newAppointmentQuery(timestamps[0], timestamps[1]);
+        PreparedStatement newAppt = newAppointmentQuery(dateTimes[0], dateTimes[1]);
         newAppt.executeUpdate();
         DBConnector.closeConnection();
         mainFormRedirect(event);
