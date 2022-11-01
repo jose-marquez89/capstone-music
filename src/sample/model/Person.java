@@ -1,20 +1,21 @@
 package sample.model;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 abstract public class Person {
     private int id;
     private String name;
-    private ZonedDateTime createDate;
+    private LocalDateTime createDate;
     private String createdBy;
-    private ZonedDateTime lastUpdate;
+    private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
     public Person(int id, String name) {
         this.id = id;
         this.name = name;
     }
-    public Person(int id, String name, ZonedDateTime createDate, String createdBy, ZonedDateTime lastUpdate, String lastUpdatedBy) {
+    public Person(int id, String name, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy) {
         this.id = id;
         this.name = name;
         this.createDate = createDate;
@@ -27,7 +28,7 @@ abstract public class Person {
         this.name = name;
     }
 
-    public void setLastUpdate(ZonedDateTime lastUpdate) {
+    public void setLastUpdate(LocalDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
@@ -43,7 +44,7 @@ abstract public class Person {
         return name;
     }
 
-    public ZonedDateTime getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
@@ -51,7 +52,7 @@ abstract public class Person {
         return createdBy;
     }
 
-    public ZonedDateTime getLastUpdate() {
+    public LocalDateTime getLastUpdate() {
         return lastUpdate;
     }
 
