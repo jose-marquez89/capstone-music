@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -50,7 +51,7 @@ public class LogInController implements Initializable {
         User queuedUser;
         int id;
         String name, createdBy, lastUpdatedBy;
-        ZonedDateTime createdDate, lastUpdatedDate;
+        LocalDateTime createdDate, lastUpdatedDate;
         String candidatePword = passwordField.getText();
         String candidateUname = usernameField.getText();
         ResourceBundle localeBundle = ResourceBundle.getBundle("Nat", Locale.getDefault());
@@ -71,13 +72,9 @@ public class LogInController implements Initializable {
             id = Integer.parseInt(queryResult.getString("user_id"));
             name = queryResult.getString("user_name");
             createdDate = queryResult.getTimestamp("create_date")
-                    .toLocalDateTime()
-                    .atZone(ZoneId.of("UTC"))
-                    .withZoneSameInstant(systemZone);
+                    .toLocalDateTime();
             lastUpdatedDate = queryResult.getTimestamp("create_date")
-                    .toLocalDateTime()
-                    .atZone(ZoneId.of("UTC"))
-                    .withZoneSameInstant(systemZone);
+                    .toLocalDateTime();
             createdBy = queryResult.getString("created_by");
             lastUpdatedBy = queryResult.getString("last_updated_by");
             queuedUser = new User(id, name, createdDate,createdBy, lastUpdatedDate, lastUpdatedBy);
