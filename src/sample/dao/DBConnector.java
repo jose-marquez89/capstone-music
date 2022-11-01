@@ -3,7 +3,7 @@ package sample.dao;
 import java.sql.*;
 
 public class DBConnector {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/client_schedule";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/client_schedule?connectionTimeZone=SERVER";
     private static final String UNAME = "sqlUser";
     private static final String PWORD = "Passw0rd!";
 
