@@ -13,6 +13,7 @@ import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Contact;
 import sample.model.Schedule;
+import sample.utility.AppointmentValidator;
 import sample.utility.DisplayMinutes;
 import sample.utility.Minute;
 
@@ -205,7 +206,27 @@ public class AppointmentAddController implements Initializable {
 
     public void save(ActionEvent event) throws SQLException, IOException {
         // TODO: validate appointment time params
+        boolean correctForm, correctPlacement, withinBusinessHours;
         LocalDateTime[] dateTimes = extractDateTimes();
+
+        // validate
+        correctForm = AppointmentValidator.validateStartEnd(dateTimes[0], dateTimes[1]);
+        correctPlacement = AppointmentValidator.validateOverlap(dateTimes[0], dateTimes[1]);
+        withinBusinessHours = AppointmentValidator.validateBusinessHours(dateTimes[0], dateTimes[1]);
+
+        if (!correctForm) {
+            System.out.println("Meeting is malformed - display malformation error");
+            return;
+        }
+        if (!correctPlacement) {
+           System.out.println("Meeting overlaps with other meetings - display overlap error");
+           return;
+        }
+        if (!withinBusinessHours) {
+            System.out.println("Meeting is outside business hours - display business hours error");
+            return;
+        }
+
         DBConnector.connect();
         PreparedStatement newAppt = newAppointmentQuery(dateTimes[0], dateTimes[1]);
         newAppt.executeUpdate();
