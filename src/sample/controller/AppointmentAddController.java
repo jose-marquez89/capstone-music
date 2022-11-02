@@ -16,6 +16,7 @@ import sample.model.Schedule;
 import sample.utility.AppointmentValidator;
 import sample.utility.DisplayMinutes;
 import sample.utility.Minute;
+import sample.utility.Notification;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +24,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
@@ -206,8 +208,20 @@ public class AppointmentAddController implements Initializable {
 
     public void save(ActionEvent event) throws SQLException, IOException {
         // TODO: validate appointment time params
+        PreparedStatement newAppt;
         boolean correctForm, correctPlacement, withinBusinessHours;
-        LocalDateTime[] dateTimes = extractDateTimes();
+        LocalDateTime[] dateTimes;
+
+        // not the best way to do this
+        try {
+             dateTimes = extractDateTimes();
+        } catch (NullPointerException npe) {
+            Notification.unfilledDate();
+            return;
+        } catch (DateTimeParseException dtp) {
+            Notification.unfilledDate();
+            return;
+        }
 
         // validate
         correctForm = AppointmentValidator.validateStartEnd(dateTimes[0], dateTimes[1]);
@@ -215,20 +229,27 @@ public class AppointmentAddController implements Initializable {
         withinBusinessHours = AppointmentValidator.validateBusinessHours(dateTimes[0], dateTimes[1]);
 
         if (!correctForm) {
-            System.out.println("Meeting is malformed - display malformation error");
+            Notification.malformedAppointment();
+            return;
+        }
+        if (!withinBusinessHours) {
+            Notification.outOfBounds();
             return;
         }
         if (!correctPlacement) {
-           System.out.println("Meeting overlaps with other meetings - display overlap error");
+            Notification.overlappingAppointment();
            return;
-        }
-        if (!withinBusinessHours) {
-            System.out.println("Meeting is outside business hours - display business hours error");
-            return;
         }
 
         DBConnector.connect();
-        PreparedStatement newAppt = newAppointmentQuery(dateTimes[0], dateTimes[1]);
+
+        try {
+            newAppt = newAppointmentQuery(dateTimes[0], dateTimes[1]);
+        } catch (NullPointerException npe) {
+            Notification.unfilledContacts();
+            return;
+        }
+
         newAppt.executeUpdate();
         DBConnector.closeConnection();
         mainFormRedirect(event);
