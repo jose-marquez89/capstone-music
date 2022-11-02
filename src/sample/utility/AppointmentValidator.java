@@ -5,9 +5,7 @@ import sample.dao.Query;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.*;
 
 public class AppointmentValidator {
     public static boolean validateStartEnd(LocalDateTime start, LocalDateTime end) {
@@ -17,38 +15,45 @@ public class AppointmentValidator {
         LocalTime estStart, estEnd;
         LocalTime businessStart = LocalTime.of(8, 0);
         LocalTime businessEnd = LocalTime.of(22, 0);
-        boolean validated = false;
+
+        // meetings longer than 14 hours automatically fall outside of biz hours
+        if (Duration.between(start, end).toHours() > 14.0) {
+            return false;
+        };
 
         estStart = start
                 .atZone(ZoneId.systemDefault())
-                .withZoneSameInstant(ZoneId.of("America/New York"))
+                .withZoneSameInstant(ZoneId.of("America/New_York"))
                 .toLocalTime();
         estEnd = end
                 .atZone(ZoneId.systemDefault())
-                .withZoneSameInstant(ZoneId.of("America/New York"))
+                .withZoneSameInstant(ZoneId.of("America/New_York"))
                 .toLocalTime();
 
         if (estStart.compareTo(businessStart) >= 0 && estEnd.compareTo(businessEnd) <= 0) {
-            validated = true;
+            return true;
+        } else {
+            return false;
         }
-
-        return validated;
     }
 
     public static boolean validateOverlap(LocalDateTime start, LocalDateTime end) throws SQLException {
         LocalDateTime maxExistingStart, maxExistingEnd;
         ResultSet results;
-        boolean validated;
-        String queryParam = end.toString();
+        String queryParam = end
+                .atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneOffset.UTC)
+                .toString();
         String query = String.format("""
                 SELECT 
+                    appointment_id,
                     start AS latest_start,
                     end AS latest_end
                 FROM appointments
-                WHERE start < %s
+                WHERE start < '%s'
                 ORDER BY start DESC
                 LIMIT 1;
-                """);
+                """, queryParam);
 
         DBConnector.connect();
         Query.runQuery(query);
@@ -58,15 +63,16 @@ public class AppointmentValidator {
             maxExistingStart = results.getTimestamp("latest_start").toLocalDateTime();
             maxExistingEnd = results.getTimestamp("latest_end").toLocalDateTime();
 
-            if (maxExistingStart.isBefore(start) && maxExistingEnd.isBefore(end)) {
-                validated = true;
+            if (maxExistingStart.compareTo(start) <= 0 && maxExistingEnd.compareTo(start) <= 0) {
+                System.out.println("Meeting time does not overlap - meeting is valid");
+                return true;
             } else {
-                validated = false;
+                System.out.println("Meeting time overlaps - meeting is NOT valid");
+                return false;
             }
         } else {
-            validated = true;
+            System.out.println("No earlier starts found - meeting is valid");
+            return true;
         }
-
-        return validated;
     }
 }
