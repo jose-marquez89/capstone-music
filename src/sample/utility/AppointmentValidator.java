@@ -40,6 +40,7 @@ public class AppointmentValidator {
     public static boolean validateOverlap(LocalDateTime start, LocalDateTime end) throws SQLException {
         LocalDateTime maxExistingStart, maxExistingEnd;
         ResultSet results;
+        boolean validated;
         String queryParam = end
                 .atZone(ZoneId.systemDefault())
                 .withZoneSameInstant(ZoneOffset.UTC)
@@ -64,15 +65,15 @@ public class AppointmentValidator {
             maxExistingEnd = results.getTimestamp("latest_end").toLocalDateTime();
 
             if (maxExistingStart.compareTo(start) <= 0 && maxExistingEnd.compareTo(start) <= 0) {
-                System.out.println("Meeting time does not overlap - meeting is valid");
-                return true;
+                validated = true;
             } else {
-                System.out.println("Meeting time overlaps - meeting is NOT valid");
-                return false;
+                validated = false;
             }
         } else {
-            System.out.println("No earlier starts found - meeting is valid");
-            return true;
+            validated = true;
         }
+
+        DBConnector.closeConnection();
+        return validated;
     }
 }
