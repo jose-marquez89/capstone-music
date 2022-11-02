@@ -154,7 +154,6 @@ public class UserDashboardController implements Initializable {
         Query.runQuery(getApptsQuery);
         apptQueryResult = Query.getResults();
 
-        System.out.println("Clearing appts...");
         Schedule.clearAppointments();
 
         while (apptQueryResult.next()) {
@@ -172,8 +171,6 @@ public class UserDashboardController implements Initializable {
             end = apptQueryResult
                     .getTimestamp("end")
                     .toLocalDateTime();
-
-            System.out.println("Creating appointment with ID: " + id);
 
             Appointment newAppt = new Appointment(id, title, description, location,
                     contact, type, start, end, customerId, userId);
