@@ -6,6 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,9 +24,6 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 
 public class UserDashboardController implements Initializable {
@@ -80,8 +79,8 @@ public class UserDashboardController implements Initializable {
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
 
         try {
-            updateCustomers();
-            updateAppointments();
+            populateCustomers();
+            populateAppointments();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -90,7 +89,7 @@ public class UserDashboardController implements Initializable {
         appointmentTable.setItems(Schedule.getAppointments());
     }
 
-    public void updateCustomers() throws SQLException {
+    public void populateCustomers() throws SQLException {
         int id;
         LocalDateTime createDate, lastUpdate;
         String name, address, pc, phone, divId, div, country, createdBy, lastUpdatedBy;
@@ -136,8 +135,8 @@ public class UserDashboardController implements Initializable {
         DBConnector.closeConnection();
     }
 
-    public void updateAppointments() throws SQLException {
-        int id, customerId, userId;
+    public void populateAppointments() throws SQLException {
+        int id, customerId, userId, contactId;
         String title, location, description, contact, type;
         LocalDateTime start, end;
         ResultSet apptQueryResult;
@@ -159,6 +158,7 @@ public class UserDashboardController implements Initializable {
         while (apptQueryResult.next()) {
             id = apptQueryResult.getInt("appointment_id");
             customerId = apptQueryResult.getInt("customer_id");
+            contactId = apptQueryResult.getInt("contact_id");
             userId = apptQueryResult.getInt("user_id");
             title = apptQueryResult.getString("title");
             description = apptQueryResult.getString("description");
@@ -173,7 +173,7 @@ public class UserDashboardController implements Initializable {
                     .toLocalDateTime();
 
             Appointment newAppt = new Appointment(id, title, description, location,
-                    contact, type, start, end, customerId, userId);
+                    contact, type, start, end, customerId, userId, contactId);
 
             Schedule.addAppointment(newAppt);
         }
@@ -181,8 +181,27 @@ public class UserDashboardController implements Initializable {
         DBConnector.closeConnection();
     }
 
-    public void updateAppointment(ActionEvent event) {
-        // TODO: start as update form and switch to appt mod form
+    public void updateAppointment(ActionEvent event) throws IOException {
+        AppointmentUpdateController updateController;
+        Alert noSelectionAlert = new Alert(AlertType.INFORMATION);
+        Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
+        FXMLLoader productFormLoader = new FXMLLoader(getClass().getResource("../view/appointment-update-form.fxml"));
+
+        // TODO: convert to static method
+        noSelectionAlert.setTitle("Add/Update Appointment");
+        noSelectionAlert.setContentText("You must select an appointment first.");
+
+        if (selectedAppointment == null) {
+            noSelectionAlert.show();
+        } else {
+            root = productFormLoader.load();
+            updateController = productFormLoader.getController();
+            updateController.setCurrentAppointment(selectedAppointment);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 
     public void addAppointment(ActionEvent event) throws IOException {
