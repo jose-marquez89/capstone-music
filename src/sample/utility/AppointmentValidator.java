@@ -76,4 +76,45 @@ public class AppointmentValidator {
         DBConnector.closeConnection();
         return validated;
     }
+
+    public static boolean validateOverlap(LocalDateTime start, LocalDateTime end, int apptId) throws SQLException {
+        LocalDateTime maxExistingStart, maxExistingEnd;
+        ResultSet results;
+        boolean validated;
+        String queryParam = end
+                .atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneOffset.UTC)
+                .toString();
+        String query = String.format("""
+                SELECT 
+                    appointment_id,
+                    start AS latest_start,
+                    end AS latest_end
+                FROM appointments
+                WHERE start < '%s'
+                    AND appointment_id <> %s
+                ORDER BY start DESC
+                LIMIT 1;
+                """, queryParam, apptId);
+
+        DBConnector.connect();
+        Query.runQuery(query);
+        results = Query.getResults();
+
+        if (results.next()) {
+            maxExistingStart = results.getTimestamp("latest_start").toLocalDateTime();
+            maxExistingEnd = results.getTimestamp("latest_end").toLocalDateTime();
+
+            if (maxExistingStart.compareTo(start) <= 0 && maxExistingEnd.compareTo(start) <= 0) {
+                validated = true;
+            } else {
+                validated = false;
+            }
+        } else {
+            validated = true;
+        }
+
+        DBConnector.closeConnection();
+        return validated;
+    }
 }
