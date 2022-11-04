@@ -17,6 +17,8 @@ import sample.model.Customer;
 import sample.model.Schedule;
 
 import javafx.event.ActionEvent;
+import sample.utility.Notification;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -252,16 +254,11 @@ public class UserDashboardController implements Initializable {
 
     public void updateAppointment(ActionEvent event) throws IOException {
         AppointmentUpdateController updateController;
-        Alert noSelectionAlert = new Alert(AlertType.INFORMATION);
         Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
         FXMLLoader productFormLoader = new FXMLLoader(getClass().getResource("../view/appointment-update-form.fxml"));
 
-        // TODO: convert to static method
-        noSelectionAlert.setTitle("Add/Update Appointment");
-        noSelectionAlert.setContentText("You must select an appointment first.");
-
         if (selectedAppointment == null) {
-            noSelectionAlert.show();
+            Notification.noSelection("Update/Delete Appointment", "appointment");
         } else {
             root = productFormLoader.load();
             updateController = productFormLoader.getController();
@@ -285,6 +282,12 @@ public class UserDashboardController implements Initializable {
     public void deleteAppointment(ActionEvent event) throws IOException, SQLException {
         Optional<ButtonType> result;
         Appointment userSelection = appointmentTable.getSelectionModel().getSelectedItem();
+
+        if (userSelection == null) {
+            Notification.noSelection("Update/Delete Appointment", "appointment");
+            return;
+        }
+
         int apptId = userSelection.getId();
         String apptType = userSelection.getType();
         String deleteQuery = String.format("""
