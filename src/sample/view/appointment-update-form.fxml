@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="678.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AppointmentUpdateController">
    <children>
-      <Label layoutX="39.0" layoutY="32.0" text="Add Appointment">
+      <Label layoutX="39.0" layoutY="32.0" text="Update Appointment">
          <font>
             <Font size="18.0" />
          </font>
@@ -42,7 +42,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField disable="true" editable="false" promptText="Auto-Generated" GridPane.columnIndex="1" />
+            <TextField fx:id="idField" disable="true" editable="false" GridPane.columnIndex="1" />
             <TextField fx:id="titleField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="locationField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="typeField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
