@@ -27,6 +27,11 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserDashboardController implements Initializable {
+    private enum ViewMode {
+        ALL,
+        WEEKLY,
+        MONTHLY
+    }
     @FXML private TableView<Customer> customerTable;
     @FXML private TableView<Appointment> appointmentTable;
     @FXML private TableColumn<Customer, Integer> customerIdCol;
@@ -49,12 +54,14 @@ public class UserDashboardController implements Initializable {
     private Parent root;
     private Scene scene;
     private Stage stage;
+    private ViewMode appointmentsViewMode;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // get all initially available customers
         String currentUserId = Integer.toString(Schedule.getCurrentUser().getId());
+        appointmentsViewMode = ViewMode.ALL;
 
         // customer table columns
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -163,17 +170,38 @@ public class UserDashboardController implements Initializable {
 
     public void populateAppointments() throws SQLException {
         int id, customerId, userId, contactId;
-        String title, location, description, contact, type;
+        String title, location, description, contact, type, getApptsQuery;
         LocalDateTime start, end;
         ResultSet apptQueryResult;
         // TODO: remove user specific query elements if necessary
         // String queryUserTail = Schedule.getCurrentUser().getId() + ";";
-        String getApptsQuery = """
+        String allApptsQuery = """
                 SELECT *
                 FROM appointments AS a
                 JOIN contacts AS c
                 ON a.contact_id = c.contact_id;""";
                 // --WHERE a.user_id = """ + queryUserTail;
+        String weeklyApptsQuery = """
+                SELECT *
+                FROM appointments AS a
+                JOIN contacts AS c
+                ON a.contact_id = c.contact_id
+                WHERE WEEK(a.start) = WEEK(CURRENT_DATE());""";
+        String monthlyApptsQuery = """
+                SELECT *
+                FROM appointments AS a
+                JOIN contacts AS c
+                ON a.contact_id = c.contact_id
+                WHERE MONTH(a.start) = MONTH(CURRENT_DATE());""";
+
+        // define query to run based on controller mode
+        if (appointmentsViewMode == ViewMode.ALL) {
+            getApptsQuery = allApptsQuery;
+        } else if (appointmentsViewMode == ViewMode.WEEKLY) {
+           getApptsQuery = weeklyApptsQuery;
+        } else {
+            getApptsQuery = monthlyApptsQuery;
+        }
 
         DBConnector.connect();
         Query.runQuery(getApptsQuery);
@@ -205,6 +233,21 @@ public class UserDashboardController implements Initializable {
         }
 
         DBConnector.closeConnection();
+    }
+
+    public void seeAllAppointments(ActionEvent event) throws SQLException {
+        appointmentsViewMode = ViewMode.ALL;
+        populateAppointments();
+    }
+
+    public void seeWeeklyAppointments(ActionEvent event) throws SQLException {
+        appointmentsViewMode = ViewMode.WEEKLY;
+        populateAppointments();
+    }
+
+    public void seeMonthlyAppointments(ActionEvent event) throws SQLException {
+        appointmentsViewMode = ViewMode.MONTHLY;
+        populateAppointments();
     }
 
     public void updateAppointment(ActionEvent event) throws IOException {
