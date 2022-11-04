@@ -28,10 +28,10 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AppointmentUpdateController implements Initializable {
+    @FXML private TextField idField;
     @FXML private TextField titleField;
     @FXML private TextField locationField;
     @FXML private TextArea descriptionField;
@@ -143,19 +143,21 @@ public class AppointmentUpdateController implements Initializable {
         Minute endMinute = null;
         int startHour = appt.getStart().getHour();
         int endHour = appt.getEnd().getHour();
+        int appointmentId = appt.getId();
         Contact selectedContact = null;
 
+        idField.setText(Integer.toString(appointmentId));
         titleField.setText(appt.getTitle());
         descriptionField.setText(appt.getDescription());
         locationField.setText(appt.getLocation());
         typeField.setText(appt.getType());
 
         startDatePicker.setValue(appt.getStart().toLocalDate());
-        startHourSelector.setValue(startHour);
+        startHourSelector.setValue(convertFromTwentyFourHour(startHour));
         startPeriodSelector.setValue(getPeriod(startHour));
 
         endDatePicker.setValue(appt.getEnd().toLocalDate());
-        endHourSelector.setValue(appt.getEnd().getHour());
+        endHourSelector.setValue(convertFromTwentyFourHour(endHour));
         endPeriodSelector.setValue(getPeriod(endHour));
 
         customerIdSelector.setValue(appt.getCustomerId());
@@ -204,7 +206,14 @@ public class AppointmentUpdateController implements Initializable {
         }
     }
 
-    public int convertHour(int hour, String period) {
+    public int convertFromTwentyFourHour(int hour) {
+        if (hour > 12) {
+            hour -= 12;
+        }
+
+        return hour;
+    }
+    public int convertToTwentyFourHour(int hour, String period) {
         if (period == "AM") {
             if (hour == 12) {
                 hour = 0;
@@ -219,8 +228,8 @@ public class AppointmentUpdateController implements Initializable {
     }
     public LocalDateTime[] extractDateTimes() {
         LocalDateTime[] dateTimes = new LocalDateTime[2];
-        int startHour = convertHour(startHourSelector.getValue(), startPeriodSelector.getValue());
-        int endHour = convertHour(endHourSelector.getValue(), endPeriodSelector.getValue());
+        int startHour = convertToTwentyFourHour(startHourSelector.getValue(), startPeriodSelector.getValue());
+        int endHour = convertToTwentyFourHour(endHourSelector.getValue(), endPeriodSelector.getValue());
         dateTimes[0] = startDatePicker
                 .getValue()
                 .atTime(startHour, startMinuteSelector.getValue().getIntegerMinute());
@@ -242,10 +251,14 @@ public class AppointmentUpdateController implements Initializable {
         int customerId = customerIdSelector.getSelectionModel().getSelectedItem();
         int userId = userIdSelector.getSelectionModel().getSelectedItem();
         int contactId = contactSelector.getSelectionModel().getSelectedItem().getId();
+        int appointmentId = Integer.parseInt(idField.getText());
 
         query = """
-                INSERT INTO appointments (title, description, location, type, start, end, created_by, last_updated_by, customer_id, user_id, contact_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                UPDATE appointments 
+                SET title = ?, description = ?, location = ?, type = ?, start = ?,
+                    end = ?, last_update=CURRENT_TIMESTAMP, last_updated_by = ?, customer_id = ?,
+                    user_id = ?, contact_id = ?
+                WHERE appointment_id = ?
                 """;
         ps = Query.pendingStatement(query);
         ps.setString(1, title);
@@ -255,10 +268,10 @@ public class AppointmentUpdateController implements Initializable {
         ps.setTimestamp(5, Timestamp.valueOf(start));
         ps.setTimestamp(6, Timestamp.valueOf(end));
         ps.setString(7, Schedule.getCurrentUser().getName());
-        ps.setString(8, Schedule.getCurrentUser().getName());
-        ps.setInt(9, customerId);
-        ps.setInt(10, userId);
-        ps.setInt(11, contactId);
+        ps.setInt(8, customerId);
+        ps.setInt(9, userId);
+        ps.setInt(10, contactId);
+        ps.setInt(11, appointmentId);
 
         return ps;
     }
@@ -282,7 +295,7 @@ public class AppointmentUpdateController implements Initializable {
 
         // validate
         correctForm = AppointmentValidator.validateStartEnd(dateTimes[0], dateTimes[1]);
-        correctPlacement = AppointmentValidator.validateOverlap(dateTimes[0], dateTimes[1]);
+        correctPlacement = AppointmentValidator.validateOverlap(dateTimes[0], dateTimes[1], Integer.parseInt(idField.getText()));
         withinBusinessHours = AppointmentValidator.validateBusinessHours(dateTimes[0], dateTimes[1]);
 
         if (!correctForm) {
