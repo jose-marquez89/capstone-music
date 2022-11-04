@@ -6,10 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
@@ -24,6 +22,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class UserDashboardController implements Initializable {
@@ -77,6 +77,32 @@ public class UserDashboardController implements Initializable {
         // TODO: override updateItem to format date/time display
         apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        apptStartCol.setCellFactory(cell -> new TableCell<Appointment, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime dt, boolean empty) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
+                super.updateItem(dt, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(formatter.format(dt));
+                }
+            }
+        });
+
+        apptEndCol.setCellFactory(cell -> new TableCell<Appointment, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime dt, boolean empty) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
+                super.updateItem(dt, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(formatter.format(dt));
+                }
+            }
+        });
 
         try {
             populateCustomers();
@@ -211,6 +237,35 @@ public class UserDashboardController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void deleteAppointment(ActionEvent event) throws IOException, SQLException {
+        Optional<ButtonType> result;
+        Appointment userSelection = appointmentTable.getSelectionModel().getSelectedItem();
+        int apptId = userSelection.getId();
+        String apptType = userSelection.getType();
+        String deleteQuery = String.format("""
+                DELETE FROM appointments
+                WHERE appointment_id = %s;
+                """, userSelection.getId());
+        String areYouSureMessage = String.format("Are you sure you want to cancel this appointment?\nID: %d\nType: %s", apptId, apptType);
+        String confirmationMessage = String.format("Appointment ID %d of type '%s' has been cancelled.", apptId, apptType);
+        Alert confirmAction = new Alert(AlertType.CONFIRMATION);
+        Alert deleteConfirmation = new Alert(AlertType.INFORMATION);
+
+        confirmAction.setTitle("Delete Appointment");
+        confirmAction.setContentText(areYouSureMessage);
+        deleteConfirmation.setTitle("Delete Appointment");
+        deleteConfirmation.setContentText(confirmationMessage);
+        result = confirmAction.showAndWait();
+
+        if (result.get() == ButtonType.OK) {
+            DBConnector.connect();
+            Query.runUpdate(deleteQuery);
+            DBConnector.closeConnection();
+            deleteConfirmation.show();
+            populateAppointments();
+        }
     }
 
     /*
