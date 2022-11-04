@@ -3,6 +3,13 @@ package sample.utility;
 import javafx.scene.control.Alert;
 
 public class Notification {
+    public static void noSelection(String title, String selectionObjectType) {
+        Alert noSelectionAlert = new Alert(Alert.AlertType.INFORMATION);
+
+        noSelectionAlert.setTitle(title);
+        noSelectionAlert.setContentText(String.format("You must select an %s first.", selectionObjectType));
+        noSelectionAlert.show();
+    }
     public static void unfilledDate() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Add/Update Appointment");
