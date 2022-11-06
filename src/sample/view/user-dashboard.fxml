@@ -9,6 +9,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -71,17 +73,17 @@
                   <Label prefHeight="17.0" prefWidth="58.0" text="View:" />
                   <Group>
                      <children>
-                        <RadioButton fx:id="allViewRadio" onAction="#seeAllAppointments" layoutX="-4.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="49.0" selected="true" text="All">
+                        <RadioButton fx:id="allViewRadio" layoutX="-4.0" mnemonicParsing="false" onAction="#seeAllAppointments" prefHeight="18.0" prefWidth="49.0" selected="true" text="All">
                            <toggleGroup>
                               <ToggleGroup fx:id="viewGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="weeklyViewRadio" onAction="#seeWeeklyAppointments" layoutX="81.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="72.0" text="Weekly">
+                        <RadioButton fx:id="weeklyViewRadio" layoutX="81.0" mnemonicParsing="false" onAction="#seeWeeklyAppointments" prefHeight="18.0" prefWidth="72.0" text="Weekly">
                            <toggleGroup>
                               <fx:reference source="viewGroup" />
                            </toggleGroup>
                         </RadioButton>
-                        <RadioButton fx:id="monthlyViewRadio" onAction="#seeMonthlyAppointments" layoutX="184.0" layoutY="1.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="82.0" text="Monthly">
+                        <RadioButton fx:id="monthlyViewRadio" layoutX="184.0" layoutY="1.0" mnemonicParsing="false" onAction="#seeMonthlyAppointments" prefHeight="18.0" prefWidth="82.0" text="Monthly">
                            <toggleGroup>
                               <fx:reference source="viewGroup" />
                            </toggleGroup>
@@ -107,5 +109,18 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <HBox layoutX="810.0" layoutY="41.0" prefHeight="37.0" prefWidth="264.0" spacing="10.0">
+         <children>
+            <ImageView fx:id="logInAlertImage" fitHeight="30.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@green-clock-smaller.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="4.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label fx:id="logInAlertText" prefHeight="59.0" prefWidth="231.0" text="There are no appointments starting within 15 minutes" wrapText="true" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
