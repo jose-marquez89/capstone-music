@@ -1,5 +1,7 @@
 package sample.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
@@ -23,17 +27,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.WeekFields;
+import java.util.*;
+import java.util.stream.Stream;
 
 public class UserDashboardController implements Initializable {
-    private enum ViewMode {
-        ALL,
-        WEEKLY,
-        MONTHLY
-    }
     @FXML private TableView<Customer> customerTable;
     @FXML private TableView<Appointment> appointmentTable;
     @FXML private TableColumn<Customer, Integer> customerIdCol;
@@ -53,18 +57,24 @@ public class UserDashboardController implements Initializable {
     @FXML private TableColumn<Appointment, String> apptTypeCol;
     @FXML private TableColumn<Appointment, LocalDateTime> apptStartCol;
     @FXML private TableColumn<Appointment, LocalDateTime> apptEndCol;
+    @FXML private Label logInAlertText;
+    @FXML private ImageView logInAlertImage;
+    private ObservableList<Appointment> appointmentsContainer = FXCollections.observableArrayList();
+    private String appointmentMessage;
     private Parent root;
     private Scene scene;
     private Stage stage;
-    private ViewMode appointmentsViewMode;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // get all initially available customers
+        int nearbyMeetingId;
+        String meetingDate, meetingTime;
         String currentUserId = Integer.toString(Schedule.getCurrentUser().getId());
-        appointmentsViewMode = ViewMode.ALL;
-
+        LocalDateTime logInDateTime = Schedule.getCurrentUser().getLogInDateTime();
+        Stream<Appointment> nearbyApptsStream;
+        List<Appointment> durations;
         // customer table columns
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -83,7 +93,6 @@ public class UserDashboardController implements Initializable {
         apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
         apptContactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        // TODO: override updateItem to format date/time display
         apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
 
@@ -120,14 +129,48 @@ public class UserDashboardController implements Initializable {
             throw new RuntimeException(e);
         }
 
+        appointmentsContainer.addAll(Schedule.getAppointments());
         customerTable.setItems(Schedule.getCustomers());
-        appointmentTable.setItems(Schedule.getAppointments());
+        appointmentTable.setItems(appointmentsContainer);
+
+        if (ChronoUnit.MINUTES.between(logInDateTime.toLocalTime(), LocalDateTime.now()) > -15) {
+            nearbyApptsStream = Schedule.getAppointments().stream();
+            durations = nearbyApptsStream
+                    .filter(a ->
+                            ChronoUnit.MINUTES.between(logInDateTime, a.getStart()) <= 15
+                            && ChronoUnit.MINUTES.between(logInDateTime, a.getStart()) >= 0)
+                    .sorted((a, b) -> a.getStart().compareTo(b.getStart()))
+                    .toList();
+
+            Schedule.getAppointments().stream().forEach(a -> System.out.println("Start" + a.getStart().toString()));
+
+
+            if (durations.isEmpty()) {
+                logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/green-clock-smaller.png")));
+                logInAlertText.setText("There are no upcoming appointments within 15 minutes");
+            } else {
+                nearbyMeetingId = durations.get(0).getId();
+                meetingDate = durations.get(0).getStart().format(DateTimeFormatter.ofPattern("MM/d/yyyy"));
+                meetingTime = durations.get(0).getStart().format(DateTimeFormatter.ofPattern("h:mm a"));
+                appointmentMessage = String.format(
+                        "Appointment ID %d on %s at %s begins within 15 minutes",
+                        nearbyMeetingId, meetingDate, meetingTime);
+                System.out.println("Appointments within 15");
+                durations.forEach(a -> System.out.println(a.getStart().toString()));
+                logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/red-clock-smaller.png")));
+                logInAlertText.setText(appointmentMessage);
+            }
+        } else {
+            logInAlertImage.setVisible(false);
+            logInAlertText.setVisible(false);
+        }
+
     }
 
     public void populateCustomers() throws SQLException {
         int id;
         LocalDateTime createDate, lastUpdate;
-        String name, address, pc, phone, divId, div, country, createdBy, lastUpdatedBy;
+        String name, address, pc, phone, div, country, createdBy, lastUpdatedBy;
         ResultSet customerQueryResult;
         String getCustomersQry = """
                 SELECT *
@@ -172,38 +215,18 @@ public class UserDashboardController implements Initializable {
 
     public void populateAppointments() throws SQLException {
         int id, customerId, userId, contactId;
-        String title, location, description, contact, type, getApptsQuery;
+        String title, location, description, contact, type;
         LocalDateTime start, end;
         ResultSet apptQueryResult;
         // TODO: remove user specific query elements if necessary
         // String queryUserTail = Schedule.getCurrentUser().getId() + ";";
-        String allApptsQuery = """
+        String getApptsQuery = """
                 SELECT *
                 FROM appointments AS a
                 JOIN contacts AS c
                 ON a.contact_id = c.contact_id;""";
                 // --WHERE a.user_id = """ + queryUserTail;
-        String weeklyApptsQuery = """
-                SELECT *
-                FROM appointments AS a
-                JOIN contacts AS c
-                ON a.contact_id = c.contact_id
-                WHERE WEEK(a.start) = WEEK(CURRENT_DATE());""";
-        String monthlyApptsQuery = """
-                SELECT *
-                FROM appointments AS a
-                JOIN contacts AS c
-                ON a.contact_id = c.contact_id
-                WHERE MONTH(a.start) = MONTH(CURRENT_DATE());""";
 
-        // define query to run based on controller mode
-        if (appointmentsViewMode == ViewMode.ALL) {
-            getApptsQuery = allApptsQuery;
-        } else if (appointmentsViewMode == ViewMode.WEEKLY) {
-           getApptsQuery = weeklyApptsQuery;
-        } else {
-            getApptsQuery = monthlyApptsQuery;
-        }
 
         DBConnector.connect();
         Query.runQuery(getApptsQuery);
@@ -237,19 +260,27 @@ public class UserDashboardController implements Initializable {
         DBConnector.closeConnection();
     }
 
-    public void seeAllAppointments(ActionEvent event) throws SQLException {
-        appointmentsViewMode = ViewMode.ALL;
-        populateAppointments();
+    public void seeAllAppointments() {
+        appointmentsContainer.clear();
+        appointmentsContainer.addAll(Schedule.getAppointments());
     }
 
-    public void seeWeeklyAppointments(ActionEvent event) throws SQLException {
-        appointmentsViewMode = ViewMode.WEEKLY;
-        populateAppointments();
+    public void seeWeeklyAppointments() {
+        Stream<Appointment> apptsStream = Schedule.getAppointments().stream();
+        int currentWeek = LocalDateTime.now().get(WeekFields.of(Locale.getDefault()).weekOfYear());
+        appointmentsContainer.clear();
+        apptsStream
+                .filter(a -> a.getStart().get(WeekFields.of(Locale.getDefault()).weekOfYear()) == currentWeek)
+                .forEach(a -> appointmentsContainer.add(a));
     }
 
-    public void seeMonthlyAppointments(ActionEvent event) throws SQLException {
-        appointmentsViewMode = ViewMode.MONTHLY;
-        populateAppointments();
+    public void seeMonthlyAppointments() {
+        Stream<Appointment> apptsStream = Schedule.getAppointments().stream();
+        int currentMonth = LocalDateTime.now().getMonthValue();
+        appointmentsContainer.clear();
+        apptsStream
+                .filter(a -> a.getStart().getMonthValue() == currentMonth)
+                .forEach(a -> appointmentsContainer.add(a));
     }
 
     public void updateAppointment(ActionEvent event) throws IOException {
@@ -311,17 +342,8 @@ public class UserDashboardController implements Initializable {
             DBConnector.closeConnection();
             deleteConfirmation.show();
             populateAppointments();
+            appointmentsContainer.clear();
+            appointmentsContainer.addAll(Schedule.getAppointments());
         }
     }
-
-    /*
-    TODO: add fields to show for customers
-    - customer_id
-    - customer_name
-    - address
-    - postal_code
-    - phone
-    - division_id
-     */
-
 }
