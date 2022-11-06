@@ -3,9 +3,11 @@ package sample.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+
 public class Schedule {
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
-    private static ObservableList<Appointment> appointments = FXCollections.observableArrayList();
+    private static ArrayList<Appointment> appointments = new ArrayList<Appointment>();
     private static User currentUser;
 
     public static void setCurrentUser(User user) {
@@ -34,7 +36,7 @@ public class Schedule {
         appointments.clear();
     }
 
-    public static ObservableList<Appointment> getAppointments() {
+    public static ArrayList<Appointment> getAppointments() {
         return appointments;
     }
 }
