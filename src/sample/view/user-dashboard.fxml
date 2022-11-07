@@ -39,7 +39,7 @@
             <HBox prefHeight="72.0" prefWidth="963.0" spacing="10.0">
                <children>
                   <Separator opacity="0.0" orientation="VERTICAL" prefHeight="44.0" prefWidth="771.0" />
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Add" />
+                  <Button fx:id="addCustomerBtn" onAction="#addCustomer" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Add" />
                   <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Update" />
                   <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Delete" />
                </children>
