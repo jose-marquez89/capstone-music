@@ -346,4 +346,12 @@ public class UserDashboardController implements Initializable {
             appointmentsContainer.addAll(Schedule.getAppointments());
         }
     }
+
+    public void addCustomer(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("../view/customer-add-form.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
