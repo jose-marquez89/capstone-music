@@ -50,8 +50,6 @@ public class AppointmentAddController implements Initializable {
     private Scene scene;
     private Stage stage;
 
-    // TODO: implement save method
-
     private void setMinuteDisplay(ComboBox box) {
         box.setCellFactory(cell -> new ListCell<Minute>() {
             @Override
@@ -71,9 +69,6 @@ public class AppointmentAddController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*
-        TODO: set the time fields such that you don't need to make a choice to get a valid time (validator should still tip off bad time selections)
-         */
         ResultSet results;
         Integer[] hours = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
         String[] periods = {"AM", "PM"};
