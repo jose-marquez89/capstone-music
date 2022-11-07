@@ -1,5 +1,13 @@
 package sample.utility;
 
+/**
+ * Creates a collection of Minute objects formatted for display.
+ *
+ * This class creates a set of Minute objects formatted
+ * to display minutes in mm format in the appointments forms.
+ *
+ * @author Jose Marquez
+ */
 public class DisplayMinutes {
     private static final int minuteSlots = 12;
     private static Minute[] minutes = new Minute[minuteSlots];
