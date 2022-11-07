@@ -28,9 +28,9 @@ public class CustomerAddController implements Initializable {
     @FXML private ComboBox<Location> countrySelector;
     @FXML private ComboBox<Location> divisionSelector;
     private ObservableList<Division> divisionContainer = FXCollections.observableArrayList();
-    Parent root;
-    Scene scene;
-    Stage stage;
+    private Parent root;
+    private Scene scene;
+    private Stage stage;
 
     public void setComboBoxDisplay(ComboBox<Location> cb) {
         cb.setCellFactory(cell -> new ListCell<Location>() {
