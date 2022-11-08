@@ -168,7 +168,7 @@ public class UserDashboardController implements Initializable {
     }
 
     public void populateCustomers() throws SQLException {
-        int id;
+        int id, divisionId, countryId;
         LocalDateTime createDate, lastUpdate;
         String name, address, pc, phone, div, country, createdBy, lastUpdatedBy;
         ResultSet customerQueryResult;
@@ -189,6 +189,8 @@ public class UserDashboardController implements Initializable {
 
         while (customerQueryResult.next()) {
             id = customerQueryResult.getInt("customer_id");
+            divisionId = customerQueryResult.getInt("division_id");
+            countryId = customerQueryResult.getInt("country_id");
             name = customerQueryResult.getString("customer_name");
             createdBy = customerQueryResult.getString("created_by");
             lastUpdatedBy = customerQueryResult.getString("last_updated_by");
@@ -204,8 +206,8 @@ public class UserDashboardController implements Initializable {
                     .getTimestamp("last_update")
                     .toLocalDateTime();
 
-           Customer newCustomer = new Customer(id, name, createDate, createdBy, lastUpdate,
-                   lastUpdatedBy, address, pc, phone, div, country);
+           Customer newCustomer = new Customer(id, divisionId, countryId, name,
+                   createDate, createdBy, lastUpdate, lastUpdatedBy, address, pc, phone, div, country);
 
            Schedule.addCustomer(newCustomer);
         }
@@ -286,13 +288,13 @@ public class UserDashboardController implements Initializable {
     public void updateAppointment(ActionEvent event) throws IOException {
         AppointmentUpdateController updateController;
         Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
-        FXMLLoader productFormLoader = new FXMLLoader(getClass().getResource("../view/appointment-update-form.fxml"));
+        FXMLLoader appointmentFormLoader = new FXMLLoader(getClass().getResource("../view/appointment-update-form.fxml"));
 
         if (selectedAppointment == null) {
             Notification.noSelection("Update/Delete Appointment", "appointment");
         } else {
-            root = productFormLoader.load();
-            updateController = productFormLoader.getController();
+            root = appointmentFormLoader.load();
+            updateController = appointmentFormLoader.getController();
             updateController.setCurrentAppointment(selectedAppointment);
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -353,5 +355,23 @@ public class UserDashboardController implements Initializable {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void updateCustomer(ActionEvent event) throws IOException {
+        CustomerUpdateController updateController;
+        Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+        FXMLLoader customerFormLoader = new FXMLLoader(getClass().getResource("../view/customer-update-form.fxml"));
+
+        if (selectedCustomer == null) {
+            Notification.noSelection("Update/Delete Customer", "customer");
+        } else {
+            root = customerFormLoader.load();
+            updateController = customerFormLoader.getController();
+            updateController.setCurrentCustomer(selectedCustomer);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 }
