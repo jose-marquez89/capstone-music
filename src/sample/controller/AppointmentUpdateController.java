@@ -241,7 +241,7 @@ public class AppointmentUpdateController implements Initializable {
         return dateTimes;
     }
 
-    public PreparedStatement newAppointmentQuery(LocalDateTime start, LocalDateTime end) throws SQLException {
+    public PreparedStatement updateAppointmentQuery(LocalDateTime start, LocalDateTime end) throws SQLException {
         PreparedStatement ps;
         String query;
         String title = titleField.getText();
@@ -314,7 +314,7 @@ public class AppointmentUpdateController implements Initializable {
         DBConnector.connect();
 
         try {
-            newAppt = newAppointmentQuery(dateTimes[0], dateTimes[1]);
+            newAppt = updateAppointmentQuery(dateTimes[0], dateTimes[1]);
         } catch (NullPointerException npe) {
             Notification.unfilledContacts();
             return;
