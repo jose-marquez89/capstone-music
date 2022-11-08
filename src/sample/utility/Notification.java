@@ -3,6 +3,21 @@ package sample.utility;
 import javafx.scene.control.Alert;
 
 public class Notification {
+    public static void customerDeleteConfirmation(String customerName) {
+        Alert customerDeleted = new Alert(Alert.AlertType.INFORMATION);
+
+        customerDeleted.setTitle("Update/Delete Customer");
+        customerDeleted.setContentText(String.format("Customer %s has been deleted.", customerName));
+        customerDeleted.show();
+
+    }
+    public static void customerHasAppointments() {
+        Alert apptAlert = new Alert(Alert.AlertType.WARNING);
+
+        apptAlert.setTitle("Update/Delete Customer");
+        apptAlert.setContentText("You must delete all of this customer's appointments before attempting to delete.");
+        apptAlert.show();
+    }
     public static void noSelection(String title, String selectionObjectType) {
         Alert noSelectionAlert = new Alert(Alert.AlertType.INFORMATION);
 
