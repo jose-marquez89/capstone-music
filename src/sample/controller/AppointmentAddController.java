@@ -202,7 +202,6 @@ public class AppointmentAddController implements Initializable {
     }
 
     public void save(ActionEvent event) throws SQLException, IOException {
-        // TODO: validate appointment time params
         PreparedStatement newAppt;
         boolean correctForm, correctPlacement, withinBusinessHours;
         LocalDateTime[] dateTimes;
