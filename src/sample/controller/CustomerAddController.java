@@ -12,14 +12,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.dao.DBConnector;
+import sample.dao.Query;
 import sample.utility.Country;
 import sample.utility.DisplayLocations;
 import sample.utility.Division;
 import sample.utility.Location;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
@@ -27,6 +33,11 @@ import java.util.stream.Stream;
 public class CustomerAddController implements Initializable {
     @FXML private ComboBox<Location> countrySelector;
     @FXML private ComboBox<Location> divisionSelector;
+    @FXML private TextField nameField;
+    @FXML private TextField addressField;
+    @FXML private TextField postalCodeField;
+    @FXML private TextField phoneField;
+
     private ObservableList<Division> divisionContainer = FXCollections.observableArrayList();
     private Parent root;
     private Scene scene;
@@ -77,5 +88,38 @@ public class CustomerAddController implements Initializable {
         stage.setX(100.0);
         stage.setY(50.0);
         stage.show();
+    }
+
+    public PreparedStatement newCustomerQuery() throws SQLException {
+        PreparedStatement ps;
+        int divisionId;
+        String name, address, postalCode, phone, query;
+
+        name = nameField.getText();
+        address = addressField.getText();
+        postalCode = postalCodeField.getText();
+        phone = phoneField.getText();
+        divisionId = divisionSelector.getValue().getId();
+
+        query = """
+                INSERT INTO customers (customer_name, address, postal_code, phone, division_id)
+                VALUES (?, ?, ?, ?, ?);
+                """;
+
+        ps = Query.pendingStatement(query);
+        ps.setString(1, name);
+        ps.setString(2, address);
+        ps.setString(3, postalCode);
+        ps.setString(4, phone);
+        ps.setInt(5, divisionId);
+
+        return ps;
+    }
+
+    public void save(ActionEvent event) throws SQLException, IOException {
+        DBConnector.connect();
+        newCustomerQuery().executeUpdate();
+        DBConnector.closeConnection();
+        mainFormRedirect(event);
     }
 }
