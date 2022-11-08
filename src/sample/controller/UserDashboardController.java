@@ -327,6 +327,7 @@ public class UserDashboardController implements Initializable {
                 DELETE FROM appointments
                 WHERE appointment_id = %s;
                 """, userSelection.getId());
+
         String areYouSureMessage = String.format("Are you sure you want to cancel this appointment?\nID: %d\nType: %s", apptId, apptType);
         String confirmationMessage = String.format("Appointment ID %d of type '%s' has been cancelled.", apptId, apptType);
         Alert confirmAction = new Alert(AlertType.CONFIRMATION);
@@ -373,5 +374,47 @@ public class UserDashboardController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    public void deleteCustomer() throws SQLException {
+        Optional<ButtonType> result;
+        List<Appointment> appts;
+        Stream<Appointment> appointmentStream = Schedule.getAppointments().stream();
+        Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+        Alert confirmDelete = new Alert(AlertType.CONFIRMATION);
+
+
+        if (selectedCustomer == null) {
+            Notification.noSelection("Update/Delete Customer", "customer");
+            return;
+        }
+
+        confirmDelete.setTitle("Update/Delete Customer");
+        confirmDelete.setContentText(String.format(
+                "Are you sure you want to delete the customer %s?", selectedCustomer.getName()));
+
+        String deleteCustomerQuery = String.format("""
+                DELETE FROM customers
+                WHERE customer_id = %d;
+                """, selectedCustomer.getId());
+
+        appts = appointmentStream.filter(a -> a.getCustomerId() == selectedCustomer.getId()).toList();
+
+        if (appts.size() > 0) {
+            Notification.customerHasAppointments();
+        } else {
+            result = confirmDelete.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                DBConnector.connect();
+                Query.runUpdate(deleteCustomerQuery);
+                DBConnector.closeConnection();
+                Notification.customerDeleteConfirmation(selectedCustomer.getName());
+                populateCustomers();
+            }
+        }
+
+
+
+
     }
 }
