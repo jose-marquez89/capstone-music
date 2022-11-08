@@ -7,7 +7,7 @@ public class Notification {
         Alert noSelectionAlert = new Alert(Alert.AlertType.INFORMATION);
 
         noSelectionAlert.setTitle(title);
-        noSelectionAlert.setContentText(String.format("You must select an %s first.", selectionObjectType));
+        noSelectionAlert.setContentText(String.format("You must select the %s you would like to update.", selectionObjectType));
         noSelectionAlert.show();
     }
     public static void unfilledDate() {
