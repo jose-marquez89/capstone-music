@@ -3,9 +3,12 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -16,111 +19,202 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane layoutX="0" layoutY="0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1111.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.UserDashboardController">
-   <children>
-      <Label layoutX="50.0" layoutY="380.0" text="Customers">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <VBox fx:id="customersVbox" layoutX="48.0" layoutY="428.0" prefHeight="276.0" prefWidth="1025.0">
-         <children>
-            <TableView fx:id="customerTable" prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TableColumn fx:id="customerIdCol" prefWidth="131.0" text="ID" />
-                  <TableColumn fx:id="customerNameCol" prefWidth="172.0" text="Name" />
-                  <TableColumn fx:id="customerAddressCol" prefWidth="162.0" text="Address" />
-                  <TableColumn fx:id="postalCodeCol" prefWidth="140.0" text="Postal Code" />
-                  <TableColumn fx:id="phoneNumberCol" prefWidth="173.0" text="Phone Number" />
-                  <TableColumn fx:id="customerDivisionCol" prefWidth="139.0" text="FL Division" />
-                <TableColumn fx:id="customerDivCountryCol" prefWidth="107.0" text="Country" />
-              </columns>
-            </TableView>
-            <HBox prefHeight="72.0" prefWidth="963.0" spacing="10.0">
+<TabPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.UserDashboardController">
+   <tabs>
+      <Tab closable="false" text="Editor">
+         <content>
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1111.0">
                <children>
-                  <Separator opacity="0.0" orientation="VERTICAL" prefHeight="44.0" prefWidth="771.0" />
-                  <Button fx:id="addCustomerBtn" onAction="#addCustomer" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Add" />
-                  <Button fx:id="updateCustomerBtn" onAction="#updateCustomer"  mnemonicParsing="false" prefHeight="25.0" prefWidth="110.0" text="Update" />
-                  <Button fx:id="deleteCustomerBtn" onAction="#deleteCustomer" mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Delete" />
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="10.0" top="10.0" />
-               </padding>
-            </HBox>
-         </children>
-      </VBox>
-      <VBox fx:id="apptVbox" layoutX="50.0" layoutY="92.0" prefHeight="274.0" prefWidth="1025.0">
-         <children>
-            <TableView fx:id="appointmentTable" prefHeight="276.0" prefWidth="963.0">
-               <columns>
-                  <TableColumn fx:id="apptIdCol" prefWidth="31.0" text="ID" />
-                  <TableColumn fx:id="apptTitleCol" prefWidth="103.0" text="Title" />
-                  <TableColumn fx:id="apptDescriptionCol" prefWidth="154.0" text="Description" />
-                  <TableColumn fx:id="apptLocationCol" prefWidth="90.0" text="Location" />
-                  <TableColumn fx:id="apptContactCol" prefWidth="97.0" text="Contact" />
-                  <TableColumn fx:id="apptTypeCol" prefWidth="121.0" text="Type" />
-                  <TableColumn fx:id="apptStartCol" prefWidth="136.0" text="Start" />
-                  <TableColumn fx:id="apptEndCol" prefWidth="138.0" text="End" />
-                  <TableColumn fx:id="apptCustomerIdCol" prefWidth="92.0" text="Customer ID" />
-                  <TableColumn fx:id="apptUserIdCol" prefWidth="59.0" text="User ID" />
-               </columns>
-            </TableView>
-            <HBox prefHeight="45.0" prefWidth="925.0" spacing="10.0">
-               <children>
-                  <Label prefHeight="17.0" prefWidth="58.0" text="View:" />
-                  <Group>
+                  <Label layoutX="50.0" layoutY="380.0" text="Customers">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <VBox fx:id="customersVbox" layoutX="48.0" layoutY="428.0" prefHeight="276.0" prefWidth="1025.0">
                      <children>
-                        <RadioButton fx:id="allViewRadio" layoutX="-4.0" mnemonicParsing="false" onAction="#seeAllAppointments" prefHeight="18.0" prefWidth="49.0" selected="true" text="All">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="viewGroup" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="weeklyViewRadio" layoutX="81.0" mnemonicParsing="false" onAction="#seeWeeklyAppointments" prefHeight="18.0" prefWidth="72.0" text="Weekly">
-                           <toggleGroup>
-                              <fx:reference source="viewGroup" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton fx:id="monthlyViewRadio" layoutX="184.0" layoutY="1.0" mnemonicParsing="false" onAction="#seeMonthlyAppointments" prefHeight="18.0" prefWidth="82.0" text="Monthly">
-                           <toggleGroup>
-                              <fx:reference source="viewGroup" />
-                           </toggleGroup>
-                        </RadioButton>
+                        <TableView fx:id="customerTable" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn fx:id="customerIdCol" prefWidth="131.0" text="ID" />
+                              <TableColumn fx:id="customerNameCol" prefWidth="172.0" text="Name" />
+                              <TableColumn fx:id="customerAddressCol" prefWidth="162.0" text="Address" />
+                              <TableColumn fx:id="postalCodeCol" prefWidth="140.0" text="Postal Code" />
+                              <TableColumn fx:id="phoneNumberCol" prefWidth="173.0" text="Phone Number" />
+                              <TableColumn fx:id="customerDivisionCol" prefWidth="139.0" text="FL Division" />
+                            <TableColumn fx:id="customerDivCountryCol" prefWidth="107.0" text="Country" />
+                          </columns>
+                        </TableView>
+                        <HBox prefHeight="72.0" prefWidth="963.0" spacing="10.0">
+                           <children>
+                              <Separator opacity="0.0" orientation="VERTICAL" prefHeight="44.0" prefWidth="771.0" />
+                              <Button fx:id="addCustomerBtn" mnemonicParsing="false" onAction="#addCustomer" prefHeight="25.0" prefWidth="111.0" text="Add" />
+                              <Button fx:id="updateCustomerBtn" mnemonicParsing="false" onAction="#updateCustomer" prefHeight="25.0" prefWidth="110.0" text="Update" />
+                              <Button fx:id="deleteCustomerBtn" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="25.0" prefWidth="82.0" text="Delete" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
                      </children>
-                  </Group>
-                  <Separator opacity="0.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="403.0" />
-                  <Button fx:id="addApptBtn" mnemonicParsing="false" onAction="#addAppointment" prefHeight="25.0" prefWidth="111.0" text="Add" />
-                  <Button fx:id="updateApptBtn" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="25.0" prefWidth="110.0" text="Modify" />
-                  <Button fx:id="deleteApptBtn" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="82.0" text="Delete" />
+                  </VBox>
+                  <VBox fx:id="apptVbox" layoutX="50.0" layoutY="92.0" prefHeight="274.0" prefWidth="1025.0">
+                     <children>
+                        <TableView fx:id="appointmentTable" prefHeight="276.0" prefWidth="963.0">
+                           <columns>
+                              <TableColumn fx:id="apptIdCol" prefWidth="31.0" text="ID" />
+                              <TableColumn fx:id="apptTitleCol" prefWidth="103.0" text="Title" />
+                              <TableColumn fx:id="apptDescriptionCol" prefWidth="154.0" text="Description" />
+                              <TableColumn fx:id="apptLocationCol" prefWidth="90.0" text="Location" />
+                              <TableColumn fx:id="apptContactCol" prefWidth="97.0" text="Contact" />
+                              <TableColumn fx:id="apptTypeCol" prefWidth="121.0" text="Type" />
+                              <TableColumn fx:id="apptStartCol" prefWidth="136.0" text="Start" />
+                              <TableColumn fx:id="apptEndCol" prefWidth="138.0" text="End" />
+                              <TableColumn fx:id="apptCustomerIdCol" prefWidth="92.0" text="Customer ID" />
+                              <TableColumn fx:id="apptUserIdCol" prefWidth="59.0" text="User ID" />
+                           </columns>
+                        </TableView>
+                        <HBox prefHeight="45.0" prefWidth="925.0" spacing="10.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="58.0" text="View:" />
+                              <Group>
+                                 <children>
+                                    <RadioButton fx:id="allViewRadio" layoutX="-4.0" mnemonicParsing="false" onAction="#seeAllAppointments" prefHeight="18.0" prefWidth="49.0" selected="true" text="All">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="viewGroup" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="weeklyViewRadio" layoutX="81.0" mnemonicParsing="false" onAction="#seeWeeklyAppointments" prefHeight="18.0" prefWidth="72.0" text="Weekly">
+                                       <toggleGroup>
+                                          <fx:reference source="viewGroup" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="monthlyViewRadio" layoutX="184.0" layoutY="1.0" mnemonicParsing="false" onAction="#seeMonthlyAppointments" prefHeight="18.0" prefWidth="82.0" text="Monthly">
+                                       <toggleGroup>
+                                          <fx:reference source="viewGroup" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                 </children>
+                              </Group>
+                              <Separator opacity="0.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="403.0" />
+                              <Button fx:id="addApptBtn" mnemonicParsing="false" onAction="#addAppointment" prefHeight="25.0" prefWidth="111.0" text="Add" />
+                              <Button fx:id="updateApptBtn" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="25.0" prefWidth="110.0" text="Modify" />
+                              <Button fx:id="deleteApptBtn" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="82.0" text="Delete" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Label layoutX="47.0" layoutY="46.0" text="Appointments">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox layoutX="810.0" layoutY="41.0" prefHeight="37.0" prefWidth="264.0" spacing="10.0">
+                     <children>
+                        <ImageView fx:id="logInAlertImage" fitHeight="30.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@green-clock-smaller.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="4.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label fx:id="logInAlertText" prefHeight="59.0" prefWidth="231.0" text="There are no appointments starting within 15 minutes" wrapText="true" />
+                     </children>
+                  </HBox>
                </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin>
-               <padding>
-                  <Insets bottom="10.0" top="10.0" />
-               </padding>
-            </HBox>
-         </children>
-      </VBox>
-      <Label layoutX="47.0" layoutY="46.0" text="Appointments">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <HBox layoutX="810.0" layoutY="41.0" prefHeight="37.0" prefWidth="264.0" spacing="10.0">
-         <children>
-            <ImageView fx:id="logInAlertImage" fitHeight="30.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@green-clock-smaller.png" />
-               </image>
-               <HBox.margin>
-                  <Insets top="4.0" />
-               </HBox.margin>
-            </ImageView>
-            <Label fx:id="logInAlertText" prefHeight="59.0" prefWidth="231.0" text="There are no appointments starting within 15 minutes" wrapText="true" />
-         </children>
-      </HBox>
-   </children>
-</AnchorPane>
+            </AnchorPane>
+         </content>
+      </Tab>
+      <Tab closable="false" onSelectionChanged="#refreshReports" text="Reports">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="40.0" layoutY="381.0" text="Reports">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <HBox layoutX="40.0" layoutY="416.0" prefHeight="253.0" prefWidth="1031.0" spacing="10.0">
+                     <children>
+                        <VBox prefHeight="135.0" prefWidth="343.0" spacing="5.0">
+                           <children>
+                              <Label text="Appointments by Type" />
+                              <TableView fx:id="apptsByType" prefHeight="200.0" prefWidth="308.0">
+                                <columns>
+                                  <TableColumn fx:id="byTypeNameCol" prefWidth="170.1597557067871" text="Type" />
+                                  <TableColumn fx:id="byTypeAmountCol" prefWidth="165.0" text="No. Appts." />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="135.0" prefWidth="343.0" spacing="5.0">
+                           <children>
+                              <Label text="Appointments by Month">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <TableView fx:id="apptsByMonth" prefHeight="197.0" prefWidth="291.0">
+                                <columns>
+                                  <TableColumn fx:id="byMonthNameCol" prefWidth="169.0" text="Month" />
+                                  <TableColumn fx:id="byMonthAmountCol" minWidth="0.0" prefWidth="167.0" text="No. Appts." />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="167.0" prefWidth="343.0" spacing="5.0">
+                           <children>
+                              <Label text="Customers by Country">
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Label>
+                              <TableView fx:id="customersByCountry" prefHeight="200.0" prefWidth="296.0">
+                                <columns>
+                                  <TableColumn fx:id="byCountryNameCol" prefWidth="175.50299072265625" text="Country" />
+                                  <TableColumn fx:id="byCountryAmountCol" prefWidth="160.0" text="Customers" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <VBox fx:id="scheduleVBox" layoutX="40.0" layoutY="32.0" prefHeight="331.0" prefWidth="1028.0" spacing="10.0">
+                     <children>
+                        <Label text="Schedule">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="34.0" prefWidth="1031.0" spacing="10.0">
+                           <children>
+                              <Label text="Contact:" />
+                              <ComboBox fx:id="contactSelector" onAction="#seeContactSchedule" prefWidth="150.0" />
+                           </children>
+                        </HBox>
+                        <TableView fx:id="scheduleTable" prefHeight="293.0" prefWidth="1028.0">
+                          <columns>
+                              <TableColumn fx:id="scheduleApptIdCol" prefWidth="128.29575729370117" text="Appt. ID" />
+                            <TableColumn fx:id="scheduleTitleCol" prefWidth="199.7042236328125" text="Title" />
+                            <TableColumn fx:id="scheduleTypeCol" prefWidth="118.02976989746094" text="Type" />
+                              <TableColumn fx:id="scheduleDescriptionCol" prefWidth="153.0889892578125" text="Description" />
+                              <TableColumn fx:id="scheduleStartCol" prefWidth="163.57424926757812" text="Start" />
+                              <TableColumn fx:id="scheduleEndCol" prefWidth="169.66900634765625" text="End" />
+                              <TableColumn fx:id="scheduleCustomerIdCol" minWidth="0.0953369140625" prefWidth="96.7637939453125" text="Customer ID" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </children></AnchorPane>
+        </content>
+      </Tab>
+   </tabs>
+</TabPane>
