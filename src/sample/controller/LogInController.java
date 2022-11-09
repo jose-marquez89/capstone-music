@@ -13,6 +13,7 @@ import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Schedule;
 import sample.model.User;
+import sample.utility.LogInLogger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -92,12 +93,14 @@ public class LogInController implements Initializable {
                 stage.show();
 
                 DBConnector.closeConnection();
+                LogInLogger.getLogger().info("Login succeeded for user candidate: " + candidateUname);
 
                 return;
             }
         }
 
         DBConnector.closeConnection();
+        LogInLogger.getLogger().info("Login failed for user candidate: " + candidateUname);
         badLogin.show();
     }
 }
