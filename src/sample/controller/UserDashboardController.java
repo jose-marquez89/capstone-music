@@ -17,27 +17,29 @@ import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Appointment;
+import sample.model.Contact;
 import sample.model.Customer;
 import sample.model.Schedule;
 
 import javafx.event.ActionEvent;
+import sample.utility.DisplayContacts;
 import sample.utility.Notification;
+import sample.utility.ReportItem;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.stream.Stream;
 
 public class UserDashboardController implements Initializable {
+    @FXML private ComboBox<Contact> contactSelector;
     @FXML private TableView<Customer> customerTable;
     @FXML private TableView<Appointment> appointmentTable;
     @FXML private TableColumn<Customer, Integer> customerIdCol;
@@ -57,9 +59,30 @@ public class UserDashboardController implements Initializable {
     @FXML private TableColumn<Appointment, String> apptTypeCol;
     @FXML private TableColumn<Appointment, LocalDateTime> apptStartCol;
     @FXML private TableColumn<Appointment, LocalDateTime> apptEndCol;
+    @FXML private TableView<Appointment> scheduleTable;
+    @FXML private TableView<ReportItem> apptsByType;
+    @FXML private TableView<ReportItem> apptsByMonth;
+    @FXML private TableView<ReportItem> customersByCountry;
+    @FXML private TableColumn<Appointment, Integer> scheduleApptIdCol;
+    @FXML private TableColumn<Appointment, String> scheduleTitleCol;
+    @FXML private TableColumn<Appointment, String> scheduleTypeCol;
+    @FXML private TableColumn<Appointment, String> scheduleDescriptionCol;
+    @FXML private TableColumn<Appointment, LocalDateTime> scheduleStartCol;
+    @FXML private TableColumn<Appointment, LocalDateTime> scheduleEndCol;
+    @FXML private TableColumn<Appointment, Integer> scheduleCustomerIdCol;
+    @FXML private TableColumn<ReportItem, String> byTypeNameCol;
+    @FXML private TableColumn<ReportItem, Integer> byTypeAmountCol;
+    @FXML private TableColumn<ReportItem, String> byMonthNameCol;
+    @FXML private TableColumn<ReportItem, Integer> byMonthAmountCol;
+    @FXML private TableColumn<ReportItem, String> byCountryNameCol;
+    @FXML private TableColumn<ReportItem, Integer> byCountryAmountCol;
     @FXML private Label logInAlertText;
     @FXML private ImageView logInAlertImage;
-    private ObservableList<Appointment> appointmentsContainer = FXCollections.observableArrayList();
+    @FXML private ObservableList<Appointment> appointmentsContainer = FXCollections.observableArrayList();
+    @FXML private ObservableList<Appointment> scheduleContainer = FXCollections.observableArrayList();
+    @FXML private ObservableList<ReportItem> typeReportContainer = FXCollections.observableArrayList();
+    @FXML private ObservableList<ReportItem> monthReportContainer = FXCollections.observableArrayList();
+    @FXML private ObservableList<ReportItem> countryReportContainer = FXCollections.observableArrayList();
     private String appointmentMessage;
     private Parent root;
     private Scene scene;
@@ -96,31 +119,31 @@ public class UserDashboardController implements Initializable {
         apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        apptStartCol.setCellFactory(cell -> new TableCell<Appointment, LocalDateTime>() {
-            @Override
-            protected void updateItem(LocalDateTime dt, boolean empty) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
-                super.updateItem(dt, empty);
-                if (empty) {
-                    setText(null);
-                } else {
-                    setText(formatter.format(dt));
-                }
-            }
-        });
+        // schedule table columns
+        scheduleApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+        scheduleCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        scheduleTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+        scheduleDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+        scheduleTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+        scheduleStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        scheduleEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        apptEndCol.setCellFactory(cell -> new TableCell<Appointment, LocalDateTime>() {
-            @Override
-            protected void updateItem(LocalDateTime dt, boolean empty) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
-                super.updateItem(dt, empty);
-                if (empty) {
-                    setText(null);
-                } else {
-                    setText(formatter.format(dt));
-                }
-            }
-        });
+        // by type report columns
+        byTypeNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        byTypeAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+        // by month report columns
+        byMonthNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        byMonthAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+        // by country customer report columns
+        byCountryNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        byCountryAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+        formatDateCol(apptStartCol);
+        formatDateCol(apptEndCol);
+        formatDateCol(scheduleStartCol);
+        formatDateCol(scheduleEndCol);
 
         try {
             populateCustomers();
@@ -129,9 +152,33 @@ public class UserDashboardController implements Initializable {
             throw new RuntimeException(e);
         }
 
+        contactSelector.getItems().addAll(DisplayContacts.getContacts());
         appointmentsContainer.addAll(Schedule.getAppointments());
+        scheduleContainer.addAll(Schedule.getAppointments());
         customerTable.setItems(Schedule.getCustomers());
         appointmentTable.setItems(appointmentsContainer);
+        scheduleTable.setItems(scheduleContainer);
+        apptsByType.setItems(typeReportContainer);
+        apptsByMonth.setItems(monthReportContainer);
+        customersByCountry.setItems(countryReportContainer);
+
+
+        contactSelector.setCellFactory(cell -> new ListCell<Contact>() {
+            @Override
+            protected void updateItem(Contact c, boolean empty) {
+                super.updateItem(c, empty);
+                setText(empty ? null : c.getName());
+            }
+        });
+
+        contactSelector.setButtonCell(new ListCell<Contact>() {
+            @Override
+            protected void updateItem(Contact c, boolean empty) {
+                super.updateItem(c, empty);
+                setText(empty ? null : c.getName());
+            }
+        });
+
 
         if (ChronoUnit.MINUTES.between(logInDateTime.toLocalTime(), LocalDateTime.now()) > -15) {
             nearbyApptsStream = Schedule.getAppointments().stream();
@@ -164,7 +211,21 @@ public class UserDashboardController implements Initializable {
             logInAlertImage.setVisible(false);
             logInAlertText.setVisible(false);
         }
+    }
 
+    public void formatDateCol(TableColumn col) {
+        col.setCellFactory(cell -> new TableCell<Appointment, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime dt, boolean empty) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy h:mm a");
+                super.updateItem(dt, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(formatter.format(dt));
+                }
+            }
+        });
     }
 
     public void populateCustomers() throws SQLException {
@@ -283,6 +344,15 @@ public class UserDashboardController implements Initializable {
         apptsStream
                 .filter(a -> a.getStart().getMonthValue() == currentMonth)
                 .forEach(a -> appointmentsContainer.add(a));
+    }
+
+    public void seeContactSchedule(ActionEvent event) {
+        Contact selectedContact = contactSelector.getValue();
+        Stream<Appointment> apptsStream = Schedule.getAppointments().stream();
+        scheduleContainer.clear();
+        apptsStream
+                .filter(a -> a.getContactId() == selectedContact.getId())
+                .forEach(a -> scheduleContainer.add(a));
     }
 
     public void updateAppointment(ActionEvent event) throws IOException {
@@ -412,9 +482,82 @@ public class UserDashboardController implements Initializable {
                 populateCustomers();
             }
         }
+    }
 
+    public void populateReportTable(ObservableList reportContainer, String query) throws SQLException {
+        String name;
+        int amount;
+        ResultSet results;
+        DBConnector.connect();
+        Query.runQuery(query);
+        results = Query.getResults();
 
+        reportContainer.clear();
 
+        while (results.next()) {
+            name = results.getString("name");
+            amount = results.getInt("amount");
+            ReportItem monthCount = new ReportItem(name, amount);
+            reportContainer.add(monthCount);
+        }
+        DBConnector.closeConnection();
+    }
 
+    public void refreshReports() throws SQLException {
+        String typeQuery, monthQuery, customersQuery;
+        Contact defaultContact = contactSelector.getItems().get(0);
+        contactSelector.setValue(defaultContact);
+        seeContactSchedule(new ActionEvent());
+
+        typeQuery = """
+                WITH raw AS (
+                    SELECT
+                        type AS name,
+                        COUNT(appointment_id) AS amount
+                    FROM appointments
+                    GROUP BY type 
+                )
+                
+                SELECT name, amount
+                FROM raw;
+                """;
+
+        monthQuery = """
+                WITH raw AS (
+                    SELECT
+                        MONTH(start) AS month_num,
+                        MONTHNAME(start) AS name,
+                        COUNT(appointment_id) AS amount
+                    FROM appointments
+                    GROUP BY MONTH(start), MONTHNAME(start)
+                    ORDER BY MONTH(start)
+                )
+                
+                SELECT name, amount
+                FROM raw;
+                """;
+        customersQuery = """
+                WITH base AS (
+                	SELECT cy.country, cs.customer_id
+                	FROM customers AS cs
+                	JOIN first_level_divisions AS d ON cs.division_id = d.division_id
+                	JOIN countries AS cy ON d.country_id = cy.country_id
+                ),
+                                
+                raw AS (
+                	SELECT
+                		country AS name,
+                		COUNT(customer_id) AS amount
+                	FROM base
+                	GROUP BY name
+                )
+                                
+                SELECT name, amount
+                FROM raw;
+                """;
+
+        populateReportTable(typeReportContainer, typeQuery);
+        populateReportTable(monthReportContainer, monthQuery);
+        populateReportTable(countryReportContainer, customersQuery);
     }
 }
