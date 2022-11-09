@@ -13,10 +13,7 @@ import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Contact;
 import sample.model.Schedule;
-import sample.utility.AppointmentValidator;
-import sample.utility.DisplayMinutes;
-import sample.utility.Minute;
-import sample.utility.Notification;
+import sample.utility.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -92,13 +89,7 @@ public class AppointmentAddController implements Initializable {
             }
 
             // populate contact names
-            Query.runQuery("SELECT * FROM contacts;");
-            results = Query.getResults();
-
-            while (results.next()) {
-                Contact newContact = new Contact(results.getInt("contact_id"), results.getString("contact_name"));
-                contactSelector.getItems().add(newContact);
-            }
+            contactSelector.getItems().addAll(DisplayContacts.getContacts());
 
             DBConnector.closeConnection();
         } catch (SQLException e) {
