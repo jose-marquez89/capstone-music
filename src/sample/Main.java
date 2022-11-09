@@ -8,6 +8,9 @@ import javafx.stage.Stage;
 import sample.utility.DisplayContacts;
 import sample.utility.DisplayLocations;
 import sample.utility.DisplayMinutes;
+import sample.utility.LogInLogger;
+
+import java.io.IOException;
 
 public class Main extends Application {
     @Override
@@ -16,6 +19,7 @@ public class Main extends Application {
         DisplayMinutes.initializeMinutes();
         DisplayLocations.initializeLocations();
         DisplayContacts.initializeContacts();
+        LogInLogger.initializeLogger();
 
         Parent root = FXMLLoader.load(getClass().getResource("view/log-in.fxml"));
         primaryStage.setTitle("Scheduler Pro");
@@ -24,8 +28,7 @@ public class Main extends Application {
         root.requestFocus();
     }
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         launch(args);
     }
 }
