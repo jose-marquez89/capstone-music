@@ -3,6 +3,15 @@ package sample.model;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+/**
+ * This class creates Appointment objects that allow for appoinment display
+ * across the application.
+ *
+ * Provides all the fields necessary to display and filter appointments in
+ * tables across the application.
+ *
+ * @author Jose Marquez
+ */
 public class Appointment {
     private int id;
     private String title;

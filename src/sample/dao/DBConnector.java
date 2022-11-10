@@ -2,6 +2,14 @@ package sample.dao;
 
 import java.sql.*;
 
+/**
+ * Creates connections to the MySQL database across
+ * the application.
+ *
+ * Opens and closes connections, and prepares statements for the Query class.
+ *
+ * @author Jose Marquez
+ */
 public class DBConnector {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/client_schedule?connectionTimeZone=SERVER";
     private static final String UNAME = "sqlUser";

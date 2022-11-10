@@ -26,6 +26,14 @@ import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 
+/**
+ * Controls the form responsible for adding appointments.
+ *
+ * Allows the addition of new appointments via a new form extending
+ * from the main user interface.
+ *
+ * @author Jose Marquez
+ */
 public class AppointmentAddController implements Initializable {
     @FXML private TextField titleField;
     @FXML private TextField locationField;
@@ -47,23 +55,6 @@ public class AppointmentAddController implements Initializable {
     private Scene scene;
     private Stage stage;
 
-    private void setMinuteDisplay(ComboBox box) {
-        box.setCellFactory(cell -> new ListCell<Minute>() {
-            @Override
-            protected void updateItem(Minute m, boolean empty) {
-                super.updateItem(m, empty);
-                setText(empty ? null : m.getTextMinute());
-            }
-        });
-
-        box.setButtonCell(new ListCell<Minute>() {
-            @Override
-            protected void updateItem(Minute m, boolean empty) {
-                super.updateItem(m, empty);
-                setText(empty ? null : m.getTextMinute());
-            }
-        });
-    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ResultSet results;
@@ -123,6 +114,24 @@ public class AppointmentAddController implements Initializable {
             }
         });
     }
+    private void setMinuteDisplay(ComboBox box) {
+        box.setCellFactory(cell -> new ListCell<Minute>() {
+            @Override
+            protected void updateItem(Minute m, boolean empty) {
+                super.updateItem(m, empty);
+                setText(empty ? null : m.getTextMinute());
+            }
+        });
+
+        box.setButtonCell(new ListCell<Minute>() {
+            @Override
+            protected void updateItem(Minute m, boolean empty) {
+                super.updateItem(m, empty);
+                setText(empty ? null : m.getTextMinute());
+            }
+        });
+    }
+
     public void mainFormRedirect(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -146,6 +155,7 @@ public class AppointmentAddController implements Initializable {
 
         return hour;
     }
+
     public LocalDateTime[] extractDateTimes() {
         LocalDateTime[] dateTimes = new LocalDateTime[2];
         int startHour = convertHour(startHourSelector.getValue(), startPeriodSelector.getValue());

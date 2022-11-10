@@ -3,6 +3,12 @@ package sample.model;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+/**
+ * An abstract class generally used to model people associated with
+ * the company appointments.
+ *
+ * @author Jose Marquez
+ */
 abstract public class Person {
     private int id;
     private String name;

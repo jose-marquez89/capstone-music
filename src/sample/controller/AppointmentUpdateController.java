@@ -27,6 +27,14 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controls the form responsible for updating customer appointments.
+ *
+ * Allows for the updating of appointment details, including start and
+ * end time.
+ *
+ * @author Jose Marquez
+ */
 public class AppointmentUpdateController implements Initializable {
     @FXML private TextField idField;
     @FXML private TextField titleField;

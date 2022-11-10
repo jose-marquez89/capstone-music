@@ -18,7 +18,7 @@ public class LogInLogger {
             System.out.println("Exception while setting logging properties: " + e.getMessage());
         }
 
-        loggingHandler = new FileHandler("logging_activity.txt", true);
+        loggingHandler = new FileHandler("login_activity.txt", true);
         loggingHandler.setFormatter(new SimpleFormatter());
         loginLogger.addHandler(loggingHandler);
         loginLogger.setLevel(Level.ALL);

@@ -30,6 +30,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+/**
+ * Controls the form responsible for adding new customers.
+ *
+ * Allows the addition of new customers via a new form extending
+ * out of the main user interface.
+ *
+ * @author Jose Marquez
+ */
 public class CustomerAddController implements Initializable {
     @FXML private ComboBox<Location> countrySelector;
     @FXML private ComboBox<Location> divisionSelector;

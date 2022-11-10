@@ -26,6 +26,15 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.time.ZoneId;
 
+/**
+ * Controls the form responsible for logging in authorized users.
+ *
+ * Allows authorized users to access the application via text entry of
+ * usernames and passwords. The controller also records all login attempts
+ * to the `login_activity.txt` file.
+ *
+ * @author Jose Marquez
+ */
 public class LogInController implements Initializable {
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;

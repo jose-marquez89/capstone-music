@@ -7,6 +7,14 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 
+/**
+ * Executes statements initiated by the DBConnector class.
+ *
+ * Provides methods used across the application to run and execute
+ * statements prepared via the DBConnector class.
+ *
+ * @author Jose Marquez
+ */
 public class Query {
     private static String query;
     private static Statement statement;

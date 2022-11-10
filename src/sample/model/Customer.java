@@ -1,8 +1,12 @@
 package sample.model;
 
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
+/**
+ * A class used to display existing customers across the application.
+ *
+ * @author Jose Marquez
+ */
 public class Customer extends Person {
     int divisionId;
     int countryId;

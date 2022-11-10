@@ -30,6 +30,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
+/**
+ * Controls the form responsible for updating existing customers.
+ *
+ * Allows for updating of existing customers in the application database.
+ *
+ * @author Jose Marquez
+ */
 public class CustomerUpdateController implements Initializable {
     @FXML private ComboBox<Location> countrySelector;
     @FXML private ComboBox<Location> divisionSelector;

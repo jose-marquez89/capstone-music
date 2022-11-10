@@ -38,6 +38,14 @@ import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.stream.Stream;
 
+/**
+ * Controls the main user interface form.
+ *
+ * Provides a controller for the main user interface as well
+ * as the additional reports and schedule.
+ *
+ * @author Jose Marquez
+ */
 public class UserDashboardController implements Initializable {
     @FXML private ComboBox<Contact> contactSelector;
     @FXML private TableView<Customer> customerTable;
