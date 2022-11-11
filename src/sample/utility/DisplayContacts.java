@@ -8,6 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Provides a container for contact display in several
+ * combo boxes in add/update forms.
+ *
+ * @author Jose Marquez
+ */
 public class DisplayContacts {
     private static ArrayList<Contact> contacts = new ArrayList<>();
 

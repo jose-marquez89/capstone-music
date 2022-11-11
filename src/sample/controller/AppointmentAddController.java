@@ -55,6 +55,17 @@ public class AppointmentAddController implements Initializable {
     private Scene scene;
     private Stage stage;
 
+    /**
+     * Initializes the components necessary to add an appointment to the database.
+     *
+     * Display of minutes and hours is initiated here for easy selection
+     * of time in 12-hour format. This method also sets the customer and
+     * user id's for display. Contacts are also initiated here for the purpose
+     * of display.
+     *
+     * @param url
+     * @param rb
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ResultSet results;
@@ -114,6 +125,18 @@ public class AppointmentAddController implements Initializable {
             }
         });
     }
+
+    /**
+     * A helper method to format the display of minutes in
+     * the appointment add form.
+     *
+     * Minutes are used in the application as integers, but
+     * for proper display, they are set to zero-padded minutes
+     * by overriding the updateItem methods in setCellFactory and
+     * setButtonCell. A lambda
+     *
+     * @param box the <code>ComboBox</code> to be formatted
+     */
     private void setMinuteDisplay(ComboBox box) {
         box.setCellFactory(cell -> new ListCell<Minute>() {
             @Override
@@ -132,6 +155,12 @@ public class AppointmentAddController implements Initializable {
         });
     }
 
+    /**
+     * Redirects users back to the main user interface.
+     *
+     * @param event
+     * @throws IOException
+     */
     public void mainFormRedirect(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -142,6 +171,13 @@ public class AppointmentAddController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Converts hours from 12 hour to 24 hour time.
+     *
+     * @param hour the integer hour selected in the user interface
+     * @param period the "AM" or "PM" string selected in the user interface
+     * @return an hour in 24-hour time represented by an integer
+     */
     public int convertHour(int hour, String period) {
         if (period == "AM") {
             if (hour == 12) {
@@ -156,6 +192,12 @@ public class AppointmentAddController implements Initializable {
         return hour;
     }
 
+    /**
+     * Creates a package (an array of two <code>LocalDateTime</code> objects) of
+     * datetimes for use in validation.
+     *
+     * @return an array of <code>LocalDateTime</code> objects
+     */
     public LocalDateTime[] extractDateTimes() {
         LocalDateTime[] dateTimes = new LocalDateTime[2];
         int startHour = convertHour(startHourSelector.getValue(), startPeriodSelector.getValue());
@@ -171,6 +213,14 @@ public class AppointmentAddController implements Initializable {
         return dateTimes;
     }
 
+    /**
+     * Creates the <code>PreparedStatement</code> query necessary to add a new appointment to the database.
+     *
+     * @param start the start datetime
+     * @param end the end datetime
+     * @return a <code>PreparedStatement</code> object
+     * @throws SQLException
+     */
     public PreparedStatement newAppointmentQuery(LocalDateTime start, LocalDateTime end) throws SQLException {
         PreparedStatement ps;
         String query;
@@ -202,6 +252,14 @@ public class AppointmentAddController implements Initializable {
         return ps;
     }
 
+    /**
+     * Commits the appointment adding query to the database once datetime
+     * values are validated.
+     *
+     * @param event the event caused by user interactions with user interface components
+     * @throws SQLException
+     * @throws IOException
+     */
     public void save(ActionEvent event) throws SQLException, IOException {
         PreparedStatement newAppt;
         boolean correctForm, correctPlacement, withinBusinessHours;

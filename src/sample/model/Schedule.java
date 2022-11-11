@@ -5,6 +5,14 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
+/**
+ * Models the schedule contained in the MySQL database.
+ *
+ * Provides static fields and methods used to access schedule
+ * elements across the application.
+ *
+ * @author Jose Marquez
+ */
 public class Schedule {
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
     private static ArrayList<Appointment> appointments = new ArrayList<Appointment>();

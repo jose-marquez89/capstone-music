@@ -1,5 +1,11 @@
 package sample.utility;
 
+/**
+ * Allows the creation of classes used to model
+ * different types of locations such as Country and Division.
+ *
+ * @author Jose Marquez
+ */
 abstract public class Location {
     private int id;
     private String name;

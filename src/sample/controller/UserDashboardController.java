@@ -22,11 +22,8 @@ import sample.model.Customer;
 import sample.model.Schedule;
 
 import javafx.event.ActionEvent;
-import sample.utility.DisplayContacts;
-import sample.utility.Notification;
-import sample.utility.ReportItem;
+import sample.utility.*;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -56,7 +53,6 @@ public class UserDashboardController implements Initializable {
     @FXML private TableColumn<Customer, String> postalCodeCol;
     @FXML private TableColumn<Customer, String> phoneNumberCol;
     @FXML private TableColumn<Customer, String> customerDivisionCol;
-    @FXML private TableColumn<Customer, String> customerDivCountryCol;
     @FXML private TableColumn<Appointment, Integer> apptIdCol;
     @FXML private TableColumn<Appointment, Integer> apptCustomerIdCol;
     @FXML private TableColumn<Appointment, Integer> apptUserIdCol;
@@ -68,9 +64,8 @@ public class UserDashboardController implements Initializable {
     @FXML private TableColumn<Appointment, LocalDateTime> apptStartCol;
     @FXML private TableColumn<Appointment, LocalDateTime> apptEndCol;
     @FXML private TableView<Appointment> scheduleTable;
-    @FXML private TableView<ReportItem> apptsByType;
-    @FXML private TableView<ReportItem> apptsByMonth;
-    @FXML private TableView<ReportItem> customersByCountry;
+    @FXML private TableView<MonthTypeRecord> apptsByTypeMonth;
+    @FXML private TableView<CountryRecord> customersByCountry;
     @FXML private TableColumn<Appointment, Integer> scheduleApptIdCol;
     @FXML private TableColumn<Appointment, String> scheduleTitleCol;
     @FXML private TableColumn<Appointment, String> scheduleTypeCol;
@@ -78,19 +73,17 @@ public class UserDashboardController implements Initializable {
     @FXML private TableColumn<Appointment, LocalDateTime> scheduleStartCol;
     @FXML private TableColumn<Appointment, LocalDateTime> scheduleEndCol;
     @FXML private TableColumn<Appointment, Integer> scheduleCustomerIdCol;
-    @FXML private TableColumn<ReportItem, String> byTypeNameCol;
-    @FXML private TableColumn<ReportItem, Integer> byTypeAmountCol;
-    @FXML private TableColumn<ReportItem, String> byMonthNameCol;
-    @FXML private TableColumn<ReportItem, Integer> byMonthAmountCol;
-    @FXML private TableColumn<ReportItem, String> byCountryNameCol;
-    @FXML private TableColumn<ReportItem, Integer> byCountryAmountCol;
+    @FXML private TableColumn<ReportRecord, String> byTypeNameCol;
+    @FXML private TableColumn<ReportRecord, String> byMonthNameCol;
+    @FXML private TableColumn<ReportRecord, Integer> byMonthAmountCol;
+    @FXML private TableColumn<ReportRecord, String> byCountryNameCol;
+    @FXML private TableColumn<ReportRecord, Integer> byCountryAmountCol;
     @FXML private Label logInAlertText;
     @FXML private ImageView logInAlertImage;
     @FXML private ObservableList<Appointment> appointmentsContainer = FXCollections.observableArrayList();
     @FXML private ObservableList<Appointment> scheduleContainer = FXCollections.observableArrayList();
-    @FXML private ObservableList<ReportItem> typeReportContainer = FXCollections.observableArrayList();
-    @FXML private ObservableList<ReportItem> monthReportContainer = FXCollections.observableArrayList();
-    @FXML private ObservableList<ReportItem> countryReportContainer = FXCollections.observableArrayList();
+    @FXML private ObservableList<MonthTypeRecord> monthTypeReportContainer = FXCollections.observableArrayList();
+    @FXML private ObservableList<CountryRecord> countryReportContainer = FXCollections.observableArrayList();
     private String appointmentMessage;
     private Parent root;
     private Scene scene;
@@ -113,7 +106,6 @@ public class UserDashboardController implements Initializable {
         postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phoneNumberCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("division"));
-        customerDivCountryCol.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         // appointment table columns
         apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -136,12 +128,10 @@ public class UserDashboardController implements Initializable {
         scheduleStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         scheduleEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
 
-        // by type report columns
-        byTypeNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        byTypeAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
         // by month report columns
         byMonthNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        byTypeNameCol.setCellValueFactory(new PropertyValueFactory<>("subName"));
         byMonthAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
         // by country customer report columns
@@ -166,8 +156,7 @@ public class UserDashboardController implements Initializable {
         customerTable.setItems(Schedule.getCustomers());
         appointmentTable.setItems(appointmentsContainer);
         scheduleTable.setItems(scheduleContainer);
-        apptsByType.setItems(typeReportContainer);
-        apptsByMonth.setItems(monthReportContainer);
+        apptsByTypeMonth.setItems(monthTypeReportContainer);
         customersByCountry.setItems(countryReportContainer);
 
 
@@ -489,7 +478,28 @@ public class UserDashboardController implements Initializable {
         }
     }
 
-    public void populateReportTable(ObservableList reportContainer, String query) throws SQLException {
+    public void populateMonthTypeTable(ObservableList<MonthTypeRecord> reportContainer, String query) throws SQLException {
+        String name, subName;
+        int amount;
+        ResultSet results;
+        DBConnector.connect();
+        Query.runQuery(query);
+        results = Query.getResults();
+
+        reportContainer.clear();
+
+        while (results.next()) {
+            name = results.getString("name");
+            subName = results.getString("sub_name");
+            amount = results.getInt("amount");
+            MonthTypeRecord record = new MonthTypeRecord(name, subName, amount);
+            reportContainer.add(record);
+        }
+
+        DBConnector.closeConnection();
+    }
+
+    public void populateCountryTable(ObservableList<CountryRecord> reportContainer, String query) throws SQLException {
         String name;
         int amount;
         ResultSet results;
@@ -502,45 +512,35 @@ public class UserDashboardController implements Initializable {
         while (results.next()) {
             name = results.getString("name");
             amount = results.getInt("amount");
-            ReportItem monthCount = new ReportItem(name, amount);
-            reportContainer.add(monthCount);
+            CountryRecord record = new CountryRecord(name, amount);
+            reportContainer.add(record);
         }
+
         DBConnector.closeConnection();
     }
 
     public void refreshReports() throws SQLException {
-        String typeQuery, monthQuery, customersQuery;
+        String monthTypeQuery, customersQuery;
         Contact defaultContact = contactSelector.getItems().get(0);
         contactSelector.setValue(defaultContact);
         seeContactSchedule(new ActionEvent());
 
-        typeQuery = """
-                WITH raw AS (
-                    SELECT
-                        type AS name,
-                        COUNT(appointment_id) AS amount
-                    FROM appointments
-                    GROUP BY type 
-                )
-                
-                SELECT name, amount
-                FROM raw;
-                """;
-
-        monthQuery = """
+        monthTypeQuery = """
                 WITH raw AS (
                     SELECT
                         MONTH(start) AS month_num,
                         MONTHNAME(start) AS name,
+                        type AS sub_name,
                         COUNT(appointment_id) AS amount
                     FROM appointments
-                    GROUP BY MONTH(start), MONTHNAME(start)
-                    ORDER BY MONTH(start)
+                    GROUP BY MONTH(start), MONTHNAME(start), type
+                    ORDER BY MONTH(start), COUNT(appointment_id) DESC
                 )
                 
-                SELECT name, amount
+                SELECT name, sub_name, amount
                 FROM raw;
                 """;
+
         customersQuery = """
                 WITH base AS (
                 	SELECT cy.country, cs.customer_id
@@ -561,8 +561,7 @@ public class UserDashboardController implements Initializable {
                 FROM raw;
                 """;
 
-        populateReportTable(typeReportContainer, typeQuery);
-        populateReportTable(monthReportContainer, monthQuery);
-        populateReportTable(countryReportContainer, customersQuery);
+        populateMonthTypeTable(monthTypeReportContainer, monthTypeQuery);
+        populateCountryTable(countryReportContainer, customersQuery);
     }
 }

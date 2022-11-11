@@ -2,6 +2,12 @@ package sample.utility;
 
 import javafx.scene.control.Alert;
 
+/**
+ * Provides several methods for use in creating
+ * alerts for different situations across the application.
+ *
+ * @author Jose Marquez
+ */
 public class Notification {
     public static void customerFieldsInvalid() {
         Alert invalidFields = new Alert(Alert.AlertType.ERROR);

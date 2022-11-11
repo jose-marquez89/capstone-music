@@ -7,6 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.*;
 
+/**
+ * Helps validate appointments in methods used in the dashboard
+ * controller.
+ *
+ * Provides methods to validate appointment times and dates.
+ *
+ * @author Jose Marquez
+ */
 public class AppointmentValidator {
     public static boolean validateStartEnd(LocalDateTime start, LocalDateTime end) {
         return start.isBefore(end);

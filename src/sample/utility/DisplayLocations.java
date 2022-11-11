@@ -9,6 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * Models locations such as country and division for
+ * use in combo box display across the application.
+ *
+ * @author Jose Marquez
+ */
 public class DisplayLocations {
     private static ArrayList<Country> countries = new ArrayList<Country>();
     private static ArrayList<Division> divisions = new ArrayList<Division>();

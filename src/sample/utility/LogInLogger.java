@@ -4,6 +4,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.*;
 
+/**
+ * Provides methods to record log-in successes and failures
+ * to a local text file.
+ *
+ * @author Jose Marquez
+ */
 public class LogInLogger {
     private static Logger loginLogger = Logger.getLogger("sample.main");
     private static FileHandler loggingHandler;
