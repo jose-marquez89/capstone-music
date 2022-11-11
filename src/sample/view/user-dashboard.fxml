@@ -32,15 +32,14 @@
                   </Label>
                   <VBox fx:id="customersVbox" layoutX="48.0" layoutY="428.0" prefHeight="276.0" prefWidth="1025.0">
                      <children>
-                        <TableView fx:id="customerTable" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="customerTable" prefHeight="200.0" prefWidth="878.0">
                           <columns>
-                            <TableColumn fx:id="customerIdCol" prefWidth="131.0" text="ID" />
-                              <TableColumn fx:id="customerNameCol" prefWidth="172.0" text="Name" />
-                              <TableColumn fx:id="customerAddressCol" prefWidth="162.0" text="Address" />
-                              <TableColumn fx:id="postalCodeCol" prefWidth="140.0" text="Postal Code" />
-                              <TableColumn fx:id="phoneNumberCol" prefWidth="173.0" text="Phone Number" />
-                              <TableColumn fx:id="customerDivisionCol" prefWidth="139.0" text="FL Division" />
-                            <TableColumn fx:id="customerDivCountryCol" prefWidth="107.0" text="Country" />
+                            <TableColumn fx:id="customerIdCol" prefWidth="115.0" text="ID" />
+                              <TableColumn fx:id="customerNameCol" prefWidth="169.0" text="Name" />
+                              <TableColumn fx:id="customerAddressCol" prefWidth="160.0" text="Address" />
+                              <TableColumn fx:id="postalCodeCol" prefWidth="141.0" text="Postal Code" />
+                              <TableColumn fx:id="phoneNumberCol" prefWidth="138.0" text="Phone Number" />
+                              <TableColumn fx:id="customerDivisionCol" prefWidth="154.0" text="Division" />
                           </columns>
                         </TableView>
                         <HBox prefHeight="72.0" prefWidth="963.0" spacing="10.0">
@@ -99,7 +98,7 @@
                               </Group>
                               <Separator opacity="0.0" orientation="VERTICAL" prefHeight="25.0" prefWidth="403.0" />
                               <Button fx:id="addApptBtn" mnemonicParsing="false" onAction="#addAppointment" prefHeight="25.0" prefWidth="111.0" text="Add" />
-                              <Button fx:id="updateApptBtn" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="25.0" prefWidth="110.0" text="Modify" />
+                              <Button fx:id="updateApptBtn" mnemonicParsing="false" onAction="#updateAppointment" prefHeight="25.0" prefWidth="110.0" text="Update" />
                               <Button fx:id="deleteApptBtn" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="82.0" text="Delete" />
                            </children>
                            <VBox.margin>
@@ -144,28 +143,18 @@
                   </Label>
                   <HBox layoutX="40.0" layoutY="416.0" prefHeight="253.0" prefWidth="1031.0" spacing="10.0">
                      <children>
-                        <VBox prefHeight="135.0" prefWidth="343.0" spacing="5.0">
-                           <children>
-                              <Label text="Appointments by Type" />
-                              <TableView fx:id="apptsByType" prefHeight="200.0" prefWidth="308.0">
-                                <columns>
-                                  <TableColumn fx:id="byTypeNameCol" prefWidth="170.1597557067871" text="Type" />
-                                  <TableColumn fx:id="byTypeAmountCol" prefWidth="165.0" text="No. Appts." />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </VBox>
-                        <VBox prefHeight="135.0" prefWidth="343.0" spacing="5.0">
+                        <VBox prefHeight="135.0" prefWidth="450.0" spacing="5.0">
                            <children>
                               <Label text="Appointments by Month">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
                               </Label>
-                              <TableView fx:id="apptsByMonth" prefHeight="197.0" prefWidth="291.0">
+                              <TableView fx:id="apptsByTypeMonth" prefHeight="197.0" prefWidth="298.0">
                                 <columns>
-                                  <TableColumn fx:id="byMonthNameCol" prefWidth="169.0" text="Month" />
-                                  <TableColumn fx:id="byMonthAmountCol" minWidth="0.0" prefWidth="167.0" text="No. Appts." />
+                                  <TableColumn fx:id="byMonthNameCol" prefWidth="127.0" text="Month" />
+                                    <TableColumn fx:id="byTypeNameCol" prefWidth="218.0" text="Type" />
+                                  <TableColumn fx:id="byMonthAmountCol" minWidth="0.0" prefWidth="103.0" text="No. Appts." />
                                 </columns>
                               </TableView>
                            </children>
