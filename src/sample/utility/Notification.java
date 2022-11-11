@@ -3,6 +3,13 @@ package sample.utility;
 import javafx.scene.control.Alert;
 
 public class Notification {
+    public static void customerFieldsInvalid() {
+        Alert invalidFields = new Alert(Alert.AlertType.ERROR);
+
+        invalidFields.setTitle("Add/Update Customer");
+        invalidFields.setContentText("One or more fields have no selection\nPlease make a selection or enter data for all fields.");
+        invalidFields.show();
+    }
     public static void customerDeleteConfirmation(String customerName) {
         Alert customerDeleted = new Alert(Alert.AlertType.INFORMATION);
 

@@ -17,10 +17,7 @@ import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Customer;
 import sample.model.Schedule;
-import sample.utility.Country;
-import sample.utility.DisplayLocations;
-import sample.utility.Division;
-import sample.utility.Location;
+import sample.utility.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -121,19 +118,16 @@ public class CustomerUpdateController implements Initializable {
         stage.show();
     }
 
-    public PreparedStatement newCustomerQuery() throws SQLException {
+    public PreparedStatement updateCustomerQuery(String name, String address, String postalCode,
+                                                 String phone, Location division) throws SQLException {
         PreparedStatement ps;
         int divisionId;
-        String name, address, postalCode, phone, query;
+        String query;
 
-        name = nameField.getText();
-        address = addressField.getText();
-        postalCode = postalCodeField.getText();
-        phone = phoneField.getText();
-        divisionId = divisionSelector.getValue().getId();
+        divisionId = division.getId();
 
         query = """
-                UPDATE customers 
+                UPDATE customers
                 SET customer_name = ?, address = ?, postal_code = ?, phone = ?,
                 division_id = ?, last_update=CURRENT_TIMESTAMP, last_updated_by=?
                 WHERE customer_id = ?
@@ -152,8 +146,33 @@ public class CustomerUpdateController implements Initializable {
     }
 
     public void save(ActionEvent event) throws SQLException, IOException {
+        String[] validationFields = new String[4];
+        String name, address, postalCode, phone;
+        Location division;
+
+        name = nameField.getText();
+        address = addressField.getText();
+        postalCode = postalCodeField.getText();
+        phone = phoneField.getText();
+        division = divisionSelector.getValue();
+
+        validationFields[0] = name;
+        validationFields[1] = address;
+        validationFields[2] = postalCode;
+        validationFields[3] = phone;
+
+        if (!CustomerValidator.validateTextFields(validationFields)) {
+            Notification.customerFieldsInvalid();
+            return;
+        }
+
+        if (!CustomerValidator.validateDivision(division)) {
+            Notification.customerFieldsInvalid();
+            return;
+        }
+
         DBConnector.connect();
-        newCustomerQuery().executeUpdate();
+        updateCustomerQuery(name, address, postalCode, phone, division).executeUpdate();
         DBConnector.closeConnection();
         mainFormRedirect(event);
     }

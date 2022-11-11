@@ -16,16 +16,16 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
-import sample.utility.Country;
-import sample.utility.DisplayLocations;
-import sample.utility.Division;
-import sample.utility.Location;
+import sample.model.Customer;
+import sample.model.Schedule;
+import sample.utility.*;
 
 import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
@@ -98,20 +98,17 @@ public class CustomerAddController implements Initializable {
         stage.show();
     }
 
-    public PreparedStatement newCustomerQuery() throws SQLException {
+    public PreparedStatement newCustomerQuery(String name, String address, String postalCode,
+                                              String phone, Location division) throws SQLException {
         PreparedStatement ps;
         int divisionId;
-        String name, address, postalCode, phone, query;
+        String query;
 
-        name = nameField.getText();
-        address = addressField.getText();
-        postalCode = postalCodeField.getText();
-        phone = phoneField.getText();
-        divisionId = divisionSelector.getValue().getId();
+        divisionId = division.getId();
 
         query = """
-                INSERT INTO customers (customer_name, address, postal_code, phone, division_id)
-                VALUES (?, ?, ?, ?, ?);
+                INSERT INTO customers (customer_name, address, postal_code, phone, division_id, created_by, last_updated_by)
+                VALUES (?, ?, ?, ?, ?, ?, ?);
                 """;
 
         ps = Query.pendingStatement(query);
@@ -120,13 +117,40 @@ public class CustomerAddController implements Initializable {
         ps.setString(3, postalCode);
         ps.setString(4, phone);
         ps.setInt(5, divisionId);
+        ps.setString(6, Schedule.getCurrentUser().getName());
+        ps.setString(7, Schedule.getCurrentUser().getName());
 
         return ps;
     }
 
     public void save(ActionEvent event) throws SQLException, IOException {
+        String[] validationFields = new String[4];
+        String name, address, postalCode, phone;
+        Location division;
+
+        name = nameField.getText();
+        address = addressField.getText();
+        postalCode = postalCodeField.getText();
+        phone = phoneField.getText();
+        division = divisionSelector.getValue();
+
+        validationFields[0] = name;
+        validationFields[1] = address;
+        validationFields[2] = postalCode;
+        validationFields[3] = phone;
+
+        if (!CustomerValidator.validateTextFields(validationFields)) {
+            Notification.customerFieldsInvalid();
+            return;
+        }
+
+        if (!CustomerValidator.validateDivision(division)) {
+            Notification.customerFieldsInvalid();
+            return;
+        }
+
         DBConnector.connect();
-        newCustomerQuery().executeUpdate();
+        newCustomerQuery(name, address, postalCode, phone, division).executeUpdate();
         DBConnector.closeConnection();
         mainFormRedirect(event);
     }

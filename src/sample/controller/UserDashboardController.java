@@ -197,9 +197,6 @@ public class UserDashboardController implements Initializable {
                     .sorted((a, b) -> a.getStart().compareTo(b.getStart()))
                     .toList();
 
-            Schedule.getAppointments().stream().forEach(a -> System.out.println("Start" + a.getStart().toString()));
-
-
             if (durations.isEmpty()) {
                 logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/green-clock-smaller.png")));
                 logInAlertText.setText("There are no upcoming appointments within 15 minutes");
