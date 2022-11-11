@@ -57,6 +57,12 @@ public class AppointmentUpdateController implements Initializable {
     private Scene scene;
     private Stage stage;
 
+    /**
+     * Initializes the components necessary to add an appointment to the database.
+     *
+     * @param box
+     * @see AppointmentAddController
+     */
     private void setMinuteDisplay(ComboBox box) {
         box.setCellFactory(cell -> new ListCell<Minute>() {
             @Override
@@ -74,6 +80,14 @@ public class AppointmentUpdateController implements Initializable {
             }
         });
     }
+
+    /**
+     * Redirects users back to the main user interface.
+     *
+     * @param url
+     * @param rb
+     * @see AppointmentAddController
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("Initializing appointment udpate form...");
@@ -137,9 +151,13 @@ public class AppointmentUpdateController implements Initializable {
         });
     }
 
+    /**
+     * Pre-populates the appointment update form with the currently
+     * selected appointment
+     *
+     * @param appt the appointment from which to extract details to populate the form
+     */
     public void setCurrentAppointment(Appointment appt) {
-        // TODO: make hours display in 12-hour time
-        System.out.println("Populating current appointment fields");
         Minute startMinute = null;
         Minute endMinute = null;
         int startHour = appt.getStart().getHour();
@@ -189,6 +207,13 @@ public class AppointmentUpdateController implements Initializable {
 
     }
 
+    /**
+     * Redirects users back to the main user interface.
+     *
+     * @param event
+     * @throws IOException
+     * @see AppointmentAddController
+     */
     public void mainFormRedirect(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -199,6 +224,16 @@ public class AppointmentUpdateController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Gets the 12-hour time period of the submitted hour.
+     *
+     * The user interface collects time in easy-to-read 12-hour time.
+     * This method allows the conversion of 24-hour time to 12-hour
+     * time by determining the period of a 24-hour time hour.
+     *
+     * @param hour
+     * @return "AM" or "PM" depending on the hour passed to the method
+     */
     public String getPeriod(int hour) {
         if (hour < 12) {
             return "AM";
@@ -207,6 +242,12 @@ public class AppointmentUpdateController implements Initializable {
         }
     }
 
+    /**
+     * Converts 24-hour time to 12-hour time for display on user interface.
+     *
+     * @param hour the integer hour passed from the user interface
+     * @return integer hour in 12-hour format
+     */
     public int convertFromTwentyFourHour(int hour) {
         if (hour > 12) {
             hour -= 12;
@@ -214,6 +255,14 @@ public class AppointmentUpdateController implements Initializable {
 
         return hour;
     }
+
+    /**
+     * Converts 12-hour integer hours to 24-hour time.
+     *
+     * @param hour the integer hour passed in from the user interface
+     * @param period the "AM" or "PM" period passed in from the user interface
+     * @return an integer hour in 24-hour format
+     */
     public int convertToTwentyFourHour(int hour, String period) {
         if (period == "AM") {
             if (hour == 12) {
@@ -227,6 +276,14 @@ public class AppointmentUpdateController implements Initializable {
 
         return hour;
     }
+
+    /**
+     * Creates a package (an array of two <code>LocalDateTime</code> objects) of
+     * datetimes for use in validation.
+     *
+     * @return an array of <code>LocalDateTime</code> objects
+     * @see AppointmentAddController
+     */
     public LocalDateTime[] extractDateTimes() {
         LocalDateTime[] dateTimes = new LocalDateTime[2];
         int startHour = convertToTwentyFourHour(startHourSelector.getValue(), startPeriodSelector.getValue());
@@ -242,6 +299,19 @@ public class AppointmentUpdateController implements Initializable {
         return dateTimes;
     }
 
+    /**
+     * Creates a <code>PreparedStatement</code> object to be passed to the
+     * <code>save</code> method.
+     *
+     * Takes the text field inputs modified by the user and uses them to
+     * create a <code>PreparedStatement</code> that will be saved if
+     * validation methods pass.
+     *
+     * @param start the start datetime
+     * @param end the end datetime
+     * @return a <code>PreparedStatement</code> object to be executed by the <code>save</code> method
+     * @throws SQLException
+     */
     public PreparedStatement updateAppointmentQuery(LocalDateTime start, LocalDateTime end) throws SQLException {
         PreparedStatement ps;
         String query;
@@ -277,8 +347,16 @@ public class AppointmentUpdateController implements Initializable {
         return ps;
     }
 
+    /**
+     * Commits the appointment adding query to the database once datetime
+     * values are validated.
+     *
+     * @param event
+     * @throws SQLException
+     * @throws IOException
+     * @see AppointmentAddController
+     */
     public void save(ActionEvent event) throws SQLException, IOException {
-        // TODO: validate appointment time params
         PreparedStatement newAppt;
         boolean correctForm, correctPlacement, withinBusinessHours;
         LocalDateTime[] dateTimes;

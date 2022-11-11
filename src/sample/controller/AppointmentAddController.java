@@ -133,7 +133,13 @@ public class AppointmentAddController implements Initializable {
      * Minutes are used in the application as integers, but
      * for proper display, they are set to zero-padded minutes
      * by overriding the updateItem methods in setCellFactory and
-     * setButtonCell. A lambda
+     * setButtonCell.
+     *
+     * <h4>Lambda Expression</h4>
+     * A lambda expression is used here to override the <code>updateItem</code>
+     * method. This expression takes the incoming cell and returns an anonymous
+     * class in which the zero-padded minute replaces the integer representation
+     * of minutes in the user interface.
      *
      * @param box the <code>ComboBox</code> to be formatted
      */
