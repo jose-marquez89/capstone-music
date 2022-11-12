@@ -89,7 +89,20 @@ public class UserDashboardController implements Initializable {
     private Scene scene;
     private Stage stage;
 
-
+    /**
+     * Sets table views and their respective columns for the main user
+     * interface.
+     *
+     * <h4>Lambda Expression</h4>
+     * The <code>contactSelector</code> combo box requires
+     * a lambda expression to take the incoming cell and
+     * override the <code>updateItem</code> method. This
+     * allows the display of the contact's name while also
+     * enabling the identification of the contact via their id.
+     *
+     * @param url the URL object passed in from the background
+     * @param rb the resource bundle passed in from the background
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // get all initially available customers
@@ -207,6 +220,19 @@ public class UserDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Allows the formatting of the date column in the appointments
+     * table to display in standard date and 12-hour time format.
+     *
+     * <h4>Lambda Expression</h4>
+     * A lambda expression is used in the column's <code>setCellFactory</code>
+     * method. This allows the incoming cell to be formatted from standard
+     * <code>LocalDateTime</code> format to a more user-friendly 12-hour format.
+     * (Example: 12/3/2022 6:06 PM)
+     *
+     * @param col the <code>LocalDateTime</code> column for which to set the
+     *            cell factory
+     */
     public void formatDateCol(TableColumn col) {
         col.setCellFactory(cell -> new TableCell<Appointment, LocalDateTime>() {
             @Override
@@ -222,6 +248,15 @@ public class UserDashboardController implements Initializable {
         });
     }
 
+    /**
+     * Populates the body of customer in static resources within <code>Schedule</code>.
+     * <p>
+     * Reads the MySQL database for customer records and creates a
+     * <code>Customer</code> object for each available customer in
+     * the database to be displayed in the user interface.
+     *
+     * @throws SQLException
+     */
     public void populateCustomers() throws SQLException {
         int id, divisionId, countryId;
         LocalDateTime createDate, lastUpdate;
@@ -270,20 +305,25 @@ public class UserDashboardController implements Initializable {
         DBConnector.closeConnection();
     }
 
+    /**
+     * Populates the body of appointments in static resources within <code>Schedule</code>.
+     *
+     * Reads the MySQL database for appointment records and creates an
+     * <code>Appointment</code> object for each available appointment in
+     * the database to be displayed in the user interface.
+     *
+     * @throws SQLException
+     */
     public void populateAppointments() throws SQLException {
         int id, customerId, userId, contactId;
         String title, location, description, contact, type;
         LocalDateTime start, end;
         ResultSet apptQueryResult;
-        // TODO: remove user specific query elements if necessary
-        // String queryUserTail = Schedule.getCurrentUser().getId() + ";";
         String getApptsQuery = """
                 SELECT *
                 FROM appointments AS a
                 JOIN contacts AS c
                 ON a.contact_id = c.contact_id;""";
-                // --WHERE a.user_id = """ + queryUserTail;
-
 
         DBConnector.connect();
         Query.runQuery(getApptsQuery);
@@ -317,11 +357,28 @@ public class UserDashboardController implements Initializable {
         DBConnector.closeConnection();
     }
 
+    /**
+     * Allows the user to see all existing appointments in the
+     * user interface.
+     *
+     * Removes all filters from the appointments table that may
+     * have been set by the user via radio button selection.
+     */
     public void seeAllAppointments() {
         appointmentsContainer.clear();
         appointmentsContainer.addAll(Schedule.getAppointments());
     }
 
+    /**
+     * Filters appointments by the current week.
+     *
+     * <h4>Lambda Expression</h4>
+     * This method uses two lambda expressions:
+     * <ul>
+     *     <li>a <code>Stream</code> of type <code>Appointment</code> is filtered to match those that are in the current week</li>
+     *     <li>each <code>Appointment</code> object in the stream is added to the <code>appoinmentsContainer</code> to effectively filter display</li>
+     * </ul>
+     */
     public void seeWeeklyAppointments() {
         Stream<Appointment> apptsStream = Schedule.getAppointments().stream();
         int currentWeek = LocalDateTime.now().get(WeekFields.of(Locale.getDefault()).weekOfYear());
@@ -331,6 +388,16 @@ public class UserDashboardController implements Initializable {
                 .forEach(a -> appointmentsContainer.add(a));
     }
 
+    /**
+     * Filters appointments by the current month.
+     *
+     * <h4>Lambda Expression</h4>
+     * This method uses two lambda expressions:
+     * <ul>
+     *     <li>a <code>Stream</code> of type <code>Appointment</code> is filtered to match those that are in the current week</li>
+     *     <li>each <code>Appointment</code> object in the stream is added to the <code>appointmentsContainer</code> to effectively filter display</li>
+     * </ul>
+     */
     public void seeMonthlyAppointments() {
         Stream<Appointment> apptsStream = Schedule.getAppointments().stream();
         int currentMonth = LocalDateTime.now().getMonthValue();
@@ -340,6 +407,16 @@ public class UserDashboardController implements Initializable {
                 .forEach(a -> appointmentsContainer.add(a));
     }
 
+    /**
+     * Filters the appointments for a selected contact in the "Reports" tab.
+     *
+     * <h4>Lambda Expression</h4>
+     * <ul>
+     *     <li>a <code>Stream</code> of type <code>Appointment</code> is filtered to match those associated with the selected contact</li>
+     *     <li>each <code>Appointment</code> object in the stream is added to the <code>scheduleContainer</code> to effectively filter the schedule display</li>
+     * </ul>
+     * @param event the event triggered by user interaction with interface components
+     */
     public void seeContactSchedule(ActionEvent event) {
         Contact selectedContact = contactSelector.getValue();
         Stream<Appointment> apptsStream = Schedule.getAppointments().stream();
@@ -349,6 +426,17 @@ public class UserDashboardController implements Initializable {
                 .forEach(a -> scheduleContainer.add(a));
     }
 
+    /**
+     * Triggers the initialization of the appointment update form.
+     *
+     * The method loads the currently selected appointment into the
+     * impending appointment update form. If there is no selection,
+     * the method will trigger a notification.
+     *
+     * @param event the event triggered via user interaction with interface components
+     * @throws IOException
+     * @see Notification#noSelection(String, String)
+     */
     public void updateAppointment(ActionEvent event) throws IOException {
         AppointmentUpdateController updateController;
         Appointment selectedAppointment = appointmentTable.getSelectionModel().getSelectedItem();
@@ -367,8 +455,8 @@ public class UserDashboardController implements Initializable {
         }
     }
 
+    // TODO: add more javadocs 2022-11-11
     public void addAppointment(ActionEvent event) throws IOException {
-        // TODO: start as add form and switch to appt mod form
         root = FXMLLoader.load(getClass().getResource("../view/appointment-add-form.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

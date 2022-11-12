@@ -51,6 +51,15 @@ public class CustomerAddController implements Initializable {
     private Scene scene;
     private Stage stage;
 
+    /**
+     * Sets the display for combo boxes intended to display <code>Location</code> objects.
+     *
+     * <code>Location</code> objects are set using the string name of the country
+     * or division, but it is necessary to convert these to integer ID's to avoid
+     * incorrect queries.
+     *
+     * @param cb the <code>ComboBox</code> target selector in the user interface
+     */
     public void setComboBoxDisplay(ComboBox<Location> cb) {
         cb.setCellFactory(cell -> new ListCell<Location>() {
             @Override
@@ -70,6 +79,14 @@ public class CustomerAddController implements Initializable {
 
     }
 
+    /**
+     * Sets combo boxes in the customer add form.
+     *
+     * Populates the combo boxes in the form with countries and or
+     * divisions.o
+     * @param url the URL object passed in from the user interface
+     * @param rb the resource bundle passed in from the background
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         setComboBoxDisplay(countrySelector);
@@ -77,6 +94,15 @@ public class CustomerAddController implements Initializable {
         countrySelector.getItems().addAll(DisplayLocations.getCountries());
     }
 
+    /**
+     * Filters the division in the user interface form based on
+     * the selected country.
+     *
+     * <h4>Lambda Expression</h4>
+     * The lambda expression used in this method takes a <code>Division</code> object,
+     * gets its country id to check it against the selected country to filter
+     * available divisions in the user interface.
+     */
     public void filterDivision() {
         int countryId;
         if (countrySelector.getValue() != null) {
@@ -88,6 +114,12 @@ public class CustomerAddController implements Initializable {
         }
     }
 
+    /**
+     * Redirects the user back to the main user interface.
+     *
+     * @param event the event caused by user interaction with interface components
+     * @throws IOException
+     */
     public void mainFormRedirect(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -123,6 +155,14 @@ public class CustomerAddController implements Initializable {
         return ps;
     }
 
+    /**
+     * Commits the <code>PreparedStatement</code> to the database
+     * once fields have been validated.
+     *
+     * @param event the event caused by user interaction with interface components
+     * @throws SQLException
+     * @throws IOException
+     */
     public void save(ActionEvent event) throws SQLException, IOException {
         String[] validationFields = new String[4];
         String name, address, postalCode, phone;
