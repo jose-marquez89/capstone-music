@@ -455,7 +455,12 @@ public class UserDashboardController implements Initializable {
         }
     }
 
-    // TODO: add more javadocs 2022-11-11
+    /**
+     * Activates the form for adding appointments.
+     *
+     * @param event the event triggered by user interaction with UI elements
+     * @throws IOException
+     */
     public void addAppointment(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../view/appointment-add-form.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -464,6 +469,15 @@ public class UserDashboardController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Removes a selected appointment from the database.
+     *
+     * Also performs a selection check to ensure an appointment is selected.
+     *
+     * @param event the event triggered by user interaction with UI elements
+     * @throws IOException
+     * @throws SQLException
+     */
     public void deleteAppointment(ActionEvent event) throws IOException, SQLException {
         Optional<ButtonType> result;
         Appointment userSelection = appointmentTable.getSelectionModel().getSelectedItem();
@@ -502,6 +516,12 @@ public class UserDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Triggers the form for adding a new customer.
+     *
+     * @param event the event triggered by user interaction with UI elements
+     * @throws IOException
+     */
     public void addCustomer(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../view/customer-add-form.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -510,6 +530,15 @@ public class UserDashboardController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Allow the addition of a new customer to the database.
+     *
+     * Ensures a customer is selected and passed to the customer update
+     * controller before triggering the form.
+     *
+     * @param event the event triggered by user interaction with UI elements
+     * @throws IOException
+     */
     public void updateCustomer(ActionEvent event) throws IOException {
         CustomerUpdateController updateController;
         Customer selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
@@ -528,6 +557,18 @@ public class UserDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Removes a customer from the database.
+     *
+     * Ensures a customer is selected before any deletions are made.
+     *
+     * <h4>Lambda Expression</h4>
+     * A lambda expression is used here to check for a customers existing
+     * appointments via customer id. The resulting list created by filtering
+     * user appointments is counted to determine existing appointments.
+     *
+     * @throws SQLException
+     */
     public void deleteCustomer() throws SQLException {
         Optional<ButtonType> result;
         List<Appointment> appts;
@@ -566,6 +607,15 @@ public class UserDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Fills in the report containing appointments by month and type.
+     *
+     * Creates <code>ReportItem</code> records to fill a <code>TableView</code>.
+     *
+     * @param reportContainer an <code>ObservableList</code> object where the records will be stored
+     * @param query the SQL query to run against the database to retrieve necessary records
+     * @throws SQLException
+     */
     public void populateMonthTypeTable(ObservableList<MonthTypeRecord> reportContainer, String query) throws SQLException {
         String name, subName;
         int amount;
@@ -587,6 +637,15 @@ public class UserDashboardController implements Initializable {
         DBConnector.closeConnection();
     }
 
+    /**
+     * Fills in the report containing the amount of customers by country.
+     *
+     * Creates <code>ReportItem</code> records to fill a <code>TableView</code>.
+     *
+     * @param reportContainer an <code>ObservableList</code> object where the records will be stored
+     * @param query the SQL query to run against the database to retrieve the necessary records.
+     * @throws SQLException
+     */
     public void populateCountryTable(ObservableList<CountryRecord> reportContainer, String query) throws SQLException {
         String name;
         int amount;
@@ -607,6 +666,15 @@ public class UserDashboardController implements Initializable {
         DBConnector.closeConnection();
     }
 
+    /**
+     * Refreshes the data contained in the "Reports" pane.
+     *
+     * Sends prepared SQL queries to population methods.
+     * 
+     * @throws SQLException
+     * @see UserDashboardController#populateCountryTable(ObservableList, String) 
+     * @see UserDashboardController#populateMonthTypeTable(ObservableList, String) 
+     */
     public void refreshReports() throws SQLException {
         String monthTypeQuery, customersQuery;
         Contact defaultContact = contactSelector.getItems().get(0);
