@@ -18,6 +18,11 @@ public class Schedule {
     private static ArrayList<Appointment> appointments = new ArrayList<Appointment>();
     private static User currentUser;
 
+    /**
+     * Sets the current logged in user for the entire application.
+     *
+     * @param user the <code>User</code> object representing the currently logged-in user
+     */
     public static void setCurrentUser(User user) {
         currentUser = user;
     }
@@ -37,9 +42,16 @@ public class Schedule {
         return customers;
     }
 
+    /**
+     * Resets the content of the customers <code>ObservableList</code>.
+     */
     public static void clearCustomers() {
         customers.clear();
     }
+
+    /**
+     * Resets the content of the appointments <code>ObservableList</code>.
+     */
     public static void clearAppointments() {
         appointments.clear();
     }

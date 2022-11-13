@@ -16,9 +16,26 @@ import java.time.*;
  * @author Jose Marquez
  */
 public class AppointmentValidator {
+    /**
+     * Validates that input start date/time is before input end date/time.
+     *
+     * @param start the <code>LocalDateTime</code> object representing appointment start date/time
+     * @param end the <code>LocalDateTime</code> object representing appointment end date/time
+     * @return true if start and end date/times are valid
+     */
     public static boolean validateStartEnd(LocalDateTime start, LocalDateTime end) {
         return start.isBefore(end);
     }
+
+    /**
+     * Determines whether the entered dates are within business hours.
+     *
+     * Business hours are validated against 8am-10pm EST.
+     *
+     * @param start the <code>LocalDateTime</code> object representing appointment start date/time
+     * @param end the <code>LocalDateTime</code> object representing appointment end date/time
+     * @return true if appointment date/time is within business hours
+     */
     public static boolean validateBusinessHours(LocalDateTime start, LocalDateTime end) {
         LocalTime estStart, estEnd;
         LocalTime businessStart = LocalTime.of(8, 0);
@@ -45,6 +62,18 @@ public class AppointmentValidator {
         }
     }
 
+    /**
+     * Determines whether the entered start and end date/time overlaps with that of an
+     * existing appointment.
+     *
+     * Overlap is defined here as the start or end of an existing appointment happening
+     * <em>after</em> the start of a potential appointment.
+     *
+     * @param start the <code>LocalDateTime</code> object representing appointment start date/time
+     * @param end the <code>LocalDateTime</code> object representing appointment end date/time
+     * @return true if pending appointment start/end date/time does not overlap
+     * @throws SQLException
+     */
     public static boolean validateOverlap(LocalDateTime start, LocalDateTime end) throws SQLException {
         LocalDateTime maxExistingStart, maxExistingEnd;
         ResultSet results;
@@ -85,6 +114,18 @@ public class AppointmentValidator {
         return validated;
     }
 
+    /**
+     * Validates overlap of appointment times for the appointment update form.
+     *
+     * Requires an appointment id to ignore the bounds of the appointment
+     * being updated.
+     *
+     * @param start the <code>LocalDateTime</code> object representing appointment start date/time
+     * @param end the <code>LocalDateTime</code> object representing appointment end date/time
+     * @param apptId the integer appointment id of the appointment to be updated
+     * @return true if the new appointment start and end date/time do not overlap
+     * @throws SQLException
+     */
     public static boolean validateOverlap(LocalDateTime start, LocalDateTime end, int apptId) throws SQLException {
         LocalDateTime maxExistingStart, maxExistingEnd;
         ResultSet results;

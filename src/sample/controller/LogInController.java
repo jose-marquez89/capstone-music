@@ -20,8 +20,6 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.time.ZoneId;
@@ -91,7 +89,7 @@ public class LogInController implements Initializable {
             queuedUser = new User(id, name, createdDate,createdBy, lastUpdatedDate, lastUpdatedBy);
 
             if (candidatePword.equals(queryResult.getString("password"))) {
-                queuedUser.setLogInTime();
+                queuedUser.setLogInDateTime();
                 Schedule.setCurrentUser(queuedUser);
                 root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();

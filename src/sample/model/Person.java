@@ -17,10 +17,27 @@ abstract public class Person {
     private LocalDateTime lastUpdate;
     private String lastUpdatedBy;
 
+    /**
+     * Constructor for the Person class when only an id and name are necessary.
+     *
+     * @param id the integer id of the intended person
+     * @param name the string name of the intended person
+     */
     public Person(int id, String name) {
         this.id = id;
         this.name = name;
     }
+
+    /**
+     * General purpose constructor for the Person class.
+     *
+     * @param id the numeric id of the intended person
+     * @param name the string name of the intended person
+     * @param createDate the date the person being modeled was created in the database
+     * @param createdBy the user the person was created by
+     * @param lastUpdate the last date/time this person was updated
+     * @param lastUpdatedBy the last user to update this person
+     */
     public Person(int id, String name, LocalDateTime createDate, String createdBy, LocalDateTime lastUpdate, String lastUpdatedBy) {
         this.id = id;
         this.name = name;
@@ -34,35 +51,11 @@ abstract public class Person {
         this.name = name;
     }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
-    }
-
     public int getId() {
         return id;
     }
 
     public String getName() {
         return name;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
     }
 }
