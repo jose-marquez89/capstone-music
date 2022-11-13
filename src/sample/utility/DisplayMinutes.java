@@ -11,6 +11,8 @@ package sample.utility;
 public class DisplayMinutes {
     private static final int minuteSlots = 12;
     private static Minute[] minutes = new Minute[minuteSlots];
+
+    // TODO: add more javadocs
     public static void initializeMinutes() {
         for (int i=0; i < minuteSlots; i++) {
             String display;

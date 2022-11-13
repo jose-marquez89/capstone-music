@@ -17,6 +17,12 @@ import java.util.ArrayList;
 public class DisplayContacts {
     private static ArrayList<Contact> contacts = new ArrayList<>();
 
+    /**
+     * Fills the <code>contacts</code> <code>ArrayList</code> with contacts
+     * to display in appointment add/update forms.
+     *
+     * @throws SQLException
+     */
     public static void initializeContacts() throws SQLException {
         ResultSet results;
 
@@ -32,6 +38,11 @@ public class DisplayContacts {
         DBConnector.closeConnection();
     }
 
+    /**
+     * Allows the utilization of the contacts list across the application.
+     *
+     * @return an <code>ArrayList</code> of <code>Contact</code> objects
+     */
     public static ArrayList<Contact> getContacts() {
         return contacts;
     }

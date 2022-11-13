@@ -19,6 +19,12 @@ public class DisplayLocations {
     private static ArrayList<Country> countries = new ArrayList<Country>();
     private static ArrayList<Division> divisions = new ArrayList<Division>();
 
+    /**
+     * Fills the static <code>ArrayList</code> pairs with countries or divisions
+     * for display in customer update/add forms.
+     *
+     * @throws SQLException
+     */
     public static void initializeLocations() throws SQLException {
         int countryId, divisionId;
         String countryName, divisionName;
@@ -56,13 +62,21 @@ public class DisplayLocations {
         }
     }
 
+    /**
+     * Allows the utilization of <code>Country</code> objects across the application.
+     *
+     * @return an <code>ArrayList</code> of <code>Country</code> objects
+     */
     public static ArrayList<Country> getCountries() {
         return countries;
     }
 
+    /**
+     * Allows the utilization of <code>Division</code> objects across the application.
+     *
+     * @return an <code>ArrayList</code> of <code>Division</code> objects
+     */
     public static ArrayList<Division> getDivisions() {
         return divisions;
     }
-
-
 }
