@@ -16,7 +16,6 @@ import java.sql.ResultSet;
  * @author Jose Marquez
  */
 public class Query {
-    private static String query;
     private static Statement statement;
     private static PreparedStatement preparedStatement;
     private static ResultSet result;
@@ -47,22 +46,6 @@ public class Query {
         }
 
         return preparedStatement;
-    }
-
-    public static void executePendingQuery(PreparedStatement ps) {
-        try {
-            result = ps.executeQuery();
-        } catch (Exception e) {
-            System.out.println("Prepared Query Error: " + e.getMessage());
-        }
-    }
-
-    public static void executePendingUpdate(PreparedStatement ps) {
-        try {
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("Prepared Query Error: " + e.getMessage());
-        }
     }
 
     public static ResultSet getResults() {
