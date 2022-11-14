@@ -27,7 +27,6 @@ public class LogInLogger {
             LogManager.getLogManager().readConfiguration(
                     new FileInputStream("resources/login_logger.properties")
             );
-            System.out.println("Set log manager file");
         } catch (IOException e) {
             System.out.println("Exception while setting logging properties: " + e.getMessage());
         }

@@ -49,7 +49,6 @@ public class DisplayLocations {
         while (countryResults.next()) {
             countryId = countryResults.getInt("country_id");
             countryName = countryResults.getString("country");
-            System.out.println("Adding country " + countryName);
             countries.add(new Country(countryId, countryName));
         }
 
