@@ -231,7 +231,7 @@ public class AppointmentUpdateController implements Initializable {
      * This method allows the conversion of 24-hour time to 12-hour
      * time by determining the period of a 24-hour time hour.
      *
-     * @param hour
+     * @param hour the integer hour to get period from
      * @return "AM" or "PM" depending on the hour passed to the method
      */
     public String getPeriod(int hour) {
