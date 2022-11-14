@@ -96,7 +96,7 @@ public class LogInController implements Initializable {
                 scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setX(100.0);
-                stage.setY(50.0);
+                stage.setY(5.0);
                 stage.show();
 
                 DBConnector.closeConnection();

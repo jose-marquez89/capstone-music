@@ -141,7 +141,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <HBox layoutX="40.0" layoutY="353.0" prefHeight="253.0" prefWidth="1031.0" spacing="10.0">
+                  <HBox layoutX="40.0" layoutY="361.0" prefHeight="253.0" prefWidth="1031.0" spacing="10.0">
                      <children>
                         <VBox prefHeight="135.0" prefWidth="450.0" spacing="5.0">
                            <children>
