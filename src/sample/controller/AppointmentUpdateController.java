@@ -60,7 +60,7 @@ public class AppointmentUpdateController implements Initializable {
     /**
      * Initializes the components necessary to add an appointment to the database.
      *
-     * @param box
+     * @param box the combobox to set display for
      * @see AppointmentAddController
      */
     private void setMinuteDisplay(ComboBox box) {
