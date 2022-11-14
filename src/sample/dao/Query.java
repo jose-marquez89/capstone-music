@@ -20,6 +20,11 @@ public class Query {
     private static PreparedStatement preparedStatement;
     private static ResultSet result;
 
+    /**
+     * Runs a previously written SQL statement.
+     *
+     * @param q the string query to run
+     */
     public static void runQuery(String q) {
         try {
             statement = DBConnector.newStatement();
@@ -29,6 +34,12 @@ public class Query {
         }
     }
 
+    /**
+     * Runs <code>UPDATE</code>, <code>INSERT</code> and <code>DELETE</code>
+     * statement.
+     *
+     * @param q the string query to run
+     */
     public static void runUpdate(String q) {
         try {
             statement = DBConnector.newStatement();
@@ -38,6 +49,14 @@ public class Query {
         }
     }
 
+    /**
+     * Initiates a <code>PreparedStatement</code> within the <code>DBConnector</code>
+     * class.
+     *
+     * @param q the prepared SQL statement
+     * @return a <code>PreparedStatment</code> with pre-set fields
+     * @see DBConnector#newPreparedStatement(String)
+     */
     public static PreparedStatement pendingStatement(String q) {
         try {
             preparedStatement = DBConnector.newPreparedStatement(q);
@@ -48,6 +67,11 @@ public class Query {
         return preparedStatement;
     }
 
+    /**
+     * Gets the <code>ResultSet</code> object containing query results.
+     *
+     * @return a <code>ResultSet</code> object
+     */
     public static ResultSet getResults() {
         return result;
     }

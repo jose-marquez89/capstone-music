@@ -14,6 +14,14 @@ public class LogInLogger {
     private static Logger loginLogger = Logger.getLogger("sample.main");
     private static FileHandler loggingHandler;
 
+    /**
+     * Puts together the elements necessary to log login attempts.
+     *
+     * Sets the log file properties (string format) from a properties file
+     * to include the required log string components.
+     *
+     * @throws IOException
+     */
     public static void initializeLogger() throws IOException {
         try {
             LogManager.getLogManager().readConfiguration(
@@ -30,6 +38,12 @@ public class LogInLogger {
         loginLogger.setLevel(Level.ALL);
     }
 
+    /**
+     * Used to retrieve the <code>Logger</code> object
+     * for use across the application.
+     *
+     * @return a fully prepared <code>Logger</code> object
+     */
     public static Logger getLogger() {
         return loginLogger;
     }

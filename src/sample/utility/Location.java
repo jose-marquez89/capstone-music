@@ -9,6 +9,13 @@ package sample.utility;
 abstract public class Location {
     private int id;
     private String name;
+
+    /**
+     * The constructor for the <code>Location</code> class
+     *
+     * @param id an integer id for the intended location
+     * @param name a string name for the intended location
+     */
     public Location(int id, String name) {
         this.id = id;
         this.name = name;

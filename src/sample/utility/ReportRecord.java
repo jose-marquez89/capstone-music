@@ -10,6 +10,12 @@ abstract public class ReportRecord {
     private String name;
     private int amount;
 
+    /**
+     * Constructor for the <code>ReportRecord</code> class.
+     *
+     * @param name the aggregation record name
+     * @param amount the aggregation record amount
+     */
     public ReportRecord(String name, int amount) {
         this.name = name;
         this.amount = amount;

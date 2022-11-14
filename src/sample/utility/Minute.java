@@ -11,6 +11,12 @@ public class Minute {
     private int integerMinute;
     private String textMinute;
 
+    /**
+     * Constructor for the <code>Minute</code> class
+     *
+     * @param im the integer representation of a minute
+     * @param tm the string representation of a minute
+     */
     public Minute(int im, String tm) {
         integerMinute = im;
         textMinute = tm;

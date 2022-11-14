@@ -10,10 +10,15 @@ package sample.utility;
  * @author Jose Marquez
  */
 public class Division extends Location {
-    private int id;
     private int countryId;
-    private String name;
 
+    /**
+     * Constructor for the <code>Division</code> class.
+     *
+     * @param id the integer id for the intended first level division
+     * @param countryId the integer id for the intended division country
+     * @param name the string name for the intended first level division
+     */
     public Division(int id, int countryId, String name) {
         super(id, name);
         this.countryId = countryId;
