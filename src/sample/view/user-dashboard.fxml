@@ -115,17 +115,17 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <HBox layoutX="810.0" layoutY="41.0" prefHeight="37.0" prefWidth="264.0" spacing="10.0">
+                  <HBox layoutX="805.0" layoutY="9.0" prefHeight="69.0" prefWidth="269.0" spacing="10.0">
                      <children>
-                        <ImageView fx:id="logInAlertImage" fitHeight="30.0" fitWidth="71.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="logInAlertImage" fitHeight="58.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@green-clock-smaller.png" />
                            </image>
                            <HBox.margin>
-                              <Insets top="4.0" />
+                              <Insets top="20.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Label fx:id="logInAlertText" prefHeight="59.0" prefWidth="231.0" text="There are no appointments starting within 15 minutes" wrapText="true" />
+                        <Label fx:id="logInAlertText" prefHeight="69.0" prefWidth="237.0" text="There are no appointments starting within 15 minutes" wrapText="true" />
                      </children>
                   </HBox>
                </children>

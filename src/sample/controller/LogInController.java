@@ -101,6 +101,7 @@ public class LogInController implements Initializable {
 
                 DBConnector.closeConnection();
                 LogInLogger.getLogger().info("Login succeeded for user candidate: " + candidateUname);
+                LogInLogger.closeLoggingHandler();
 
                 return;
             }

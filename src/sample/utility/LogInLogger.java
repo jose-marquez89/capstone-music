@@ -46,4 +46,8 @@ public class LogInLogger {
     public static Logger getLogger() {
         return loginLogger;
     }
+
+    public static void closeLoggingHandler() {
+        loggingHandler.close();
+    }
 }

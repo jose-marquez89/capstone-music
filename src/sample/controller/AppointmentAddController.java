@@ -239,8 +239,9 @@ public class AppointmentAddController implements Initializable {
         int contactId = contactSelector.getSelectionModel().getSelectedItem().getId();
 
         query = """
-                INSERT INTO appointments (title, description, location, type, start, end, created_by, last_updated_by, customer_id, user_id, contact_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                INSERT INTO appointments (title, description, location, type, start, end, created_by,
+                    last_updated_by, customer_id, user_id, contact_id, create_date, last_update)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
                 """;
         ps = Query.pendingStatement(query);
         ps.setString(1, title);

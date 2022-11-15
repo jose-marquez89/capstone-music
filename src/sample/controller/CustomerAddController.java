@@ -139,8 +139,9 @@ public class CustomerAddController implements Initializable {
         divisionId = division.getId();
 
         query = """
-                INSERT INTO customers (customer_name, address, postal_code, phone, division_id, created_by, last_updated_by)
-                VALUES (?, ?, ?, ?, ?, ?, ?);
+                INSERT INTO customers (customer_name, address, postal_code, phone,
+                    division_id, created_by, last_updated_by, create_date, last_update)
+                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
                 """;
 
         ps = Query.pendingStatement(query);

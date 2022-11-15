@@ -43,11 +43,11 @@
       </GridPane>
       <HBox layoutX="307.0" layoutY="354.0" prefHeight="25.0" prefWidth="134.0" spacing="10.0">
          <children>
-            <Button onAction="#save" mnemonicParsing="false" text="Save" />
+            <Button mnemonicParsing="false" onAction="#save" text="Save" />
             <Button mnemonicParsing="false" onAction="#mainFormRedirect" text="Cancel" />
          </children>
       </HBox>
-      <Label layoutX="37.0" layoutY="35.0" text="Add Customer">
+      <Label layoutX="37.0" layoutY="35.0" text="Update Customer">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

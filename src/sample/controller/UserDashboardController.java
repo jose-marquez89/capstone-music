@@ -112,6 +112,7 @@ public class UserDashboardController implements Initializable {
         LocalDateTime logInDateTime = Schedule.getCurrentUser().getLogInDateTime();
         Stream<Appointment> nearbyApptsStream;
         List<Appointment> durations;
+
         // customer table columns
         customerIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -201,15 +202,14 @@ public class UserDashboardController implements Initializable {
 
             if (durations.isEmpty()) {
                 logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/green-clock-smaller.png")));
-                logInAlertText.setText("There are no upcoming appointments within 15 minutes");
+                logInAlertText.setText("There are no upcoming appointments within 15 minutes of your login");
             } else {
                 nearbyMeetingId = durations.get(0).getId();
                 meetingDate = durations.get(0).getStart().format(DateTimeFormatter.ofPattern("MM/d/yyyy"));
                 meetingTime = durations.get(0).getStart().format(DateTimeFormatter.ofPattern("h:mm a"));
                 appointmentMessage = String.format(
-                        "Appointment ID %d on %s at %s begins within 15 minutes",
+                        "Appointment ID %d on %s at %s begins within 15 minutes of your login",
                         nearbyMeetingId, meetingDate, meetingTime);
-                System.out.println("Appointments within 15");
                 durations.forEach(a -> System.out.println(a.getStart().toString()));
                 logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/red-clock-smaller.png")));
                 logInAlertText.setText(appointmentMessage);
