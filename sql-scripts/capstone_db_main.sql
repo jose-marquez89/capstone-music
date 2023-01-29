@@ -44,10 +44,11 @@ CREATE TABLE employee (
 	role_id integer REFERENCES role (id)
 );
 
-CREATE TABLE manager_credential (
+CREATE TABLE manager_detail (
 	employee_id integer REFERENCES employee (id),
 	user_name varchar(25),
-	password varchar(40)
+	password varchar(40),
+	store_id integer REFERENCES store (id)
 );
 
 CREATE TABLE "order" (
