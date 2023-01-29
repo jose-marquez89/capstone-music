@@ -11,7 +11,7 @@ VALUES
     ('Janice Joplin', '2019-04-19', NULL, 2),
     ('Miles Davis', '2020-02-14', NULL, 1),
     ('Herbie Hancock', '2020-01-23', NULL, 2)
-    ('Emily Remler' '2020-05-18', NULL, 2),
+    ('Emily Remler', '2020-05-18', NULL, 2),
     ('John Williams', '2019-12-25', NULL, 1),
     ('Aaron Copland', '2019-11-30', NULL, 2),
     ('Andres Segovia', '2020-03-15', NULL, 2);
