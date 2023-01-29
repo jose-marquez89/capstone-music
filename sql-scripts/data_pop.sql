@@ -10,7 +10,7 @@ VALUES
 	('Eric Clapton', '2021-08-23', NULL, 2),
     ('Janice Joplin', '2019-04-19', NULL, 2),
     ('Miles Davis', '2020-02-14', NULL, 1),
-    ('Herbie Hancock', '2020-01-23', NULL, 2)
+    ('Herbie Hancock', '2020-01-23', NULL, 2),
     ('Emily Remler', '2020-05-18', NULL, 2),
     ('John Williams', '2019-12-25', NULL, 1),
     ('Aaron Copland', '2019-11-30', NULL, 2),
@@ -19,10 +19,10 @@ VALUES
 INSERT INTO customer (name, email, phone)
 VALUES 
 	('Ted Lasso', 'tlasso@yahoo.com', '(349)-234-0394'),
-	('Joe Biden', 'jbiddy@gmail.com', '(916)-422-8066')
+	('Joe Biden', 'jbiddy@gmail.com', '(916)-422-8066'),
 	('Donald Trump', 'dtrump@outlook.com', '(345)-234-5434'),
     ('Condoleezza Rice', 'crice@earthlink.com', '(456)-123-2348'),
-    ('Michelle Obama', 'mobama@gmail.com', '(234)-234-3945')
+    ('Michelle Obama', 'mobama@gmail.com', '(234)-234-3945'),
     ('Laura Bush', 'lbush@outlook.com', '(234)-334-3457');
 
 INSERT INTO store (name, city, state, zip, street)
@@ -111,32 +111,27 @@ VALUES
     (4, 6, 2),
     -- New York
     (5, 8, 3),
-    (6, 9, 3;
+    (6, 9, 3);
 
 INSERT INTO order_line (is_service, product_id, service_id, order_id, return)
 VALUES
 	-- Sacramento, order 1
 	(FALSE, 1, NULL, 1, FALSE),
-	(TRUE, NULL, 1, 1, FALSE)
-	
+	(TRUE, NULL, 1, 1, FALSE),
 	-- So2
 	(FALSE, 2, NULL, 2, FALSE),
     (FALSE, 3, NULL, 2, FALSE),
-    
     -- Austin order 3
     (FALSE, 1, NULL, 3, FALSE),
 	(TRUE, NULL, 1, 3, FALSE),
-	
     -- Ao4
     (FALSE, 4, NULL, 4, FALSE),
-    
     -- New York o5
     (FALSE, 2, NULL, 5, FALSE),
     (TRUE, NULL, 1, 5, FALSE),
-    
     -- o6
     (FALSE, 6, NULL, 6, FALSE),
     (FALSE, 6, NULL, 6, FALSE),
     (FALSE, 6, NULL, 6, FALSE),
    	(FALSE, 6, NULL, 6, FALSE),
-    (FALSE, 7, NULL, 7, FALSE);
+    (FALSE, 7, NULL, 6, FALSE);
