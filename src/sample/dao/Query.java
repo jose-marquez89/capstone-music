@@ -1,6 +1,6 @@
 package sample.dao;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
+// TODO: get postgresql imports and drivers
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
