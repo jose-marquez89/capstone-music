@@ -11,9 +11,9 @@ import java.sql.*;
  * @author Jose Marquez
  */
 public class DBConnector {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/client_schedule?connectionTimeZone=SERVER";
-    private static final String UNAME = "sqlUser";
-    private static final String PWORD = "Passw0rd!";
+    private static final String DB_URL = "jdbc:mysql://" + System.getenv("DB_CONN");
+    private static final String UNAME = System.getenv("USERNAME");
+    private static final String PWORD = System.getenv("PASSWORD");
 
     private static Connection conn;
 
