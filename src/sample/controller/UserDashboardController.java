@@ -105,119 +105,119 @@ public class UserDashboardController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // get all initially available customers
-        int nearbyMeetingId;
-        String meetingDate, meetingTime;
-        String currentUserId = Integer.toString(Schedule.getCurrentUser().getId());
-        LocalDateTime logInDateTime = Schedule.getCurrentUser().getLogInDateTime();
-        Stream<Appointment> nearbyApptsStream;
-        List<Appointment> durations;
-
-        // customer table columns
-        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        customerNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
-        postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-        phoneNumberCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("division"));
-
-        // appointment table columns
-        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-        apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
-        apptContactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-
-        // schedule table columns
-        scheduleApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-        scheduleCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        scheduleTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
-        scheduleDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
-        scheduleTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
-        scheduleStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        scheduleEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
-
-
-        // by month report columns
-        byMonthNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        byTypeNameCol.setCellValueFactory(new PropertyValueFactory<>("subName"));
-        byMonthAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
-
-        // by country customer report columns
-        byCountryNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        byCountryAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
-
-        formatDateCol(apptStartCol);
-        formatDateCol(apptEndCol);
-        formatDateCol(scheduleStartCol);
-        formatDateCol(scheduleEndCol);
-
-        try {
-            populateCustomers();
-            populateAppointments();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-        contactSelector.getItems().addAll(DisplayContacts.getContacts());
-        appointmentsContainer.addAll(Schedule.getAppointments());
-        scheduleContainer.addAll(Schedule.getAppointments());
-        customerTable.setItems(Schedule.getCustomers());
-        appointmentTable.setItems(appointmentsContainer);
-        scheduleTable.setItems(scheduleContainer);
-        apptsByTypeMonth.setItems(monthTypeReportContainer);
-        customersByCountry.setItems(countryReportContainer);
-
-
-        contactSelector.setCellFactory(cell -> new ListCell<Contact>() {
-            @Override
-            protected void updateItem(Contact c, boolean empty) {
-                super.updateItem(c, empty);
-                setText(empty ? null : c.getName());
-            }
-        });
-
-        contactSelector.setButtonCell(new ListCell<Contact>() {
-            @Override
-            protected void updateItem(Contact c, boolean empty) {
-                super.updateItem(c, empty);
-                setText(empty ? null : c.getName());
-            }
-        });
-
-
-        if (ChronoUnit.MINUTES.between(logInDateTime.toLocalTime(), LocalDateTime.now()) > -15) {
-            nearbyApptsStream = Schedule.getAppointments().stream();
-            durations = nearbyApptsStream
-                    .filter(a ->
-                            ChronoUnit.MINUTES.between(logInDateTime, a.getStart()) <= 15
-                            && ChronoUnit.MINUTES.between(logInDateTime, a.getStart()) >= 0)
-                    .sorted((a, b) -> a.getStart().compareTo(b.getStart()))
-                    .toList();
-
-            if (durations.isEmpty()) {
-                logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/green-clock-smaller.png")));
-                logInAlertText.setText("There are no upcoming appointments within 15 minutes of your login");
-            } else {
-                nearbyMeetingId = durations.get(0).getId();
-                meetingDate = durations.get(0).getStart().format(DateTimeFormatter.ofPattern("MM/d/yyyy"));
-                meetingTime = durations.get(0).getStart().format(DateTimeFormatter.ofPattern("h:mm a"));
-                appointmentMessage = String.format(
-                        "Appointment ID %d on %s at %s begins within 15 minutes of your login",
-                        nearbyMeetingId, meetingDate, meetingTime);
-                durations.forEach(a -> System.out.println(a.getStart().toString()));
-                logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/red-clock-smaller.png")));
-                logInAlertText.setText(appointmentMessage);
-            }
-        } else {
-            logInAlertImage.setVisible(false);
-            logInAlertText.setVisible(false);
-        }
+//        // get all initially available customers
+//        int nearbyMeetingId;
+//        String meetingDate, meetingTime;
+//        String currentUserId = Integer.toString(Schedule.getCurrentUser().getId());
+//        LocalDateTime logInDateTime = Schedule.getCurrentUser().getLogInDateTime();
+//        Stream<Appointment> nearbyApptsStream;
+//        List<Appointment> durations;
+//
+//        // customer table columns
+//        customerIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        customerNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+//        customerAddressCol.setCellValueFactory(new PropertyValueFactory<>("address"));
+//        postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+//        phoneNumberCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
+//        customerDivisionCol.setCellValueFactory(new PropertyValueFactory<>("division"));
+//
+//        // appointment table columns
+//        apptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        apptUserIdCol.setCellValueFactory(new PropertyValueFactory<>("userId"));
+//        apptCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+//        apptTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+//        apptDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+//        apptLocationCol.setCellValueFactory(new PropertyValueFactory<>("location"));
+//        apptContactCol.setCellValueFactory(new PropertyValueFactory<>("contact"));
+//        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+//        apptStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+//        apptEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+//
+//        // schedule table columns
+//        scheduleApptIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        scheduleCustomerIdCol.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+//        scheduleTitleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
+//        scheduleDescriptionCol.setCellValueFactory(new PropertyValueFactory<>("description"));
+//        scheduleTypeCol.setCellValueFactory(new PropertyValueFactory<>("type"));
+//        scheduleStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+//        scheduleEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+//
+//
+//        // by month report columns
+//        byMonthNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+//        byTypeNameCol.setCellValueFactory(new PropertyValueFactory<>("subName"));
+//        byMonthAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+//
+//        // by country customer report columns
+//        byCountryNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+//        byCountryAmountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+//
+//        formatDateCol(apptStartCol);
+//        formatDateCol(apptEndCol);
+//        formatDateCol(scheduleStartCol);
+//        formatDateCol(scheduleEndCol);
+//
+//        try {
+//            populateCustomers();
+//            populateAppointments();
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        contactSelector.getItems().addAll(DisplayContacts.getContacts());
+//        appointmentsContainer.addAll(Schedule.getAppointments());
+//        scheduleContainer.addAll(Schedule.getAppointments());
+//        customerTable.setItems(Schedule.getCustomers());
+//        appointmentTable.setItems(appointmentsContainer);
+//        scheduleTable.setItems(scheduleContainer);
+//        apptsByTypeMonth.setItems(monthTypeReportContainer);
+//        customersByCountry.setItems(countryReportContainer);
+//
+//
+//        contactSelector.setCellFactory(cell -> new ListCell<Contact>() {
+//            @Override
+//            protected void updateItem(Contact c, boolean empty) {
+//                super.updateItem(c, empty);
+//                setText(empty ? null : c.getName());
+//            }
+//        });
+//
+//        contactSelector.setButtonCell(new ListCell<Contact>() {
+//            @Override
+//            protected void updateItem(Contact c, boolean empty) {
+//                super.updateItem(c, empty);
+//                setText(empty ? null : c.getName());
+//            }
+//        });
+//
+//
+//        if (ChronoUnit.MINUTES.between(logInDateTime.toLocalTime(), LocalDateTime.now()) > -15) {
+//            nearbyApptsStream = Schedule.getAppointments().stream();
+//            durations = nearbyApptsStream
+//                    .filter(a ->
+//                            ChronoUnit.MINUTES.between(logInDateTime, a.getStart()) <= 15
+//                            && ChronoUnit.MINUTES.between(logInDateTime, a.getStart()) >= 0)
+//                    .sorted((a, b) -> a.getStart().compareTo(b.getStart()))
+//                    .toList();
+//
+//            if (durations.isEmpty()) {
+//                logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/green-clock-smaller.png")));
+//                logInAlertText.setText("There are no upcoming appointments within 15 minutes of your login");
+//            } else {
+//                nearbyMeetingId = durations.get(0).getId();
+//                meetingDate = durations.get(0).getStart().format(DateTimeFormatter.ofPattern("MM/d/yyyy"));
+//                meetingTime = durations.get(0).getStart().format(DateTimeFormatter.ofPattern("h:mm a"));
+//                appointmentMessage = String.format(
+//                        "Appointment ID %d on %s at %s begins within 15 minutes of your login",
+//                        nearbyMeetingId, meetingDate, meetingTime);
+//                durations.forEach(a -> System.out.println(a.getStart().toString()));
+//                logInAlertImage.setImage(new Image(getClass().getResourceAsStream("../view/red-clock-smaller.png")));
+//                logInAlertText.setText(appointmentMessage);
+//            }
+//        } else {
+//            logInAlertImage.setVisible(false);
+//            logInAlertText.setVisible(false);
+//        }
     }
 
     /**
