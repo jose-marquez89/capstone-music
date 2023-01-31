@@ -17,7 +17,8 @@ CREATE TABLE customer (
 CREATE TABLE product (
 	id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name varchar(40),	
-	price numeric
+	price numeric,
+	discontinued boolean DEFAULT FALSE
 );
 
 CREATE TABLE role (
@@ -28,7 +29,8 @@ CREATE TABLE role (
 CREATE TABLE service (
 	id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
 	name varchar(40),
-	price numeric
+	price numeric,
+	discontinued boolean DEFAULT FALSE
 );
 
 CREATE TABLE service_application ( 
@@ -66,6 +68,7 @@ CREATE TABLE order_line (
 	product_id integer REFERENCES product (id) ON DELETE SET NULL,
 	service_id integer REFERENCES service (id) ON DELETE SET NULL, 
 	order_id integer REFERENCES "order" (id),
+	sale_price numeric,
 	return boolean DEFAULT FALSE,
 	returned_at timestamp
 );

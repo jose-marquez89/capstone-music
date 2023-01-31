@@ -64,15 +64,6 @@ VALUES
 	(5, 6), -- repadding
 	(5, 7);
 
-/*
- * 	('Electric Guitar', 499.99),
-	('Acoustic Guitar', 599.99),
-	('Upright Piano', 1249.99),
-	('Grand Piano', 15499.99),
-	('Violin', 699.99),
-	('Trumpet', 799.99),
-    ('Saxophone', 599.99);
- */
 
 INSERT INTO inventory (product_id, store_id, on_hand)
 VALUES
@@ -113,25 +104,40 @@ VALUES
     (5, 8, 3),
     (6, 9, 3);
 
-INSERT INTO order_line (is_service, product_id, service_id, order_id, return)
+/*
+ * 	('Electric Guitar', 499.99),
+	('Acoustic Guitar', 599.99),
+	('Upright Piano', 1249.99),
+	('Grand Piano', 15499.99),
+	('Violin', 699.99),
+	('Trumpet', 799.99),
+    ('Saxophone', 599.99);
+
+	('Restring', 15.99),
+    ('Cleaning', 9.99),
+    ('Tuning', 4.99),
+    ('Piano Tuning', 99.99),
+    ('Repadding', 49.99);
+ */
+INSERT INTO order_line (is_service, product_id, service_id, order_id, sale_price, return)
 VALUES
 	-- Sacramento, order 1
-	(FALSE, 1, NULL, 1, FALSE),
-	(TRUE, NULL, 1, 1, FALSE),
+	(FALSE, 1, NULL, 1, 499.99, FALSE),
+	(TRUE, NULL, 1, 1, 15.99, FALSE),
 	-- So2
-	(FALSE, 2, NULL, 2, FALSE),
-    (FALSE, 3, NULL, 2, FALSE),
+	(FALSE, 2, NULL, 2, 599.99, FALSE),
+    (FALSE, 3, NULL, 2, 1249.99, FALSE),
     -- Austin order 3
-    (FALSE, 1, NULL, 3, FALSE),
-	(TRUE, NULL, 1, 3, FALSE),
+    (FALSE, 1, NULL, 3, 499.99, FALSE),
+	(TRUE, NULL, 1, 3, 15.99, FALSE),
     -- Ao4
-    (FALSE, 4, NULL, 4, FALSE),
+    (FALSE, 4, NULL, 4, 15499.99, FALSE),
     -- New York o5
-    (FALSE, 2, NULL, 5, FALSE),
-    (TRUE, NULL, 1, 5, FALSE),
+    (FALSE, 2, NULL, 5, 599.99, FALSE),
+    (TRUE, NULL, 1, 5, 15.99, FALSE),
     -- o6
-    (FALSE, 6, NULL, 6, FALSE),
-    (FALSE, 6, NULL, 6, FALSE),
-    (FALSE, 6, NULL, 6, FALSE),
-   	(FALSE, 6, NULL, 6, FALSE),
-    (FALSE, 7, NULL, 6, FALSE);
+    (FALSE, 6, NULL, 6, 799.99, FALSE),
+    (FALSE, 6, NULL, 6, 799.99, FALSE),
+    (FALSE, 6, NULL, 6, 799.99, FALSE),
+   	(FALSE, 6, NULL, 6, 799.99, FALSE),
+    (FALSE, 7, NULL, 6, 599.99, FALSE);
