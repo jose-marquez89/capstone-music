@@ -24,7 +24,7 @@
                </VBox.margin></PasswordField>
          </children>
       </VBox>
-      <Label layoutX="77.0" layoutY="39.0" text="Scheduler Pro">
+      <Label layoutX="77.0" layoutY="39.0" text="Capstone Music">
          <font>
             <Font size="24.0" />
          </font></Label>
