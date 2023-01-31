@@ -33,7 +33,6 @@ public class DBConnector {
         props.setProperty("ssl", "true");
         props.setProperty("sslmode", "verify-full");
         props.setProperty("sslrootcert", CPATH);
-        System.out.println(CPATH);
         conn = DriverManager.getConnection(DB_URL, props);
     }
 
