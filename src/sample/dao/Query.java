@@ -36,7 +36,7 @@ public class Query {
 
     /**
      * Runs <code>UPDATE</code>, <code>INSERT</code> and <code>DELETE</code>
-     * statement.
+     * statement. May be deprecated for capstone-music.
      *
      * @param q the string query to run
      */
