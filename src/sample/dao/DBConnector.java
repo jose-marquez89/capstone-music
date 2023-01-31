@@ -1,6 +1,7 @@
 package sample.dao;
 
 import java.sql.*;
+import java.util.Properties;
 
 /**
  * Creates connections to the MySQL database across
@@ -11,11 +12,12 @@ import java.sql.*;
  * @author Jose Marquez
  */
 public class DBConnector {
-    private static final String DB_URL = "jdbc:mysql://" + System.getenv("DB_CONN");
+    private static final String DB_URL = "jdbc:postgresql://" + System.getenv("DB_CONN");
     private static final String UNAME = System.getenv("USERNAME");
     private static final String PWORD = System.getenv("PASSWORD");
-
+    private static final String CPATH = System.getenv("CERT_PATH");
     private static Connection conn;
+    private static Properties props = new Properties();
 
     /**
      * Creates the connection to the MySQL database.
@@ -26,7 +28,13 @@ public class DBConnector {
      * @throws SQLException
      */
     public static void connect() throws SQLException {
-        conn = (Connection) DriverManager.getConnection(DB_URL, UNAME, PWORD);
+        props.setProperty("user", UNAME);
+        props.setProperty("password", PWORD);
+        props.setProperty("ssl", "true");
+        props.setProperty("sslmode", "verify-full");
+        props.setProperty("sslrootcert", CPATH);
+        System.out.println(CPATH);
+        conn = DriverManager.getConnection(DB_URL, props);
     }
 
     /**
