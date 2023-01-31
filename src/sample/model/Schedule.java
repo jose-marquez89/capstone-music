@@ -13,6 +13,7 @@ import java.util.ArrayList;
  *
  * @author Jose Marquez
  */
+// TODO: water down to Session, doesn't need to be as fully featured
 public class Schedule {
     private static ObservableList<Customer> customers = FXCollections.observableArrayList();
     private static ArrayList<Appointment> appointments = new ArrayList<Appointment>();
