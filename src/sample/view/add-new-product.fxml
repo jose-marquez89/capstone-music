@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane prefHeight="176.0" prefWidth="225.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.AddNewProduct">
+   <children>
+      <VBox layoutX="13.0" layoutY="12.0" prefHeight="152.0" prefWidth="200.0" spacing="10.0">
+         <children>
+            <TextField promptText="Name" />
+            <TextField promptText="Price" />
+            <TextField promptText="Quantity" />
+            <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button mnemonicParsing="false" text="Save" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
