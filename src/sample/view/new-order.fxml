@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox layoutX="17.0" layoutY="21.0" prefHeight="369.0" prefWidth="845.0" spacing="10.0">
+         <children>
+            <VBox alignment="TOP_RIGHT">
+               <children>
+                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="306.0">
+                    <columns>
+                      <TableColumn prefWidth="183.0" text="Product" />
+                      <TableColumn text="Price" />
+                        <TableColumn minWidth="0.0" prefWidth="49.0" text="Stock" />
+                    </columns>
+                  </TableView>
+                  <Button mnemonicParsing="false" text="Add Product">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_RIGHT">
+               <children>
+                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="280.0">
+                    <columns>
+                      <TableColumn prefWidth="146.0" text="Service" />
+                      <TableColumn prefWidth="87.0" text="Price" />
+                    </columns>
+                  </TableView>
+                  <Button mnemonicParsing="false" text="Add Service">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_RIGHT">
+               <children>
+                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="232.0">
+                    <columns>
+                      <TableColumn prefWidth="138.0" text="Item" />
+                      <TableColumn prefWidth="81.0" text="Price" />
+                    </columns>
+                  </TableView>
+                  <HBox prefHeight="65.0" prefWidth="232.0">
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="-1.0" layoutY="5.0" text="Total:" />
+                              <Label layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" text="Price" textAlignment="CENTER" />
+                           </children>
+                           <HBox.margin>
+                              <Insets left="2.0" />
+                           </HBox.margin>
+                        </Pane>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Button layoutX="17.0" mnemonicParsing="false" text="Remove Item" />
+                           </children>
+                        </Pane>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Button mnemonicParsing="false" text="Submit Order" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
