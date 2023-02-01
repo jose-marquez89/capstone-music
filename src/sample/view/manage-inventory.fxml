@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="328.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.ManageInventory">
+   <children>
+      <HBox layoutX="10.0" layoutY="17.0" prefHeight="295.0" prefWidth="554.0" spacing="10.0">
+         <children>
+            <VBox prefHeight="295.0" prefWidth="289.0">
+               <children>
+                  <TableView prefHeight="200.0" prefWidth="268.0">
+                    <columns>
+                      <TableColumn prefWidth="135.0" text="Product" />
+                      <TableColumn prefWidth="105.0" text="Price" />
+                        <TableColumn prefWidth="48.0" text="Stock" />
+                    </columns>
+                  </TableView>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Remove" />
+                        <Button mnemonicParsing="false" text="Update" />
+                        <Button mnemonicParsing="false" text="Add New" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="295.0" prefWidth="242.0">
+               <children>
+                  <TableView prefHeight="227.0" prefWidth="261.0">
+                    <columns>
+                      <TableColumn prefWidth="135.0" text="Service" />
+                      <TableColumn prefWidth="105.0" text="Price" />
+                    </columns>
+                  </TableView>
+                  <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" text="Remove" />
+                        <Button mnemonicParsing="false" text="Update" />
+                        <Button mnemonicParsing="false" text="Add New" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="BOTTOM_RIGHT">
+                     <children>
+                        <Button mnemonicParsing="false" text="Main Menu" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
