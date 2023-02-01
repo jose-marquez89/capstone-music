@@ -118,7 +118,7 @@ public class LogInController implements Initializable {
                 }
 
                 // Schedule.setCurrentUser(queuedUser);
-                root = FXMLLoader.load(getClass().getResource("../view/user-dashboard.fxml"));
+                root = FXMLLoader.load(getClass().getResource("../view/manager-cmd-ctrl.fxml"));
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
