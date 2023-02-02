@@ -22,4 +22,8 @@ public class Session {
     public static String getManagerUserName() {
         return manager.getUsername();
     }
+
+    public static int getManagerStoreId() {
+        return manager.getStoreId();
+    }
 }
