@@ -6,8 +6,8 @@ public class Manager extends Employee {
     private String username;
     private int storeId;
 
-    public Manager(int id, LocalDateTime startdate, LocalDateTime enddate, String username, int storeId) {
-        super(id, startdate, enddate);
+    public Manager(int id, String name, LocalDateTime startdate, LocalDateTime enddate, String username, int storeId) {
+        super(id, name, startdate, enddate);
         this.username = username;
         this.storeId = storeId;
     }
