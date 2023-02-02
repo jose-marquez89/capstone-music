@@ -3,18 +3,23 @@ VALUES
 	('Manager'),
 	('Sales Associate');
 	
-
-INSERT INTO employee (name, start_date, end_date, role_id)
+INSERT INTO store (name, city, state, zip, street)
 VALUES
-	('Admin Manager', '2020-01-01', NULL, 1),
-	('Eric Clapton', '2021-08-23', NULL, 2),
-    ('Janice Joplin', '2019-04-19', NULL, 2),
-    ('Miles Davis', '2020-02-14', NULL, 1),
-    ('Herbie Hancock', '2020-01-23', NULL, 2),
-    ('Emily Remler', '2020-05-18', NULL, 2),
-    ('John Williams', '2019-12-25', NULL, 1),
-    ('Aaron Copland', '2019-11-30', NULL, 2),
-    ('Andres Segovia', '2020-03-15', NULL, 2);
+	('Capstone Music #1', 'Sacramento', 'CA', '95823', '7912 Deer Creek Dr'),
+    ('Capstone Music #2', 'Austin', 'TX', '78731', '7015 Village Center Dr'),
+    ('Capstone Music #3', 'New York', 'NY', '11221', '236 Malcolm X Blvd');
+
+INSERT INTO employee (name, start_date, end_date, role_id, store_id)
+VALUES
+	('Admin Manager', '2020-01-01', NULL, 1, 1),
+	('Eric Clapton', '2021-08-23', NULL, 2, 1),
+    ('Janice Joplin', '2019-04-19', NULL, 2, 1),
+    ('Miles Davis', '2020-02-14', NULL, 1, 2),
+    ('Herbie Hancock', '2020-01-23', NULL, 2, 2),
+    ('Emily Remler', '2020-05-18', NULL, 2, 2),
+    ('John Williams', '2019-12-25', NULL, 1, 3),
+    ('Aaron Copland', '2019-11-30', NULL, 2, 3),
+    ('Andres Segovia', '2020-03-15', NULL, 2, 3);
 	
 INSERT INTO customer (name, email, phone)
 VALUES 
@@ -24,12 +29,6 @@ VALUES
     ('Condoleezza Rice', 'crice@earthlink.com', '(456)-123-2348'),
     ('Michelle Obama', 'mobama@gmail.com', '(234)-234-3945'),
     ('Laura Bush', 'lbush@outlook.com', '(234)-334-3457');
-
-INSERT INTO store (name, city, state, zip, street)
-VALUES 
-	('Capstone Music #1', 'Sacramento', 'CA', '95823', '7912 Deer Creek Dr'),
-    ('Capstone Music #2', 'Austin', 'TX', '78731', '7015 Village Center Dr'),
-    ('Capstone Music #3', 'New York', 'NY', '11221', '236 Malcolm X Blvd');
 
 INSERT INTO product (name, price)
 VALUES 

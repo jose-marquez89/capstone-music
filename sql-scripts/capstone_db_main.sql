@@ -43,14 +43,14 @@ CREATE TABLE employee (
 	name varchar(50),
 	start_date timestamp, -- defaults to no time zone
 	end_date timestamp, 
-	role_id integer REFERENCES role (id)
+	role_id integer REFERENCES role (id),
+	store_id integer REFERENCES store (id)
 );
 
 CREATE TABLE manager_detail (
 	employee_id integer REFERENCES employee (id),
 	user_name varchar(25),
-	password varchar(40),
-	store_id integer REFERENCES store (id)
+	password varchar(40)
 );
 
 CREATE TABLE "order" (
