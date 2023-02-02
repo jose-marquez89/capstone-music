@@ -62,7 +62,7 @@ public class LogInController implements Initializable {
         int id, storeId;
         Manager sessionManager = null;
         String username, name, createdBy, managerDetailsQ;
-        LocalDateTime startdate, enddate;
+        LocalDateTime startDate, endDate;
         String candidatePword = passwordField.getText();
         String candidateUname = usernameField.getText();
         ResourceBundle localeBundle = ResourceBundle.getBundle("Nat", Locale.getDefault());
@@ -82,15 +82,11 @@ public class LogInController implements Initializable {
             // we really don't need the User class
             id = Integer.parseInt(queryResult.getString("employee_id"));
             username = queryResult.getString("user_name");
-            storeId = queryResult.getInt("store_id");
-
 
             if (candidatePword.equals(queryResult.getString("password"))) {
                 // create the session's manager
                 managerDetailsQ = """
-                        SELECT e.*,
-                            m.user_name,
-                            m.store_id
+                        SELECT e.*, m.user_name
                         FROM employee AS e
                         JOIN manager_detail AS m
                         ON e.id = m.employee_id
@@ -104,13 +100,14 @@ public class LogInController implements Initializable {
 
                 if (mgrResult.next()) {
                     name = mgrResult.getString("name");
-                    startdate = mgrResult.getTimestamp("start_date").toLocalDateTime();
+                    storeId = mgrResult.getInt("store_id");
+                    startDate = mgrResult.getTimestamp("start_date").toLocalDateTime();
                     try {
-                        enddate = mgrResult.getTimestamp("end_date").toLocalDateTime();
+                        endDate = mgrResult.getTimestamp("end_date").toLocalDateTime();
                     } catch (NullPointerException npe){
-                        enddate = null;
+                        endDate = null;
                     }
-                    sessionManager = new Manager(id, name, startdate, enddate, candidateUname, storeId);
+                    sessionManager = new Manager(id, name, startDate, endDate, candidateUname, storeId);
                     Session.setManager(sessionManager);
                 } else {
                     // TODO: change to proper logging event and break
