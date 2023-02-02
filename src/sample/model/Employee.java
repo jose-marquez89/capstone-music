@@ -4,21 +4,21 @@ import java.time.LocalDateTime;
 
 abstract public class Employee extends Person {
     private int id;
-    private LocalDateTime startdate;
-    private LocalDateTime enddate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
-    public Employee(int id, String name, LocalDateTime startdate, LocalDateTime enddate) {
+    public Employee(int id, String name, LocalDateTime startDate, LocalDateTime endDate) {
         super(name);
         this.id = id;
-        this.startdate = startdate;
-        this.enddate = enddate;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    public LocalDateTime getStartdate() {
-        return startdate;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public LocalDateTime getEnddate() {
-        return enddate;
+    public LocalDateTime getEndDate() {
+        return endDate;
     }
 }
