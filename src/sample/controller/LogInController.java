@@ -12,9 +12,8 @@ import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Manager;
-import sample.model.Schedule;
-import sample.model.User;
 import sample.utility.LogInLogger;
+import sample.utility.Session;
 
 import javax.xml.transform.Result;
 import java.io.IOException;
@@ -62,7 +61,7 @@ public class LogInController implements Initializable {
     public void logIn(ActionEvent event) throws SQLException, IOException {
         int id, storeId;
         Manager sessionManager = null;
-        String name, createdBy, managerDetailsQ;
+        String username, name, createdBy, managerDetailsQ;
         LocalDateTime startdate, enddate;
         String candidatePword = passwordField.getText();
         String candidateUname = usernameField.getText();
@@ -82,7 +81,7 @@ public class LogInController implements Initializable {
         if (queryResult.next()) {
             // we really don't need the User class
             id = Integer.parseInt(queryResult.getString("employee_id"));
-            name = queryResult.getString("user_name");
+            username = queryResult.getString("user_name");
             storeId = queryResult.getInt("store_id");
 
 
@@ -100,18 +99,19 @@ public class LogInController implements Initializable {
 
                 PreparedStatement managerPs = Query.pendingStatement(managerDetailsQ);
                 managerPs.setInt(1, id);
-                System.out.println("Currently attempting to log in employee id: " + id);
 
                 mgrResult = managerPs.executeQuery();
 
                 if (mgrResult.next()) {
+                    name = mgrResult.getString("name");
                     startdate = mgrResult.getTimestamp("start_date").toLocalDateTime();
                     try {
                         enddate = mgrResult.getTimestamp("end_date").toLocalDateTime();
                     } catch (NullPointerException npe){
                         enddate = null;
                     }
-                    sessionManager = new Manager(id, startdate, enddate, candidateUname, storeId);
+                    sessionManager = new Manager(id, name, startdate, enddate, candidateUname, storeId);
+                    Session.setManager(sessionManager);
                 } else {
                     // TODO: change to proper logging event and break
                     System.out.println("Something's gone wrong with manager log in and DB");
@@ -121,6 +121,7 @@ public class LogInController implements Initializable {
                 root = FXMLLoader.load(getClass().getResource("../view/manager-cmd-ctrl.fxml"));
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
+                stage.setTitle("Manager Console");
                 stage.setScene(scene);
                 stage.setX(100.0);
                 stage.setY(5.0);
