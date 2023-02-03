@@ -43,7 +43,7 @@
                            <VBox.margin>
                               <Insets />
                            </VBox.margin></Button>
-                        <Button minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" text="Manage Inventory" />
+                        <Button minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" text="Manage Inventory" onAction="#manageInventory"/>
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
