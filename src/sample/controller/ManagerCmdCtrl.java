@@ -110,4 +110,17 @@ public class ManagerCmdCtrl implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void viewReports(ActionEvent event) throws IOException {
+        // TODO: add reporting view
+    }
+
+    public void manageInventory(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("../view/manage-inventory.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Inventory Management");
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
