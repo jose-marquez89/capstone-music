@@ -32,29 +32,13 @@
                <children>
                   <TableView fx:id="associateTbl" prefHeight="184.0" prefWidth="369.0">
                     <columns>
-                      <TableColumn fx:id="associateNameCol" prefWidth="163.0" text="Employee" />
+                      <TableColumn fx:id="associateNameCol" prefWidth="163.0" text="Sales Associate" />
                       <TableColumn fx:id="associateStartDtCol" minWidth="8.0" prefWidth="168.0" text="Start Date" />
                     </columns>
                   </TableView>
-                  <HBox alignment="TOP_CENTER" prefHeight="3.0" prefWidth="350.0" spacing="10.0">
-                     <children>
-                        <Button mnemonicParsing="false" prefWidth="150.0" text="Start Session">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Terminate Employee">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin>
-                  </HBox>
                   <VBox alignment="TOP_CENTER" prefHeight="22.0" prefWidth="350.0" spacing="10.0">
                      <children>
+                        <Button mnemonicParsing="false" prefWidth="150.0" text="Start Session" onAction="#startSession" />
                         <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="View Reports">
                            <VBox.margin>
                               <Insets />
@@ -62,7 +46,7 @@
                         <Button minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" text="Manage Inventory" />
                      </children>
                      <VBox.margin>
-                        <Insets />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </VBox>
                </children>
