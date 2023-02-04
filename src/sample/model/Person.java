@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
  * @author Jose Marquez
  */
 abstract public class Person {
+    private int id;
     private String name;
 
     /**
@@ -17,8 +18,13 @@ abstract public class Person {
      *
      * @param name the string name of the intended person
      */
-    public Person(String name) {
+    public Person(int id, String name) {
+        this.id = id;
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getName() {
