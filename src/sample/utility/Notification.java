@@ -56,7 +56,7 @@ public class Notification {
         Alert noSelectionAlert = new Alert(Alert.AlertType.INFORMATION);
 
         noSelectionAlert.setTitle(title);
-        noSelectionAlert.setContentText(String.format("You must select the %s you would like to update.", selectionObjectType));
+        noSelectionAlert.setContentText(String.format("You must select a %s to continue.", selectionObjectType));
         noSelectionAlert.show();
     }
 
