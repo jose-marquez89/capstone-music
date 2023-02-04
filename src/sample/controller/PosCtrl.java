@@ -19,6 +19,7 @@ import sample.utility.Notification;
 import sample.utility.Session;
 import sample.utility.SimpleSearch;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -81,6 +82,15 @@ public class PosCtrl implements Initializable {
         customerTable.setItems(customerContainer);
     }
 
+    private void switchForms(ActionEvent e, String formName, String title) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("../view/" + formName));
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        stage.setTitle(title);
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void searchForCustomer(ActionEvent e) {
         String searchQuery = customerSearchField.getText();
         customerContainer.clear();
@@ -89,12 +99,7 @@ public class PosCtrl implements Initializable {
     }
 
     public void endSession(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("../view/log-in.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Capstone Music");
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        switchForms(event, "log-in.fxml", "Capstone Music");
     }
 
     public void newOrder(ActionEvent event) throws IOException {
@@ -106,11 +111,10 @@ public class PosCtrl implements Initializable {
 
         // TODO: you may need to "flush" the current customer at the end of the order session
         Session.setCurrentCustomer(customerSelectionModel.getSelectedItem());
-        root = FXMLLoader.load(getClass().getResource("../view/new-order.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("New Order");
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        switchForms(event, "new-order.fxml", "New Order");
+    }
+
+    public void addNewCustomer(ActionEvent event) throws IOException {
+        switchForms(event, "new-customer-form.fxml", "New Customer");
     }
 }
