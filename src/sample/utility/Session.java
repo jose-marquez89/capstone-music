@@ -1,11 +1,13 @@
 package sample.utility;
 
+import sample.model.Customer;
 import sample.model.Manager;
 import sample.model.SalesAssociate;
 
 public class Session {
     private static Manager manager;
     private static SalesAssociate salesAssociate;
+    private static Customer currentCustomer;
 
     public static void setManager(Manager manager) {
         Session.manager = manager;
@@ -25,5 +27,13 @@ public class Session {
 
     public static int getManagerStoreId() {
         return manager.getStoreId();
+    }
+
+    public static void setCurrentCustomer(Customer currentCustomer) {
+        Session.currentCustomer = currentCustomer;
+    }
+
+    public static Customer getCurrentCustomer() {
+        return currentCustomer;
     }
 }
