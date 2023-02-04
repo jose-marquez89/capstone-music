@@ -9,26 +9,33 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Customer;
+import sample.utility.SimpleSearch;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PosCtrl implements Initializable {
+    @FXML TextField customerSearchField;
+    @FXML Button customerSearchBtn;
     @FXML TableView<Customer> customerTable;
     @FXML TableColumn<Customer, String> customerNameCol;
     @FXML TableColumn<Customer, String> customerEmailCol;
     @FXML TableColumn<Customer, String> customerPhoneCol;
     @FXML ObservableList<Customer> customerContainer = FXCollections.observableArrayList();
+    private ArrayList<Customer> scannedCustomers;
 
     private Parent root;
     private Scene scene;
@@ -40,6 +47,7 @@ public class PosCtrl implements Initializable {
         String customersQuery, name, phone, email;
         ResultSet customerRs;
 
+        scannedCustomers = new ArrayList<Customer>();
         customerNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         customerEmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
         customerPhoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
@@ -59,6 +67,11 @@ public class PosCtrl implements Initializable {
                 email = customerRs.getString("email");
                 phone = customerRs.getString("phone");
                 custId = customerRs.getInt("id");
+
+                // scanned customers will contain all customers for performing search
+                scannedCustomers.add(new Customer(custId, name, email, phone));
+
+                // customer container will reflect search result
                 customerContainer.add(new Customer(custId, name, email, phone));
             }
 
@@ -66,6 +79,13 @@ public class PosCtrl implements Initializable {
             throw new RuntimeException(e);
         }
 
+        customerTable.setItems(customerContainer);
+    }
+
+    public void searchForCustomer(ActionEvent e) {
+        String searchQuery = customerSearchField.getText();
+        customerContainer.clear();
+        customerContainer.addAll(SimpleSearch.searchCustomer(scannedCustomers, searchQuery));
         customerTable.setItems(customerContainer);
     }
 
