@@ -18,8 +18,8 @@
          <children>
             <HBox prefHeight="19.0" prefWidth="426.0" spacing="10.0">
                <children>
-                  <TextField promptText="Find a customer..." />
-                  <Button mnemonicParsing="false" text="Search" />
+                  <TextField fx:id="customerSearchField" promptText="Find a customer..." />
+                  <Button fx:id="customerSearchBtn" mnemonicParsing="false" onAction="#searchForCustomer" text="Search" />
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -27,9 +27,9 @@
             </HBox>
             <TableView fx:id="customerTable" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn fx:id="customerNameCol" prefWidth="161.0" text="Name" />
-                <TableColumn fx:id="customerEmailCol" minWidth="0.0" prefWidth="144.0" text="Email" />
-                  <TableColumn fx:id="customerPhoneCol" prefWidth="119.0" text="Phone" />
+                <TableColumn fx:id="customerNameCol" prefWidth="160.0" text="Name" />
+                <TableColumn fx:id="customerEmailCol" minWidth="0.0" prefWidth="137.0" text="Email" />
+                  <TableColumn fx:id="customerPhoneCol" prefWidth="125.0" text="Phone" />
               </columns>
             </TableView>
             <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
