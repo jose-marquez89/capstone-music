@@ -4,22 +4,32 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="329.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="346.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.PosCtrl">
    <children>
-      <VBox layoutX="14.0" layoutY="21.0" prefHeight="288.0" prefWidth="426.0">
+      <VBox layoutX="14.0" layoutY="14.0" prefHeight="320.0" prefWidth="426.0">
          <children>
-            <TableView prefHeight="200.0" prefWidth="200.0">
+            <HBox prefHeight="19.0" prefWidth="426.0" spacing="10.0">
+               <children>
+                  <TextField promptText="Find a customer..." />
+                  <Button mnemonicParsing="false" text="Search" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </HBox>
+            <TableView fx:id="customerTable" prefHeight="200.0" prefWidth="200.0">
               <columns>
-                <TableColumn prefWidth="161.0" text="Name" />
-                <TableColumn minWidth="0.0" prefWidth="144.0" text="Email" />
-                  <TableColumn prefWidth="119.0" text="Phone" />
+                <TableColumn fx:id="customerNameCol" prefWidth="161.0" text="Name" />
+                <TableColumn fx:id="customerEmailCol" minWidth="0.0" prefWidth="144.0" text="Email" />
+                  <TableColumn fx:id="customerPhoneCol" prefWidth="119.0" text="Phone" />
               </columns>
             </TableView>
             <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
@@ -35,7 +45,7 @@
                   <Button mnemonicParsing="false" prefWidth="150.0" text="New Order" />
                   <Button mnemonicParsing="false" prefWidth="150.0" text="Return" GridPane.columnIndex="1" />
                   <Button mnemonicParsing="false" prefWidth="150.0" text="New Customer" GridPane.rowIndex="1" />
-                  <Button mnemonicParsing="false" prefWidth="150.0" text="End Session" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#endSession" prefWidth="150.0" text="End Session" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
