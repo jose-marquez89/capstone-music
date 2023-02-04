@@ -17,8 +17,8 @@ public class Customer extends Person {
      * @param phone the <code>phone</code> field from the <code>customers</code> table in database
      * @param email the customer's email in username@domain.com format
      */
-    public Customer(String name, String phone, String email) {
-        super(name);
+    public Customer(int id, String name, String email, String phone) {
+        super(id, name);
         this.phone = phone;
         this.email = email;
     }
