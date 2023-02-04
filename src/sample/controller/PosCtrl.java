@@ -9,15 +9,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Customer;
+import sample.utility.Notification;
+import sample.utility.Session;
 import sample.utility.SimpleSearch;
 
 import java.io.IOException;
@@ -29,7 +28,7 @@ import java.util.ResourceBundle;
 
 public class PosCtrl implements Initializable {
     @FXML TextField customerSearchField;
-    @FXML Button customerSearchBtn;
+    @FXML Button customerSearchBtn, newOrderBtn;
     @FXML TableView<Customer> customerTable;
     @FXML TableColumn<Customer, String> customerNameCol;
     @FXML TableColumn<Customer, String> customerEmailCol;
@@ -93,6 +92,23 @@ public class PosCtrl implements Initializable {
         root = FXMLLoader.load(getClass().getResource("../view/log-in.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Capstone Music");
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void newOrder(ActionEvent event) throws IOException {
+        SelectionModel<Customer> customerSelectionModel = customerTable.getSelectionModel();
+        if (customerSelectionModel.isEmpty()) {
+            Notification.noSelection("New Order", "customer");
+            return;
+        }
+
+        // TODO: you may need to "flush" the current customer at the end of the order session
+        Session.setCurrentCustomer(customerSelectionModel.getSelectedItem());
+        root = FXMLLoader.load(getClass().getResource("../view/new-order.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("New Order");
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
