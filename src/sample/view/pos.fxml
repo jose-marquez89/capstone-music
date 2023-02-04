@@ -42,7 +42,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefWidth="150.0" text="New Order" />
+                  <Button mnemonicParsing="false" prefWidth="150.0" text="New Order" fx:id="newOrderBtn" onAction="#newOrder" />
                   <Button mnemonicParsing="false" prefWidth="150.0" text="Return" GridPane.columnIndex="1" />
                   <Button mnemonicParsing="false" prefWidth="150.0" text="New Customer" GridPane.rowIndex="1" />
                   <Button mnemonicParsing="false" onAction="#endSession" prefWidth="150.0" text="End Session" GridPane.columnIndex="1" GridPane.rowIndex="1" />
