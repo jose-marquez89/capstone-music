@@ -5,9 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-//import sample.utility.DisplayContacts;
-//import sample.utility.DisplayLocations;
-//import sample.utility.DisplayMinutes;
 import sample.utility.LogInLogger;
 
 import java.io.IOException;
@@ -16,10 +13,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         // make static utilities available to application
-        // TODO: remove initializers as needed
-//        DisplayMinutes.initializeMinutes();
-//        DisplayLocations.initializeLocations();
-//        DisplayContacts.initializeContacts();
         LogInLogger.initializeLogger();
 
         Parent root = FXMLLoader.load(getClass().getResource("view/log-in.fxml"));
