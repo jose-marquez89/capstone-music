@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.NewOrderCtrl">
    <children>
       <HBox layoutX="17.0" layoutY="21.0" prefHeight="369.0" prefWidth="845.0" spacing="10.0">
          <children>
@@ -77,7 +77,7 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Button mnemonicParsing="false" text="Cancel" onAction="#toPos" />
                         <Button mnemonicParsing="false" text="Submit Order" />
                      </children>
                   </HBox>

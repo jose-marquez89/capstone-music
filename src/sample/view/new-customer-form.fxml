@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="165.0" prefWidth="262.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.NewCustomerCtrl">
    <children>
       <VBox layoutX="12.0" layoutY="16.0" prefHeight="133.0" prefWidth="238.0" spacing="10.0">
          <children>
@@ -28,7 +28,7 @@
             </TextField>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="49.0" prefWidth="237.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" text="Cancel" />
+                  <Button mnemonicParsing="false" text="Cancel" onAction="#cancel" />
                   <Button mnemonicParsing="false" text="Save" />
                </children>
             </HBox>

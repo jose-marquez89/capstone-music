@@ -53,7 +53,7 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT">
                      <children>
-                        <Button mnemonicParsing="false" text="Main Menu" />
+                        <Button mnemonicParsing="false" text="Manager Console" onAction="#toManagerConsole" />
                      </children>
                   </HBox>
                </children>
