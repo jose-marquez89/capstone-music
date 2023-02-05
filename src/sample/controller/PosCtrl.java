@@ -88,6 +88,7 @@ public class PosCtrl implements Initializable {
         stage.setTitle(title);
         scene = new Scene(root);
         stage.setScene(scene);
+        root.requestFocus();
         stage.show();
     }
 
