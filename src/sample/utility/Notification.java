@@ -115,4 +115,20 @@ public class Notification {
 
         alert.show();
     }
+
+    public static void blankName() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Blank Name Input");
+        alert.setContentText("Name field cannot be blank. Please enter a name.");
+
+        alert.show();
+    }
+
+    public static void emailPhoneError() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Detail Input");
+        alert.setContentText("Malformed phone or email input, please follow the formats below.\nPhone format: (###) ###-####\nEmail format: username@yourdomain.com");
+
+        alert.show();
+    }
 }
