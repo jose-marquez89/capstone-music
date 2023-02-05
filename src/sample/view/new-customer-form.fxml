@@ -11,17 +11,17 @@
    <children>
       <VBox layoutX="12.0" layoutY="16.0" prefHeight="133.0" prefWidth="238.0" spacing="10.0">
          <children>
-            <TextField promptText="Customer Name">
+            <TextField promptText="Customer Name" fx:id="customerNameField">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </TextField>
-            <TextField promptText="customer@email.com">
+            <TextField promptText="customer@email.com" fx:id="customerEmailField">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </TextField>
-            <TextField promptText="(123)-456-7890">
+            <TextField promptText="(123)-456-7890" fx:id="customerPhoneField">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -29,7 +29,7 @@
             <HBox alignment="BOTTOM_RIGHT" prefHeight="49.0" prefWidth="237.0" spacing="10.0">
                <children>
                   <Button mnemonicParsing="false" text="Cancel" onAction="#cancel" />
-                  <Button mnemonicParsing="false" text="Save" />
+                  <Button mnemonicParsing="false" text="Save" onAction="#saveNewCustomer" />
                </children>
             </HBox>
          </children>
