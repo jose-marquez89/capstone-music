@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -10,21 +11,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.NewOrderCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.NewOrderCtrl">
    <children>
-      <HBox layoutX="17.0" layoutY="21.0" prefHeight="369.0" prefWidth="845.0" spacing="10.0">
+      <HBox layoutX="12.0" layoutY="65.0" prefHeight="369.0" prefWidth="845.0" spacing="10.0">
          <children>
             <VBox alignment="TOP_RIGHT">
                <children>
-                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="306.0">
+                  <TableView fx:id="orderProductsTable" minHeight="-Infinity" prefHeight="270.0" prefWidth="306.0">
                     <columns>
-                      <TableColumn prefWidth="183.0" text="Product" />
-                      <TableColumn text="Price" />
-                        <TableColumn minWidth="0.0" prefWidth="49.0" text="Stock" />
+                      <TableColumn fx:id="productNameCol" prefWidth="183.0" text="Product" />
+                      <TableColumn fx:id="productPriceCol" text="Price" />
+                        <TableColumn fx:id="productStockCol" minWidth="0.0" prefWidth="49.0" text="Stock" />
                     </columns>
                   </TableView>
-                  <Button mnemonicParsing="false" text="Add Product">
+                  <Button mnemonicParsing="false" text="Add Product" onAction="#addProduct">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -33,25 +33,28 @@
             </VBox>
             <VBox alignment="TOP_RIGHT">
                <children>
-                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="280.0">
+                  <TableView fx:id="orderServiceTable" minHeight="-Infinity" prefHeight="270.0" prefWidth="280.0">
                     <columns>
-                      <TableColumn prefWidth="146.0" text="Service" />
-                      <TableColumn prefWidth="87.0" text="Price" />
+                      <TableColumn fx:id="serviceNameCol" prefWidth="146.0" text="Service" />
+                      <TableColumn fx:id="servicePriceCol" prefWidth="87.0" text="Price" />
                     </columns>
                   </TableView>
-                  <Button mnemonicParsing="false" text="Add Service">
+                  <HBox alignment="TOP_RIGHT" spacing="10.0">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
-                  </Button>
+                     <children>
+                        <Button mnemonicParsing="false" text="Add Service" onAction="#addService" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox alignment="TOP_RIGHT">
                <children>
-                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="232.0">
+                  <TableView fx:id="orderItemsTable" minHeight="-Infinity" prefHeight="270.0" prefWidth="232.0">
                     <columns>
-                      <TableColumn prefWidth="138.0" text="Item" />
-                      <TableColumn prefWidth="81.0" text="Price" />
+                      <TableColumn fx:id="orderNameCol" prefWidth="138.0" text="Item" />
+                      <TableColumn fx:id="orderPriceCol" prefWidth="81.0" text="Price" />
                     </columns>
                   </TableView>
                   <HBox prefHeight="65.0" prefWidth="232.0">
@@ -59,7 +62,7 @@
                         <Pane prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="-1.0" layoutY="5.0" text="Total:" />
-                              <Label layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" text="Price" textAlignment="CENTER" />
+                              <Label layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" textAlignment="CENTER" fx:id="totalDisplay" />
                            </children>
                            <HBox.margin>
                               <Insets left="2.0" />
@@ -67,7 +70,7 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button layoutX="17.0" mnemonicParsing="false" text="Remove Item" />
+                              <Button layoutX="17.0" mnemonicParsing="false" text="Remove Item" onAction="#removeItem"/>
                            </children>
                         </Pane>
                      </children>
@@ -77,12 +80,18 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Cancel" onAction="#toPos" />
+                        <Button mnemonicParsing="false" onAction="#toPos" text="Cancel" />
                         <Button mnemonicParsing="false" text="Submit Order" />
                      </children>
                   </HBox>
                </children>
             </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="331.0" layoutY="19.0" prefHeight="37.0" prefWidth="280.0" spacing="10.0">
+         <children>
+            <Label text="Filter By:" />
+            <ChoiceBox fx:id="serviceFilterCb" onAction="#filterServices" prefHeight="25.0" prefWidth="160.0" />
          </children>
       </HBox>
    </children>
