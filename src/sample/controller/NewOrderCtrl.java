@@ -198,6 +198,12 @@ public class NewOrderCtrl implements Initializable {
         orderServiceTable.setItems(serviceContainer);
     }
 
+    private boolean validateOrder() {
+        // TODO: finish validation - order products cannot exceed on hand qty
+        int productId, productCount;
+        ArrayList<Product> orderProducts = new ArrayList<Product>();
+        return false;
+    }
     private double getOrderTotal() {
         double total = 0.00;
         total = orderLineContainer.stream().mapToDouble(i -> i.getPrice()).reduce(0.0, (a, b) -> a + b);
