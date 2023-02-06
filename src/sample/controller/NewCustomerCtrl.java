@@ -19,9 +19,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class NewCustomerCtrl {
-    @FXML TextField customerNameField;
-    @FXML TextField customerEmailField;
-    @FXML TextField customerPhoneField;
+    @FXML private TextField customerNameField;
+    @FXML private TextField customerEmailField;
+    @FXML private TextField customerPhoneField;
     private Parent root;
     private Stage stage;
     private Scene scene;
