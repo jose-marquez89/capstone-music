@@ -28,13 +28,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PosCtrl implements Initializable {
-    @FXML TextField customerSearchField;
-    @FXML Button customerSearchBtn, newOrderBtn;
-    @FXML TableView<Customer> customerTable;
-    @FXML TableColumn<Customer, String> customerNameCol;
-    @FXML TableColumn<Customer, String> customerEmailCol;
-    @FXML TableColumn<Customer, String> customerPhoneCol;
-    @FXML ObservableList<Customer> customerContainer = FXCollections.observableArrayList();
+    @FXML private TextField customerSearchField;
+    @FXML private Button customerSearchBtn, newOrderBtn;
+    @FXML private TableView<Customer> customerTable;
+    @FXML private TableColumn<Customer, String> customerNameCol;
+    @FXML private TableColumn<Customer, String> customerEmailCol;
+    @FXML private TableColumn<Customer, String> customerPhoneCol;
+    @FXML private ObservableList<Customer> customerContainer = FXCollections.observableArrayList();
     private ArrayList<Customer> scannedCustomers;
 
     private Parent root;
