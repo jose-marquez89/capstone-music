@@ -23,11 +23,13 @@ import sample.model.Service;
 import sample.utility.Notification;
 import sample.utility.Session;
 
-import javax.swing.*;
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.*;
 
 public class NewOrderCtrl implements Initializable {
@@ -239,13 +241,77 @@ public class NewOrderCtrl implements Initializable {
         return true;
     }
 
-    public void submitOrder(ActionEvent e) {
-        boolean valid = validateOrder();
+    public void submitOrder(ActionEvent e) throws SQLException, IOException {
+        int customerId, salesAssociateId, storeId, newOrderId;
+        PreparedStatement orderPs, orderLineBatchPs;
+        ResultSet orderIdRs;
+        String orderQuery, orderLineQuery, orderIdQuery;
 
-        if (valid) {
-            System.out.println("Order is valid");
+        orderQuery = """
+                INSERT INTO "order" (customer_id, processing_employee, origin_store_id)
+                VALUES (?, ?, ?); 
+                """;
+
+        if (validateOrder()) {
+            // kick off the order creation process
+            customerId = Session.getCurrentCustomerId();
+            salesAssociateId = Session.getSalesAssociateId();
+            storeId = Session.getManagerStoreId();
+
+            DBConnector.connect();
+            orderPs = Query.pendingStatement(orderQuery);
+            orderPs.setInt(1, customerId);
+            orderPs.setInt(2, salesAssociateId);
+            orderPs.setInt(3, storeId);
+
+            orderPs.executeUpdate();
+
+            /*
+            get orderId - this would probably be better if the application kept track of order id
+            as opposed to the DB keeping track as it is now.
+             */
+            orderIdQuery = """
+                    SELECT MAX(id) AS max_id FROM "order";
+                    """;
+            Query.runQuery(orderIdQuery);
+            orderIdRs = Query.getResults();
+
+            if (orderIdRs.next()) {
+                newOrderId = orderIdRs.getInt("max_id");
+            } else {
+                throw new RuntimeException("No order Id could be retrieved.");
+            }
+
+            // add the statements for order lines in a batch
+            orderLineQuery = """
+                        INSERT INTO order_line (is_service, product_id, service_id, order_id, sale_price)
+                        VALUES (?, ?, ?, ?, ?);
+                        """;
+
+            orderLineBatchPs = Query.pendingStatement(orderLineQuery);
+
+            for (Item i : orderLineContainer) {
+                if (i instanceof Service) {
+                    orderLineBatchPs.setBoolean(1, true);
+                    orderLineBatchPs.setNull(2, Types.NULL);
+                    orderLineBatchPs.setInt(3, i.getId());
+                } else {
+                    orderLineBatchPs.setBoolean(1, false);
+                    orderLineBatchPs.setInt(2, i.getId());
+                    orderLineBatchPs.setNull(3, Types.NULL);
+                }
+
+                orderLineBatchPs.setInt(4, newOrderId);
+                orderLineBatchPs.setDouble(5, i.getPrice());
+                orderLineBatchPs.addBatch();
+            }
+
+            orderLineBatchPs.executeBatch();
+            Notification.orderSuccessConfirmation();
+            switchForms(e, "pos.fxml", "POS");
+
         } else {
-            System.out.println("An item exceeded on hand inventory at this story");
+            Notification.inventoryError();
         }
     }
 
