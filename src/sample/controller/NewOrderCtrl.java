@@ -28,8 +28,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class NewOrderCtrl implements Initializable {
     @FXML private TableView<Product> orderProductsTable;
@@ -198,12 +197,58 @@ public class NewOrderCtrl implements Initializable {
         orderServiceTable.setItems(serviceContainer);
     }
 
+    private class productIdComparator implements Comparator<Product> {
+
+        public int compare(Product p1, Product p2) {
+            if (p1.getId() == p2.getId())
+                return 0;
+            else if (p1.getId() > p2.getId())
+                return 1;
+            else
+                return -1;
+        }
+    }
+
     private boolean validateOrder() {
         // TODO: finish validation - order products cannot exceed on hand qty
-        int productId, productCount;
-        ArrayList<Product> orderProducts = new ArrayList<Product>();
-        return false;
+        int productId = -1, productCount = 0;
+        ArrayList<Product> productsOnly = new ArrayList<Product>();
+
+        // first you need to filter out services
+        productsOnly.addAll(
+                orderLineContainer
+                        .stream()
+                        .filter(i -> i instanceof Product)
+                        .map(i -> (Product)i).toList());
+
+        // sort products by id
+        Collections.sort(productsOnly, new productIdComparator());
+
+        for (Product p : productsOnly) {
+            if (productId == p.getId())
+                productCount++;
+            else {
+                productId = p.getId();
+                productCount = 1;
+            }
+
+            if (productCount > p.getQuantityOnHand())
+                return false;
+        }
+
+        return true;
     }
+
+    public void submitOrder(ActionEvent e) {
+        boolean valid = validateOrder();
+
+        if (valid) {
+            System.out.println("Order is valid");
+        } else {
+            System.out.println("An item exceeded on hand inventory at this story");
+        }
+    }
+
     private double getOrderTotal() {
         double total = 0.00;
         total = orderLineContainer.stream().mapToDouble(i -> i.getPrice()).reduce(0.0, (a, b) -> a + b);
