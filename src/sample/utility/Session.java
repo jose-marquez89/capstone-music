@@ -33,7 +33,10 @@ public class Session {
         Session.currentCustomer = currentCustomer;
     }
 
-    public static Customer getCurrentCustomer() {
-        return currentCustomer;
+    public static int getSalesAssociateId() {
+        return salesAssociate.getId();
+    }
+    public static int getCurrentCustomerId() {
+        return currentCustomer.getId();
     }
 }
