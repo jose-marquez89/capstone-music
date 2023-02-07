@@ -21,17 +21,14 @@ public class Notification {
     }
 
     /**
-     * Notifies the user that they have deleted a customer.
-     *
-     * @param customerName the name of the customer as a string
+     * Alerts the sales associate that the order has been successfully submitted.
      */
-    public static void customerDeleteConfirmation(String customerName) {
-        Alert customerDeleted = new Alert(Alert.AlertType.INFORMATION);
+    public static void orderSuccessConfirmation() {
+        Alert orderSubmitted = new Alert(Alert.AlertType.INFORMATION);
 
-        customerDeleted.setTitle("Update/Delete Customer");
-        customerDeleted.setContentText(String.format("Customer %s has been deleted.", customerName));
-        customerDeleted.show();
-
+        orderSubmitted.setTitle("New Order");
+        orderSubmitted.setContentText("The order has been successfully submitted.");
+        orderSubmitted.showAndWait();
     }
 
     /**
@@ -96,10 +93,10 @@ public class Notification {
     /**
      * Notifies the user of an overlapping appointment.
      */
-    public static void overlappingAppointment() {
+    public static void inventoryError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Add/Update Appointment");
-        alert.setContentText("The selected time slot overlaps with one or more existing appointments, please select another time.");
+        alert.setTitle("Submit Order");
+        alert.setContentText("One or more products exceeds current on hand inventory. Please review product lines.");
 
         alert.show();
     }
