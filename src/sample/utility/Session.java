@@ -39,4 +39,8 @@ public class Session {
     public static int getCurrentCustomerId() {
         return currentCustomer.getId();
     }
+
+    public static String getCurrentCustomerName() {
+        return currentCustomer.getName();
+    }
 }
