@@ -121,6 +121,14 @@ public class Notification {
         alert.show();
     }
 
+    public static void noOrders() {
+        Alert noStoreOrders = new Alert(Alert.AlertType.INFORMATION);
+
+        noStoreOrders.setTitle("New Return");
+        noStoreOrders.setContentText("This customer has no orders at this location.");
+        noStoreOrders.showAndWait();
+    }
+
     public static void emailPhoneError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Detail Input");
