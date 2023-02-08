@@ -10,31 +10,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="404.0" prefWidth="749.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ReturnConfigCtrl">
    <children>
-      <HBox layoutX="13.0" layoutY="18.0" prefHeight="369.0" prefWidth="724.0" spacing="10.0">
+      <HBox layoutX="13.0" layoutY="18.0" prefHeight="369.0" prefWidth="532.0" spacing="10.0">
          <children>
             <VBox alignment="TOP_RIGHT">
                <children>
-                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="180.0">
+                  <TableView fx:id="orderItemtable" minHeight="-Infinity" prefHeight="270.0" prefWidth="260.0">
                     <columns>
-                      <TableColumn prefWidth="71.0" text="Order ID" />
-                      <TableColumn prefWidth="116.0" text="Date" />
-                    </columns>
-                  </TableView>
-                  <Button mnemonicParsing="false" text="View Details">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_RIGHT">
-               <children>
-                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="260.0">
-                    <columns>
-                      <TableColumn prefWidth="155.0" text="Item" />
-                      <TableColumn prefWidth="105.0" text="Sale Price" />
+                      <TableColumn fx:id="orderItemCol" prefWidth="155.0" text="Item" />
+                      <TableColumn fx:id="orderSalePriceCol" prefWidth="105.0" text="Sale Price" />
                     </columns>
                   </TableView>
                   <Button mnemonicParsing="false" text="Add To Returns">
@@ -46,10 +31,10 @@
             </VBox>
             <VBox alignment="TOP_RIGHT">
                <children>
-                  <TableView minHeight="-Infinity" prefHeight="270.0" prefWidth="260.0">
+                  <TableView fx:id="returnTable" minHeight="-Infinity" prefHeight="270.0" prefWidth="260.0">
                     <columns>
-                      <TableColumn prefWidth="155.0" text="Item" />
-                      <TableColumn prefWidth="105.0" text="Return Value" />
+                      <TableColumn fx:id="returnItemCol" prefWidth="155.0" text="Item" />
+                      <TableColumn fx:id="returnValueCol" prefWidth="105.0" text="Return Value" />
                     </columns>
                   </TableView>
                   <HBox prefHeight="65.0" prefWidth="232.0">
@@ -57,7 +42,7 @@
                         <Pane prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="-1.0" layoutY="5.0" text="Total:" />
-                              <Label layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" text="Price" textAlignment="CENTER" />
+                              <Label fx:id="priceLabel" layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" text="Price" textAlignment="CENTER" />
                            </children>
                            <HBox.margin>
                               <Insets left="2.0" />
@@ -76,7 +61,7 @@
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
                         <Button mnemonicParsing="false" text="Cancel" />
-                        <Button mnemonicParsing="false" text="Submit Order" />
+                        <Button mnemonicParsing="false" text="Submit Return" />
                      </children>
                   </HBox>
                </children>
