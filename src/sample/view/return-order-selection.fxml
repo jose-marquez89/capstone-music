@@ -30,7 +30,7 @@
             <HBox alignment="BOTTOM_RIGHT" prefHeight="36.0" prefWidth="260.0" spacing="10.0">
                <children>
                   <Button mnemonicParsing="false" text="Cancel" onAction="#cancel"/>
-                  <Button mnemonicParsing="false" text="Select Order" />
+                  <Button mnemonicParsing="false" text="Select Order" onAction="#selectOrder"/>
                </children>
                <VBox.margin>
                   <Insets top="10.0" />
