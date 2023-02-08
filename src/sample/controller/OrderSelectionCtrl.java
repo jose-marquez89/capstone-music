@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.dao.DBConnector;
@@ -84,6 +81,28 @@ public class OrderSelectionCtrl implements Initializable {
         }
 
         customerNameLabel.setText("Customer: " + Session.getCurrentCustomerName());
+    }
+
+    public void selectOrder(ActionEvent e) throws IOException {
+        ReturnConfigCtrl returnController;
+        Order selectedOrder;
+        SelectionModel<Order> orderSm = returnOrderTable.getSelectionModel();
+        FXMLLoader returnFormLoader = new FXMLLoader(getClass().getResource("../view/return-config.fxml"));
+
+        if (orderSm.isEmpty()) {
+            Notification.noSelection("Order Selection", "order");
+            return;
+        }
+
+        selectedOrder = orderSm.getSelectedItem();
+        root = returnFormLoader.load();
+        returnController = returnFormLoader.getController();
+        returnController.setSelectedOrder(selectedOrder);
+        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Return Configuration");
+        stage.show();
     }
 
     public void formatDateCol(TableColumn col) {
