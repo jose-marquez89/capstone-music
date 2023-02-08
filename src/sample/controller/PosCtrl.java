@@ -115,6 +115,37 @@ public class PosCtrl implements Initializable {
         switchForms(event, "new-order.fxml", "New Order");
     }
 
+    public void startReturn(ActionEvent event) throws IOException, SQLException {
+        String orderCheckQuery;
+        ResultSet orderCheckRs;
+
+        SelectionModel<Customer> customerSelectionModel = customerTable.getSelectionModel();
+        if (customerSelectionModel.isEmpty()) {
+            Notification.noSelection("No Selection", "customer");
+            return;
+        }
+
+        orderCheckQuery = String.format("""
+                SELECT *
+                FROM "order"
+                WHERE customer_id = %d 
+                    AND origin_store_id = %d;
+                """, customerTable.getSelectionModel().getSelectedItem().getId(),
+                Session.getManagerStoreId());
+
+        DBConnector.connect();
+        Query.runQuery(orderCheckQuery);
+        orderCheckRs = Query.getResults();
+
+        if (!orderCheckRs.next()) {
+            Notification.noOrders();
+            return;
+        }
+
+        Session.setCurrentCustomer(customerSelectionModel.getSelectedItem());
+        switchForms(event, "return-order-selection.fxml", "Select Order");
+    }
+
     public void addNewCustomer(ActionEvent event) throws IOException {
         switchForms(event, "new-customer-form.fxml", "New Customer");
     }
