@@ -84,25 +84,15 @@ public class OrderSelectionCtrl implements Initializable {
     }
 
     public void selectOrder(ActionEvent e) throws IOException {
-        ReturnConfigCtrl returnController;
-        Order selectedOrder;
         SelectionModel<Order> orderSm = returnOrderTable.getSelectionModel();
-        FXMLLoader returnFormLoader = new FXMLLoader(getClass().getResource("../view/return-config.fxml"));
 
         if (orderSm.isEmpty()) {
             Notification.noSelection("Order Selection", "order");
             return;
         }
 
-        selectedOrder = orderSm.getSelectedItem();
-        root = returnFormLoader.load();
-        returnController = returnFormLoader.getController();
-        returnController.setSelectedOrder(selectedOrder);
-        stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Return Configuration");
-        stage.show();
+        Session.setCurrentOrder(orderSm.getSelectedItem());
+        switchForms(e, "return-config.fxml", "Return Configuration");
     }
 
     public void formatDateCol(TableColumn col) {
