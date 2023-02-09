@@ -32,15 +32,14 @@ public class Notification {
     }
 
     /**
-     * Warns the user that a customer cannot be deleted due to
-     * existing appointments.
+     * Alerts the sales associate that the return has been successfully submitted.
      */
-    public static void customerHasAppointments() {
-        Alert apptAlert = new Alert(Alert.AlertType.WARNING);
+    public static void returnSuccessConfirmation() {
+        Alert orderSubmitted = new Alert(Alert.AlertType.INFORMATION);
 
-        apptAlert.setTitle("Update/Delete Customer");
-        apptAlert.setContentText("You must delete all of this customer's appointments before attempting to delete.");
-        apptAlert.show();
+        orderSubmitted.setTitle("New Return");
+        orderSubmitted.setContentText("The return has been successfully submitted.");
+        orderSubmitted.showAndWait();
     }
 
     /**
@@ -58,57 +57,12 @@ public class Notification {
     }
 
     /**
-     * Notifies the user of an unfilled date.
-     */
-    public static void unfilledDate() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Add/Update Appointment");
-        alert.setContentText("One or more date/time fields have no selection.");
-
-        alert.show();
-    }
-
-    /**
-     * Notifies the user that no general contact has been selected.
-     */
-    public static void unfilledContacts() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Add/Update Appointment");
-        alert.setContentText("A selection must be made for Customer ID, User ID and Contact.");
-
-        alert.show();
-    }
-
-    /**
-     * Notifies the user that appointment start is not before appointment end.
-     */
-    public static void malformedAppointment() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Add/Update Appointment");
-        alert.setContentText("The appointment end date and time must be after the start date and time.");
-
-        alert.show();
-    }
-
-    /**
      * Notifies the user of an overlapping appointment.
      */
     public static void inventoryError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Submit Order");
         alert.setContentText("One or more products exceeds current on hand inventory. Please review product lines.");
-
-        alert.show();
-    }
-
-    /**
-     * Notifies the user that selected appointment times are outside
-     * of business hours.
-     */
-    public static void outOfBounds() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Add/Update Appointment");
-        alert.setContentText("Selected appointment time falls outside of business hours. Hint: Check that your appointment does not span several days.\n\nBusiness hours: 8am-10pm EST");
 
         alert.show();
     }
@@ -129,6 +83,21 @@ public class Notification {
         noStoreOrders.showAndWait();
     }
 
+    public static void emptyReturn() {
+        Alert noStoreOrders = new Alert(Alert.AlertType.ERROR);
+
+        noStoreOrders.setTitle("New Return");
+        noStoreOrders.setContentText("The return list has no products. Add products from the existing order to continue.");
+        noStoreOrders.showAndWait();
+    }
+
+    public static void notAProduct() {
+        Alert noStoreOrders = new Alert(Alert.AlertType.INFORMATION);
+
+        noStoreOrders.setTitle("Return Item");
+        noStoreOrders.setContentText("The item you have selected is a service. Services cannot be restocked and are non-refundable.");
+        noStoreOrders.showAndWait();
+    }
     public static void emailPhoneError() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Detail Input");
