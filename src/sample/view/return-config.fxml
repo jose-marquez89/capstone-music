@@ -16,13 +16,13 @@
          <children>
             <VBox alignment="TOP_RIGHT">
                <children>
-                  <TableView fx:id="orderItemtable" minHeight="-Infinity" prefHeight="270.0" prefWidth="260.0">
+                  <TableView fx:id="orderItemTable" minHeight="-Infinity" prefHeight="270.0" prefWidth="260.0">
                     <columns>
                       <TableColumn fx:id="orderItemCol" prefWidth="155.0" text="Item" />
-                      <TableColumn fx:id="orderSalePriceCol" prefWidth="105.0" text="Sale Price" />
+                      <TableColumn fx:id="orderItemSalePrice" prefWidth="105.0" text="Sale Price" />
                     </columns>
                   </TableView>
-                  <Button mnemonicParsing="false" text="Add To Returns">
+                  <Button mnemonicParsing="false" text="Add To Returns" onAction="#addReturnItem">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -42,7 +42,7 @@
                         <Pane prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="-1.0" layoutY="5.0" text="Total:" />
-                              <Label fx:id="priceLabel" layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" text="Price" textAlignment="CENTER" />
+                              <Label fx:id="returnValueLabel" layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" textAlignment="CENTER" />
                            </children>
                            <HBox.margin>
                               <Insets left="2.0" />
@@ -50,7 +50,7 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button layoutX="30.0" mnemonicParsing="false" text="Remove Item" />
+                              <Button layoutX="30.0" mnemonicParsing="false" text="Remove Item" onAction="#removeReturnItem"/>
                            </children>
                         </Pane>
                      </children>
@@ -60,8 +60,8 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Cancel" />
-                        <Button mnemonicParsing="false" text="Submit Return" />
+                        <Button mnemonicParsing="false" text="Cancel" onAction="#cancel"/>
+                        <Button mnemonicParsing="false" text="Submit Return" onAction="#submitReturn" />
                      </children>
                   </HBox>
                </children>
