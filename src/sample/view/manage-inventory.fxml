@@ -23,7 +23,7 @@
                   </TableView>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Remove" />
+                        <Button mnemonicParsing="false" text="Remove" onAction="#removeProduct" />
                         <Button mnemonicParsing="false" text="Update" />
                         <Button mnemonicParsing="false" text="Add New" />
                      </children>
@@ -43,7 +43,7 @@
                   </TableView>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Remove" />
+                        <Button mnemonicParsing="false" text="Remove" onAction="#removeService" />
                         <Button mnemonicParsing="false" text="Update" />
                         <Button mnemonicParsing="false" text="Add New" />
                      </children>
