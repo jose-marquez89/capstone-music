@@ -81,8 +81,6 @@ public class InvMgmtCtrl implements Initializable {
                 price = itemsRs.getDouble("price");
                 stock = itemsRs.getInt("on_hand");
 
-                System.out.println("Product retrieved from database");
-
                 productContainer.add(new Product(id, name, price, stock));
             }
 
