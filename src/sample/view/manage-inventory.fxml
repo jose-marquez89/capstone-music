@@ -14,11 +14,11 @@
          <children>
             <VBox prefHeight="295.0" prefWidth="289.0">
                <children>
-                  <TableView prefHeight="200.0" prefWidth="268.0">
+                  <TableView fx:id="productTable" prefHeight="200.0" prefWidth="268.0">
                     <columns>
-                      <TableColumn prefWidth="135.0" text="Product" />
-                      <TableColumn prefWidth="105.0" text="Price" />
-                        <TableColumn prefWidth="48.0" text="Stock" />
+                      <TableColumn fx:id="productNameCol" prefWidth="135.0" text="Product" />
+                      <TableColumn fx:id="productPriceCol" prefWidth="105.0" text="Price" />
+                        <TableColumn fx:id="productStockCol" prefWidth="48.0" text="Stock" />
                     </columns>
                   </TableView>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -35,10 +35,10 @@
             </VBox>
             <VBox prefHeight="295.0" prefWidth="242.0">
                <children>
-                  <TableView prefHeight="227.0" prefWidth="261.0">
+                  <TableView fx:id="serviceTable" prefHeight="227.0" prefWidth="261.0">
                     <columns>
-                      <TableColumn prefWidth="135.0" text="Service" />
-                      <TableColumn prefWidth="105.0" text="Price" />
+                      <TableColumn fx:id="serviceNameCol" prefWidth="135.0" text="Service" />
+                      <TableColumn fx:id="servicePriceCol" prefWidth="105.0" text="Price" />
                     </columns>
                   </TableView>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -53,7 +53,7 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT">
                      <children>
-                        <Button mnemonicParsing="false" text="Manager Console" onAction="#toManagerConsole" />
+                        <Button mnemonicParsing="false" onAction="#toManagerConsole" text="Manager Console" />
                      </children>
                   </HBox>
                </children>
