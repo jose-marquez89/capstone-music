@@ -1,6 +1,7 @@
 package sample.utility;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 /**
  * Provides several methods for use in creating
@@ -65,6 +66,21 @@ public class Notification {
         alert.setContentText("One or more products exceeds current on hand inventory. Please review product lines.");
 
         alert.show();
+    }
+
+    public static boolean confirmRemove(String title, String itemType) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setContentText(String.format(
+                "You are about to remove a %s. Removing it for your store removes it for all stores.\n\nAre you sure you want to continue?",
+                itemType));
+
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.OK)
+            return true;
+        else
+            return false;
     }
 
     public static void blankName() {
