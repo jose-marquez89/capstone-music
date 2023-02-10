@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.SelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,10 +18,13 @@ import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.model.Product;
 import sample.model.Service;
+import sample.utility.Notification;
 import sample.utility.Session;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -94,12 +98,71 @@ public class InvMgmtCtrl implements Initializable {
 
                 serviceContainer.add(new Service(id, name, price));
             }
+
+            DBConnector.closeConnection();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
         productTable.setItems(productContainer);
         serviceTable.setItems(serviceContainer);
+    }
+
+    public void removeProduct(ActionEvent e) throws SQLException {
+        String productQuery;
+        Product selectedProduct;
+        SelectionModel<Product> productSm;
+
+        productSm = productTable.getSelectionModel();
+
+        if (productSm.isEmpty()) {
+            Notification.noSelection("Remove Product", "product");
+        } else {
+            selectedProduct = productSm.getSelectedItem();
+            productQuery = String.format("""
+                UPDATE product
+                SET discontinued = TRUE
+                WHERE id = %d; 
+                """, selectedProduct.getId());
+
+            DBConnector.connect();
+
+            if (Notification.confirmRemove("Remove Product", "product")) {
+                Query.runUpdate(productQuery);
+                productContainer.remove(selectedProduct);
+            }
+
+            DBConnector.closeConnection();
+        }
+    }
+
+    public void removeService(ActionEvent e) throws SQLException {
+        String serviceQuery;
+        Service selectedService;
+        SelectionModel<Service> serviceSm;
+
+        serviceSm = serviceTable.getSelectionModel();
+
+        if (serviceSm.isEmpty()) {
+            Notification.noSelection("Remove Service", "service");
+        } else {
+            selectedService = serviceSm.getSelectedItem();
+            serviceQuery = String.format("""
+                UPDATE service
+                SET discontinued = TRUE
+                WHERE id = %d; 
+                """, selectedService.getId());
+
+            DBConnector.connect();
+
+            if (Notification.confirmRemove("Remove Service", "service")) {
+                Query.runUpdate(serviceQuery);
+                serviceContainer.remove(selectedService);
+            }
+
+            DBConnector.closeConnection();
+        }
     }
 
     public void switchForms(ActionEvent e, String formName, String title) throws IOException {
