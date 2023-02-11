@@ -99,6 +99,14 @@ public class Notification {
         alert.show();
     }
 
+    public static void duplicateServiceAssociation() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Existing Association");
+        alert.setContentText("The selected product is already in the association list.");
+
+        alert.show();
+    }
+
     public static void noOrders() {
         Alert noStoreOrders = new Alert(Alert.AlertType.INFORMATION);
 
