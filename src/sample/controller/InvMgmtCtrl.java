@@ -113,6 +113,19 @@ public class InvMgmtCtrl implements Initializable {
         switchForms(e, "add-new-product.fxml", "New Product");
     }
 
+    public void updateProduct(ActionEvent e) throws IOException {
+        SelectionModel<Product> productSm;
+
+        productSm = productTable.getSelectionModel();
+
+        if (productSm.isEmpty()) {
+            Notification.noSelection("Update Product", "product");
+        } else {
+            Session.setCurrentProduct(productSm.getSelectedItem());
+            switchForms(e, "update-product.fxml", "Update Product");
+        }
+    }
+
     public void removeProduct(ActionEvent e) throws SQLException {
         String productQuery;
         Product selectedProduct;
