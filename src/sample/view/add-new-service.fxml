@@ -31,19 +31,19 @@
                 <TableColumn fx:id="productNameCol" prefWidth="208.0" text="All Products" />
               </columns>
             </TableView>
-            <TableView fx:id="associateProductTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TableView fx:id="associatedProductsTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <columns>
                 <TableColumn fx:id="associatedProductNameCol" prefWidth="208.0" text="Associated Products" />
               </columns>
             </TableView>
             <HBox alignment="TOP_RIGHT" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" text="Add Associated Product" />
+                  <Button mnemonicParsing="false" text="Add Associated Product" onAction="#addToService"/>
                </children>
             </HBox>
             <HBox alignment="TOP_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" text="Remove Product" />
+                  <Button mnemonicParsing="false" text="Remove Product" onAction="#removeFromService"/>
                </children>
             </HBox>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="37.0" prefWidth="214.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
