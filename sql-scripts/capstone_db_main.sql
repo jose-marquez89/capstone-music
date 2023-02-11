@@ -16,7 +16,7 @@ CREATE TABLE customer (
 
 CREATE TABLE product (
 	id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name varchar(40),	
+	name varchar(40) UNIQUE,
 	price numeric,
 	discontinued boolean DEFAULT FALSE
 );
@@ -28,7 +28,7 @@ CREATE TABLE role (
 
 CREATE TABLE service (
 	id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-	name varchar(40),
+	name varchar(40) UNIQUE,
 	price numeric,
 	discontinued boolean DEFAULT FALSE
 );
