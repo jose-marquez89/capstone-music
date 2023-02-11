@@ -25,7 +25,7 @@
                      <children>
                         <Button mnemonicParsing="false" text="Remove" onAction="#removeProduct" />
                         <Button mnemonicParsing="false" text="Update" />
-                        <Button mnemonicParsing="false" text="Add New" />
+                        <Button mnemonicParsing="false" text="Add New" onAction="#addProduct" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
