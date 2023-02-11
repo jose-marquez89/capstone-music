@@ -140,7 +140,7 @@ public class InvMgmtCtrl implements Initializable {
             productQuery = String.format("""
                 UPDATE product
                 SET discontinued = TRUE
-                WHERE id = %d; 
+                WHERE id = %d;
                 """, selectedProduct.getId());
 
             DBConnector.connect();
@@ -168,7 +168,7 @@ public class InvMgmtCtrl implements Initializable {
             serviceQuery = String.format("""
                 UPDATE service
                 SET discontinued = TRUE
-                WHERE id = %d; 
+                WHERE id = %d;
                 """, selectedService.getId());
 
             DBConnector.connect();
@@ -190,6 +190,10 @@ public class InvMgmtCtrl implements Initializable {
         stage.setScene(scene);
         root.requestFocus();
         stage.show();
+    }
+
+    public void addService(ActionEvent e) throws IOException {
+        switchForms(e, "add-new-service.fxml", "New Service");
     }
 
     public void toManagerConsole(ActionEvent event) throws IOException {
