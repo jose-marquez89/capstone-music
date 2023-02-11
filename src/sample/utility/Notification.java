@@ -86,7 +86,15 @@ public class Notification {
     public static void blankName() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Blank Name Input");
-        alert.setContentText("Name field cannot be blank. Please enter a name.");
+        alert.setContentText("Name field cannot be blank.");
+
+        alert.show();
+    }
+
+    public static void badNumericInput() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Malformed Numeric Input");
+        alert.setContentText("One or more numeric fields contain malformed input. Format should be as follows:\n\nCurrency/Price Input: #.##\nQuantity Input: ###");
 
         alert.show();
     }
@@ -120,5 +128,29 @@ public class Notification {
         alert.setContentText("Malformed phone or email input, please follow the formats below.\nPhone format: (###) ###-####\nEmail format: username@yourdomain.com");
 
         alert.show();
+    }
+
+    public static void genericInfoWait(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+
+        alert.showAndWait();
+    }
+
+    public static void genericInfo(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+
+        alert.show();
+    }
+
+    public static void genericErrorWait(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setContentText(message);
+
+        alert.showAndWait();
     }
 }
