@@ -109,6 +109,10 @@ public class InvMgmtCtrl implements Initializable {
         serviceTable.setItems(serviceContainer);
     }
 
+    public void addProduct(ActionEvent e) throws IOException {
+        switchForms(e, "add-new-product.fxml", "New Product");
+    }
+
     public void removeProduct(ActionEvent e) throws SQLException {
         String productQuery;
         Product selectedProduct;
