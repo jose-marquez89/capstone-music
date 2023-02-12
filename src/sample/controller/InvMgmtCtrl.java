@@ -196,6 +196,19 @@ public class InvMgmtCtrl implements Initializable {
         switchForms(e, "add-new-service.fxml", "New Service");
     }
 
+    public void updateService(ActionEvent e) throws IOException {
+        SelectionModel<Service> serviceSm;
+
+        serviceSm = serviceTable.getSelectionModel();
+
+        if (serviceSm.isEmpty()) {
+            Notification.noSelection("Update Service", "service");
+        } else {
+            Session.setCurrentService(serviceSm.getSelectedItem());
+            switchForms(e, "update-service.fxml", "Update Service");
+        }
+    }
+
     public void toManagerConsole(ActionEvent event) throws IOException {
         switchForms(event, "manager-cmd-ctrl.fxml", "Manager Console");
     }
