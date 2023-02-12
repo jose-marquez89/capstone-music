@@ -8,6 +8,7 @@ public class Session {
     private static Customer currentCustomer;
     private static Order currentOrder;
     private static Product currentProduct;
+    private static Service currentService;
 
     public static void setManager(Manager manager) {
         Session.manager = manager;
@@ -27,6 +28,10 @@ public class Session {
 
     public static int getManagerStoreId() {
         return manager.getStoreId();
+    }
+
+    public static void setCurrentService(Service newService) {
+        currentService = newService;
     }
 
     public static void setCurrentProduct(Product newProduct) {
@@ -57,5 +62,8 @@ public class Session {
 
     public static Product getCurrentProduct() {
         return currentProduct;
+    }
+    public static Service getCurrentService() {
+        return currentService;
     }
 }
