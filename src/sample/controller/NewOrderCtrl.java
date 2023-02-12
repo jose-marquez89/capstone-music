@@ -90,8 +90,8 @@ public class NewOrderCtrl implements Initializable {
                 FROM service s
                 JOIN service_application sa
                 ON s.id = sa.service_id
-                JOIN product p
-                ON sa.product_id = p.id
+                LEFT JOIN product p
+                ON sa.product_id = p.id AND NOT p.discontinued
                 WHERE NOT s.discontinued
                 ORDER BY s.id;
                 """;
@@ -138,18 +138,18 @@ public class NewOrderCtrl implements Initializable {
                 associatedProduct = serviceRs.getString("associated_product");
 
                 // only add unique products
-                if (!serviceChoices.contains(associatedProduct)) {
+                if (associatedProduct != null && !serviceChoices.contains(associatedProduct)) {
                     serviceChoices.add(associatedProduct);
                 }
 
                 if (id != currentServiceId) {
                     tempService = new Service(id, name, price);
-                    tempService.addAssociatedProduct(associatedProduct);
                     unfilteredServices.add(tempService);
                     currentServiceId = id;
-                } else {
-                    tempService.addAssociatedProduct(associatedProduct);
                 }
+
+                if (associatedProduct != null)
+                    tempService.addAssociatedProduct(associatedProduct);
             }
 
             serviceFilterCb.getItems().addAll(serviceChoices);
