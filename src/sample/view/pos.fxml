@@ -43,7 +43,7 @@
               </rowConstraints>
                <children>
                   <Button mnemonicParsing="false" prefWidth="150.0" text="New Order" fx:id="newOrderBtn" onAction="#newOrder" />
-                  <Button mnemonicParsing="false" prefWidth="150.0" text="Return" GridPane.columnIndex="1" onAction="#startReturn" />
+                  <Button mnemonicParsing="false" prefWidth="150.0" text="Return Order Items" GridPane.columnIndex="1" onAction="#startReturn" />
                   <Button mnemonicParsing="false" prefWidth="150.0" text="New Customer" GridPane.rowIndex="1" fx:id="newCustomerBtn" onAction="#addNewCustomer" />
                   <Button mnemonicParsing="false" onAction="#endSession" prefWidth="150.0" text="End Session" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>

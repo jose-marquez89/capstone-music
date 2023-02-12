@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="382.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.view.AddNewService">
+<AnchorPane prefHeight="382.0" prefWidth="455.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.UpdateServiceCtrl">
    <children>
       <GridPane hgap="10.0" layoutX="14.0" layoutY="17.0" prefHeight="348.0" prefWidth="427.0" vgap="10.0">
         <columnConstraints>
@@ -27,36 +26,36 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView prefHeight="128.0" prefWidth="262.0" GridPane.rowIndex="1">
+            <TableView fx:id="allProductsTable" prefHeight="128.0" prefWidth="262.0" GridPane.rowIndex="1">
               <columns>
-                <TableColumn prefWidth="208.0" text="Product" />
+                <TableColumn fx:id="productNameCol" prefWidth="208.0" text="All Products" />
               </columns>
             </TableView>
-            <TableView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TableView fx:id="associatedProductsTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <columns>
-                <TableColumn prefWidth="208.0" text="Product" />
+                <TableColumn fx:id="associatedProductNameCol" prefWidth="208.0" text="Associated Products" />
               </columns>
             </TableView>
             <HBox alignment="TOP_RIGHT" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" text="Add Associated Product" />
+                  <Button mnemonicParsing="false" text="Add Associated Product" onAction="#addToService"/>
                </children>
             </HBox>
             <HBox alignment="TOP_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
-                  <Button mnemonicParsing="false" text="Remove Product" />
+                  <Button mnemonicParsing="false" text="Remove Product" onAction="#removeFromService"/>
                </children>
             </HBox>
             <HBox alignment="BOTTOM_RIGHT" prefHeight="37.0" prefWidth="214.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <children>
-                  <Button mnemonicParsing="false" text="Cancel" />
-                  <Button mnemonicParsing="false" text="Save" />
+                  <Button mnemonicParsing="false" text="Cancel" onAction="#cancel" />
+                  <Button mnemonicParsing="false" text="Save" onAction="#submitNew"/>
                </children>
             </HBox>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0">
                <children>
-                  <TextField promptText="Name" />
-                  <TextField promptText="Price" />
+                  <TextField fx:id="nameField" promptText="Name" />
+                  <TextField fx:id="priceField" promptText="Price" />
                </children>
                <GridPane.margin>
                   <Insets />
