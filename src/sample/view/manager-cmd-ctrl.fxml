@@ -39,7 +39,7 @@
                   <VBox alignment="TOP_CENTER" prefHeight="22.0" prefWidth="350.0" spacing="10.0">
                      <children>
                         <Button mnemonicParsing="false" prefWidth="150.0" text="Start Session" onAction="#startSession" />
-                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="View Reports">
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="View Reports" onAction="#viewReports">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin></Button>
