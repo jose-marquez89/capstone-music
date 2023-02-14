@@ -112,7 +112,12 @@ public class ManagerCmdCtrl implements Initializable {
     }
 
     public void viewReports(ActionEvent event) throws IOException {
-        // TODO: add reporting view
+        root = FXMLLoader.load(getClass().getResource("../view/manager-reports.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Reports");
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void manageInventory(ActionEvent event) throws IOException {
