@@ -120,8 +120,6 @@ public class LogInController implements Initializable {
                 scene = new Scene(root);
                 stage.setTitle("Manager Console");
                 stage.setScene(scene);
-                stage.setX(100.0);
-                stage.setY(5.0);
                 stage.show();
 
                 System.out.println("Login Successful for " + sessionManager.getUsername());
