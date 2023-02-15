@@ -99,7 +99,7 @@ public class OrderSelectionCtrl implements Initializable {
         col.setCellFactory(cell -> new TableCell<Order, LocalDateTime>() {
             @Override
             protected void updateItem(LocalDateTime dt, boolean empty) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 super.updateItem(dt, empty);
                 if (empty) {
                     setText(null);

@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.EventObject;
 import java.util.ResourceBundle;
 
@@ -83,9 +84,25 @@ public class ManagerCmdCtrl implements Initializable {
         // set up table columns
         associateNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         associateStartDtCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        formatDateCol(associateStartDtCol);
 
         // load them into table
         associateTbl.setItems(associateContainer);
+    }
+
+    public void formatDateCol(TableColumn col) {
+        col.setCellFactory(cell -> new TableCell<SalesAssociate, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime dt, boolean empty) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                super.updateItem(dt, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(formatter.format(dt));
+                }
+            }
+        });
     }
 
     public void startSession(ActionEvent event) throws IOException {
@@ -123,7 +140,7 @@ public class ManagerCmdCtrl implements Initializable {
     public void manageInventory(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("../view/manage-inventory.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Inventory Management");
+        stage.setTitle("Manage Inventory");
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

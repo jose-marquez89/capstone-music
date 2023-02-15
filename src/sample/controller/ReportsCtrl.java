@@ -22,6 +22,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.*;
 
@@ -61,6 +62,7 @@ public class ReportsCtrl implements Initializable {
         cityCol.setCellValueFactory(new PropertyValueFactory<>("city"));
         stateCol.setCellValueFactory(new PropertyValueFactory<>("state"));
         priceCol.setCellValueFactory(new PropertyValueFactory<>("salePrice"));
+        formatDateCol(dateTimeCol);
 
         unfilteredRows = new ArrayList<>();
         storeChoices = new ArrayList<>();
@@ -135,6 +137,21 @@ public class ReportsCtrl implements Initializable {
 
         // set total display
         grandTotalDisplay.setText(String.format("$%.2f", getGrandTotal(unfilteredRows)));
+    }
+
+    public void formatDateCol(TableColumn col) {
+        col.setCellFactory(cell -> new TableCell<ReportRow, LocalDateTime>() {
+            @Override
+            protected void updateItem(LocalDateTime dt, boolean empty) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                super.updateItem(dt, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(formatter.format(dt));
+                }
+            }
+        });
     }
 
     private double getGrandTotal(List<ReportRow> reportsList) {
