@@ -10,10 +10,11 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.NewOrderCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="512.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.NewOrderCtrl">
    <children>
-      <HBox layoutX="12.0" layoutY="65.0" prefHeight="369.0" prefWidth="845.0" spacing="10.0">
+      <HBox layoutX="12.0" layoutY="95.0" prefHeight="369.0" prefWidth="845.0" spacing="10.0">
          <children>
             <VBox alignment="TOP_RIGHT">
                <children>
@@ -24,7 +25,7 @@
                         <TableColumn fx:id="productStockCol" minWidth="0.0" prefWidth="49.0" text="Stock" />
                     </columns>
                   </TableView>
-                  <Button mnemonicParsing="false" text="Add Product" onAction="#addProduct">
+                  <Button mnemonicParsing="false" onAction="#addProduct" text="Add Product">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -44,7 +45,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                      <children>
-                        <Button mnemonicParsing="false" text="Add Service" onAction="#addService" />
+                        <Button mnemonicParsing="false" onAction="#addService" text="Add Service" />
                      </children>
                   </HBox>
                </children>
@@ -62,7 +63,7 @@
                         <Pane prefHeight="200.0" prefWidth="200.0">
                            <children>
                               <Label layoutX="-1.0" layoutY="5.0" text="Total:" />
-                              <Label layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" textAlignment="CENTER" fx:id="totalDisplay" />
+                              <Label fx:id="totalDisplay" layoutX="40.0" layoutY="5.0" prefHeight="17.0" prefWidth="76.0" textAlignment="CENTER" />
                            </children>
                            <HBox.margin>
                               <Insets left="2.0" />
@@ -70,7 +71,7 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button layoutX="17.0" mnemonicParsing="false" text="Remove Item" onAction="#removeItem"/>
+                              <Button layoutX="17.0" mnemonicParsing="false" onAction="#removeItem" text="Remove Item" />
                            </children>
                         </Pane>
                      </children>
@@ -81,18 +82,29 @@
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#toPos" text="Cancel" />
-                        <Button mnemonicParsing="false" text="Submit Order" onAction="#submitOrder" />
+                        <Button mnemonicParsing="false" onAction="#submitOrder" text="Submit Order" />
                      </children>
                   </HBox>
                </children>
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" layoutX="331.0" layoutY="19.0" prefHeight="37.0" prefWidth="280.0" spacing="10.0">
-         <children>
-            <Label text="Filter By:" />
-            <ChoiceBox fx:id="serviceFilterCb" onAction="#filterServices" prefHeight="25.0" prefWidth="160.0" />
-         </children>
-      </HBox>
+      <Label layoutX="448.0" layoutY="34.0" text="Filter By:" />
+      <ChoiceBox fx:id="serviceFilterCb" layoutX="448.0" layoutY="59.0" onAction="#filterServices" prefHeight="25.0" prefWidth="160.0" />
+      <Label layoutX="14.0" layoutY="62.0" text="Products">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="331.0" layoutY="62.0" text="Services">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="617.0" layoutY="62.0" text="Order">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -2,15 +2,17 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="328.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.InvMgmtCtrl">
+<AnchorPane prefHeight="373.0" prefWidth="564.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.InvMgmtCtrl">
    <children>
-      <HBox layoutX="10.0" layoutY="17.0" prefHeight="295.0" prefWidth="554.0" spacing="10.0">
+      <HBox layoutX="10.0" layoutY="60.0" prefHeight="295.0" prefWidth="554.0" spacing="10.0">
          <children>
             <VBox prefHeight="295.0" prefWidth="289.0">
                <children>
@@ -23,9 +25,9 @@
                   </TableView>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Remove" onAction="#removeProduct" />
-                        <Button mnemonicParsing="false" text="Update" onAction="#updateProduct"/>
-                        <Button mnemonicParsing="false" text="Add New" onAction="#addProduct" />
+                        <Button mnemonicParsing="false" onAction="#removeProduct" text="Remove" />
+                        <Button mnemonicParsing="false" onAction="#updateProduct" text="Update" />
+                        <Button mnemonicParsing="false" onAction="#addProduct" text="Add New" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -43,9 +45,9 @@
                   </TableView>
                   <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Remove" onAction="#removeService" />
-                        <Button mnemonicParsing="false" text="Update" onAction="#updateService"/>
-                        <Button mnemonicParsing="false" text="Add New" onAction="#addService" />
+                        <Button mnemonicParsing="false" onAction="#removeService" text="Remove" />
+                        <Button mnemonicParsing="false" onAction="#updateService" text="Update" />
+                        <Button mnemonicParsing="false" onAction="#addService" text="Add New" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -60,5 +62,15 @@
             </VBox>
          </children>
       </HBox>
+      <Label layoutX="10.0" layoutY="32.0" text="Products">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="309.0" layoutY="32.0" text="Services">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
