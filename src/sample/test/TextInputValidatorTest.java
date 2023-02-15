@@ -38,4 +38,30 @@ class TextInputValidatorTest {
         assertFalse(TextInputValidator.validatePhone(testPhone4));
         assertFalse(TextInputValidator.validatePhone(testPhone5));
     }
+
+    @Test
+    void validatePrice() {
+        String price1, price2, price3;
+
+        price1 = "34.949";
+        price2 = "2";
+        price3 = "123.23";
+
+        assertFalse(TextInputValidator.validatePrice(price1));
+        assertFalse(TextInputValidator.validatePrice(price2));
+        assertTrue(TextInputValidator.validatePrice(price3));
+    }
+
+    @Test
+    void validateInteger() {
+        String i1, i2, i3;
+
+        i1 = "Hello";
+        i2 = ".0";
+        i3 = "54";
+
+        assertFalse(TextInputValidator.validateInteger(i1));
+        assertFalse(TextInputValidator.validateInteger(i2));
+        assertTrue(TextInputValidator.validateInteger(i3));
+    }
 }
