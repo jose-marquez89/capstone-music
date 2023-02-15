@@ -16,7 +16,7 @@ public class Main extends Application {
         LogInLogger.initializeLogger();
 
         Parent root = FXMLLoader.load(getClass().getResource("view/log-in.fxml"));
-        primaryStage.setTitle("Capstone Music");
+        primaryStage.setTitle("POS/Inventory System");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
         root.requestFocus();
