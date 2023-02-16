@@ -10,22 +10,35 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ManagerCmdCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="359.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ManagerCmdCtrl">
    <children>
       <BorderPane layoutX="14.0" layoutY="5.0" prefHeight="346.0" prefWidth="332.0">
          <top>
-            <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="332.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="managerLabel" text="Session Manager: [Manager Name]">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
+            <VBox BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets />
                </BorderPane.margin>
-            </HBox>
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="332.0">
+                     <children>
+                        <Label fx:id="managerLabel" text="Session Manager: [Manager Name]">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="24.0" prefWidth="332.0">
+                     <children>
+                        <Label fx:id="storeLabel" text="Store: Store">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
          </top>
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
@@ -38,12 +51,12 @@
                   </TableView>
                   <VBox alignment="TOP_CENTER" prefHeight="22.0" prefWidth="350.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" prefWidth="150.0" text="Start Session" onAction="#startSession" />
-                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="View Reports" onAction="#viewReports">
+                        <Button mnemonicParsing="false" onAction="#startSession" prefWidth="150.0" text="Start Session" />
+                        <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#viewReports" prefHeight="25.0" prefWidth="150.0" text="View Reports">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin></Button>
-                        <Button minWidth="-Infinity" mnemonicParsing="false" prefWidth="150.0" text="Manage Inventory" onAction="#manageInventory"/>
+                        <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#manageInventory" prefWidth="150.0" text="Manage Inventory" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />
