@@ -47,7 +47,7 @@ public class NewOrderCtrl implements Initializable {
     @FXML private ObservableList<Service> serviceContainer = FXCollections.observableArrayList();
     @FXML private ObservableList<Item> orderLineContainer = FXCollections.observableArrayList();
     @FXML private ChoiceBox<String> serviceFilterCb;
-    @FXML private Label totalDisplay;
+    @FXML private Label totalDisplay, customerNameLabel;
     private ArrayList<String> serviceChoices;
     private ArrayList<Service> unfilteredServices;
 
@@ -166,6 +166,8 @@ public class NewOrderCtrl implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        customerNameLabel.setText("Customer: " + Session.getCurrentCustomerName());
     }
 
     public void switchForms(ActionEvent e, String formName, String title) throws IOException {
