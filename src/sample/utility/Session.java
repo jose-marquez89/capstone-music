@@ -9,9 +9,14 @@ public class Session {
     private static Order currentOrder;
     private static Product currentProduct;
     private static Service currentService;
+    private static String currentStore;
 
     public static void setManager(Manager manager) {
         Session.manager = manager;
+    }
+
+    public static void setStore(String store) {
+        currentStore = store;
     }
 
     public static void setSalesAssociate(SalesAssociate salesAssociate) {
@@ -63,7 +68,12 @@ public class Session {
     public static Product getCurrentProduct() {
         return currentProduct;
     }
+
     public static Service getCurrentService() {
         return currentService;
+    }
+
+    public static String getCurrentStoreName() {
+        return currentStore;
     }
 }
