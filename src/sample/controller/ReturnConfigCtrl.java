@@ -37,7 +37,7 @@ public class ReturnConfigCtrl implements Initializable {
     @FXML private TableColumn<OrderLine, Double> returnValueCol;
     @FXML private ObservableList<OrderLine> orderItemContainer = FXCollections.observableArrayList();
     @FXML private ObservableList<OrderLine> returnItemContainer = FXCollections.observableArrayList();
-    @FXML private Label returnValueLabel;
+    @FXML private Label returnValueLabel, customerNameLabel;
     private Parent root;
     private Stage stage;
     private Scene scene;
@@ -86,6 +86,7 @@ public class ReturnConfigCtrl implements Initializable {
         orderItemTable.setItems(orderItemContainer);
         returnTable.setItems(returnItemContainer);
         returnValueLabel.setText("$0.00");
+        customerNameLabel.setText("Customer: " + Session.getCurrentCustomerName());
     }
 
     public void addReturnItem(ActionEvent e) {
@@ -108,6 +109,7 @@ public class ReturnConfigCtrl implements Initializable {
             returnItemContainer.add(selectedOrderLine);
             returnValueLabel.setText(String.format("$%.2f", getReturnTotal()));
         }
+
     }
 
     private double getReturnTotal() {
