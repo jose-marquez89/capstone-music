@@ -33,10 +33,12 @@ public class ManagerCmdCtrl implements Initializable {
     @FXML private TableColumn<SalesAssociate, String> associateNameCol;
     @FXML private TableColumn<SalesAssociate, LocalDateTime> associateStartDtCol;
     @FXML private ObservableList<SalesAssociate> associateContainer = FXCollections.observableArrayList();
+    @FXML private Label storeLabel;
     private String message;
     private Parent root;
     private Scene scene;
     private Stage stage;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String associateQuery, associateName;
@@ -88,6 +90,8 @@ public class ManagerCmdCtrl implements Initializable {
 
         // load them into table
         associateTbl.setItems(associateContainer);
+
+        storeLabel.setText("Store: " + Session.getCurrentStoreName());
     }
 
     public void formatDateCol(TableColumn col) {
@@ -125,6 +129,7 @@ public class ManagerCmdCtrl implements Initializable {
         stage.setTitle("POS");
         scene = new Scene(root);
         stage.setScene(scene);
+        root.requestFocus();
         stage.show();
     }
 
