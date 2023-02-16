@@ -61,7 +61,7 @@ public class LogInController implements Initializable {
     public void logIn(ActionEvent event) throws SQLException, IOException {
         int id, storeId;
         Manager sessionManager = null;
-        String username, name, createdBy, managerDetailsQ;
+        String username, name, createdBy, managerDetailsQ, storeName;
         LocalDateTime startDate, endDate;
         String candidatePword = passwordField.getText();
         String candidateUname = usernameField.getText();
@@ -86,11 +86,13 @@ public class LogInController implements Initializable {
             if (candidatePword.equals(queryResult.getString("password"))) {
                 // create the session's manager
                 managerDetailsQ = """
-                        SELECT e.*, m.user_name
+                        SELECT e.*, m.user_name, s.name AS store_name
                         FROM employee AS e
                         JOIN manager_detail AS m
                         ON e.id = m.employee_id
-                        WHERE e.id = ?;       
+                        JOIN store AS s
+                        ON e.store_id = s.id
+                        WHERE e.id = ?;
                         """;
 
                 PreparedStatement managerPs = Query.pendingStatement(managerDetailsQ);
@@ -102,6 +104,8 @@ public class LogInController implements Initializable {
                     name = mgrResult.getString("name");
                     storeId = mgrResult.getInt("store_id");
                     startDate = mgrResult.getTimestamp("start_date").toLocalDateTime();
+                    storeName = mgrResult.getString("store_name");
+
                     try {
                         endDate = mgrResult.getTimestamp("end_date").toLocalDateTime();
                     } catch (NullPointerException npe){
@@ -109,9 +113,9 @@ public class LogInController implements Initializable {
                     }
                     sessionManager = new Manager(id, name, startDate, endDate, candidateUname, storeId);
                     Session.setManager(sessionManager);
+                    Session.setStore(storeName);
                 } else {
-                    // TODO: change to proper logging event and break
-                    System.out.println("Something's gone wrong with manager log in and DB");
+                    LogInLogger.getLogger().info("Could not set a manager for the current session, check database.");
                 }
 
                 // Schedule.setCurrentUser(queuedUser);
@@ -120,9 +124,8 @@ public class LogInController implements Initializable {
                 scene = new Scene(root);
                 stage.setTitle("Manager Console");
                 stage.setScene(scene);
+                root.requestFocus();
                 stage.show();
-
-                System.out.println("Login Successful for " + sessionManager.getUsername());
 
                 DBConnector.closeConnection();
                 LogInLogger.getLogger().info("Login succeeded for user candidate: " + candidateUname);
