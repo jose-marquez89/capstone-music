@@ -106,5 +106,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Label fx:id="customerNameLabel" layoutX="12.0" layoutY="34.0" />
    </children>
 </AnchorPane>
