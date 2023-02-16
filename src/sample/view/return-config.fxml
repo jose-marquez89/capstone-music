@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="407.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ReturnConfigCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="428.0" prefWidth="555.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ReturnConfigCtrl">
    <children>
-      <HBox layoutX="13.0" layoutY="18.0" prefHeight="369.0" prefWidth="532.0" spacing="10.0">
+      <HBox layoutX="13.0" layoutY="45.0" prefHeight="369.0" prefWidth="532.0" spacing="10.0">
          <children>
             <VBox alignment="TOP_RIGHT">
                <children>
@@ -22,7 +22,7 @@
                       <TableColumn fx:id="orderItemSalePrice" prefWidth="105.0" text="Sale Price" />
                     </columns>
                   </TableView>
-                  <Button mnemonicParsing="false" text="Add To Returns" onAction="#addReturnItem">
+                  <Button mnemonicParsing="false" onAction="#addReturnItem" text="Add To Returns">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -50,7 +50,7 @@
                         </Pane>
                         <Pane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <Button layoutX="30.0" mnemonicParsing="false" text="Remove Item" onAction="#removeReturnItem"/>
+                              <Button layoutX="30.0" mnemonicParsing="false" onAction="#removeReturnItem" text="Remove Item" />
                            </children>
                         </Pane>
                      </children>
@@ -60,13 +60,14 @@
                   </HBox>
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Cancel" onAction="#cancel"/>
-                        <Button mnemonicParsing="false" text="Submit Return" onAction="#submitReturn" />
+                        <Button mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+                        <Button mnemonicParsing="false" onAction="#submitReturn" text="Submit Return" />
                      </children>
                   </HBox>
                </children>
             </VBox>
          </children>
       </HBox>
+      <Label fx:id="customerNameLabel" layoutX="13.0" layoutY="17.0" />
    </children>
 </AnchorPane>
