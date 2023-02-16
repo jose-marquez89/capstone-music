@@ -20,7 +20,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="14.0" prefWidth="613.0">
                <children>
-                  <Label text="Sales Report">
+                  <Label text="Sales Report" fx:id="titleLabel">
                      <font>
                         <Font size="18.0" />
                      </font>
