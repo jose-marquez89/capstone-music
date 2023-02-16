@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import sample.dao.DBConnector;
 import sample.dao.Query;
 import sample.utility.ReportRow;
+import sample.utility.Session;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class ReportsCtrl implements Initializable {
     @FXML private ChoiceBox<String> storeCb;
 
     @FXML private ObservableList<ReportRow> reportDisplayContainer = FXCollections.observableArrayList();
-    @FXML private Label grandTotalDisplay;
+    @FXML private Label grandTotalDisplay, titleLabel;
     private ArrayList<ReportRow> unfilteredRows;
     private ArrayList<String> storeChoices;
     private Parent root;
@@ -137,6 +138,8 @@ public class ReportsCtrl implements Initializable {
 
         // set total display
         grandTotalDisplay.setText(String.format("$%.2f", getGrandTotal(unfilteredRows)));
+
+        titleLabel.setText("Sales Report - " + Session.getCurrentStoreName());
     }
 
     public void formatDateCol(TableColumn col) {
