@@ -58,7 +58,7 @@
             <TableView fx:id="reportTable" prefHeight="300.0" prefWidth="613.0">
               <columns>
                 <TableColumn fx:id="customerCol" prefWidth="129.0" text="Customer" />
-                <TableColumn fx:id="dateTimeCol" prefWidth="149.0" text="Date/Time" />
+                <TableColumn fx:id="dateTimeCol" prefWidth="149.0" text="Order Date/Time" />
                   <TableColumn fx:id="storeCol" prefWidth="144.0" text="Store" />
                   <TableColumn fx:id="cityCol" prefWidth="102.0" text="City" />
                   <TableColumn fx:id="stateCol" prefWidth="49.0" text="State" />
