@@ -100,7 +100,7 @@ public class PosCtrl implements Initializable {
     }
 
     public void endSession(ActionEvent event) throws IOException {
-        switchForms(event, "log-in.fxml", "Capstone Music");
+        switchForms(event, "log-in.fxml", "POS/Inventory System");
     }
 
     public void newOrder(ActionEvent event) throws IOException {
@@ -110,7 +110,6 @@ public class PosCtrl implements Initializable {
             return;
         }
 
-        // TODO: you may need to "flush" the current customer at the end of the order session
         Session.setCurrentCustomer(customerSelectionModel.getSelectedItem());
         switchForms(event, "new-order.fxml", "New Order");
     }
